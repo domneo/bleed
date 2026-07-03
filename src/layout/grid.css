@@ -1,0 +1,47 @@
+/* Dashboard grid — auto-fit tiles that span via data-span.
+ *   <div class="dashboard">
+ *     <article class="stat">…</article>
+ *     <section class="card" data-span="2">…</section>
+ *     <section class="card" data-span="full">…</section>
+ *   </div>
+ * The grid is its own container, so spans collapse to single column on narrow
+ * viewports without a media query tied to the page. */
+
+@layer bleed.components {
+  .dashboard {
+    container-type: inline-size;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(var(--dashboard-min, 16rem), 1fr));
+    gap: var(--space-4);
+    align-items: start;
+  }
+
+  .dashboard > [data-span="2"] { grid-column: span 2; }
+  .dashboard > [data-span="3"] { grid-column: span 3; }
+  .dashboard > [data-span="full"] { grid-column: 1 / -1; }
+
+  /* when the grid itself is narrow, everything goes full-width */
+  @container (max-width: 34rem) {
+    .dashboard > [data-span] { grid-column: 1 / -1; }
+  }
+
+  /* generic responsive cluster (KPI row) */
+  .cluster {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+  }
+  .cluster > * { flex: 1 1 var(--cluster-min, 12rem); }
+
+  /* app shell: sidebar + main */
+  .app-shell {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    min-block-size: 100svh;
+  }
+  .app-shell > main { min-inline-size: 0; padding: var(--space-5); }
+
+  @container (max-width: 48rem) {
+    .app-shell { grid-template-columns: 1fr; }
+  }
+}

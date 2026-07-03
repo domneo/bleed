@@ -1,0 +1,85 @@
+/* Modal — native <dialog class="modal">, opened with showModal() (see bleed.js,
+ * ~5 lines: wire [data-open-modal] / [data-close-modal]). Native gives focus trap,
+ * Esc-to-close, inert background, and ::backdrop for free.
+ *   <dialog class="modal">
+ *     <form method="dialog" class="modal__wrap">
+ *       <header class="modal__header"><h2 class="modal__title">…</h2>
+ *         <button class="btn btn--icon btn--ghost" data-close-modal>✕</button></header>
+ *       <div class="modal__body">…</div>
+ *       <footer class="modal__footer"><button class="btn">Confirm</button></footer>
+ *     </form>
+ *   </dialog>
+ * Entry/exit animate via @starting-style + transition-behavior:allow-discrete. */
+
+@layer bleed.components {
+  .modal {
+    padding: 0;
+    inline-size: min(92vw, 34rem);
+    max-block-size: 85svh;
+    color: var(--ink);
+    background-color: var(--paper);
+    border: var(--border-w) var(--border-style) var(--ink);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+
+    opacity: 0;
+    translate: 0 var(--space-3);
+    transition:
+      opacity var(--transition),
+      translate var(--transition),
+      overlay var(--transition) allow-discrete,
+      display var(--transition) allow-discrete;
+  }
+
+  .modal[open] {
+    opacity: 1;
+    translate: 0 0;
+  }
+
+  @starting-style {
+    .modal[open] {
+      opacity: 0;
+      translate: 0 var(--space-3);
+    }
+  }
+
+  .modal::backdrop {
+    background-color: color-mix(in oklch, var(--ink) 45%, transparent);
+    backdrop-filter: blur(2px); /* px-ok: optical blur radius, not a layout size */
+  }
+
+  .modal__wrap {
+    display: flex;
+    flex-direction: column;
+    max-block-size: 85svh;
+  }
+
+  .modal__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    padding: var(--space-4) var(--space-5);
+    border-block-end: var(--border-w) var(--border-style) var(--ink);
+  }
+
+  .modal__title {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+  }
+
+  .modal__body {
+    padding: var(--space-5);
+    overflow: auto;
+  }
+
+  .modal__footer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: var(--space-3);
+    padding: var(--space-4) var(--space-5);
+    border-block-start: var(--border-w) var(--border-style) var(--ink);
+  }
+}

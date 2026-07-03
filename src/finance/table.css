@@ -1,0 +1,75 @@
+/* Data table — real <table>. Sticky header, tabular numerics, zebra, :has() row
+ * states. Wrap in .table-scroll for a bounded, sticky-header scroll region:
+ *   <div class="table-scroll"><table class="table table--zebra"> … </table></div>
+ * Mark numeric columns with class="num" on the <th>/<td> to right-align + tabular. */
+
+@layer bleed.components {
+  .table-scroll {
+    overflow: auto;
+    max-block-size: 70svh;
+    border: var(--border-w) var(--border-style) var(--ink);
+    border-radius: var(--radius);
+  }
+
+  .table {
+    inline-size: 100%;
+    border-collapse: collapse;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .table :is(th, td) {
+    padding: var(--space-2) var(--space-3);
+    text-align: start;
+    border-block-end: var(--border-w) var(--border-style)
+      color-mix(in oklch, var(--ink) 30%, var(--paper));
+  }
+
+  .table thead th {
+    position: sticky;
+    inset-block-start: 0;
+    z-index: 1;
+    font-family: var(--font-display);
+    font-size: 0.85rem;
+    background-color: var(--paper);
+    border-block-end: var(--border-w) var(--border-style) var(--ink);
+  }
+
+  .table tfoot :is(th, td) {
+    font-weight: 700;
+    border-block-start: var(--border-w) var(--border-style) var(--ink);
+    border-block-end: none;
+  }
+
+  /* numeric column: right-align + align digits */
+  .table :is(th, td).num,
+  .table :is(th, td)[data-type="number"] {
+    text-align: end;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* zebra */
+  .table--zebra tbody tr:nth-child(even) {
+    background-color: color-mix(in oklch, var(--ink) 6%, var(--paper));
+  }
+
+  /* interactive rows (:has powers hover + selection without JS classes) */
+  .table--rows tbody tr:hover {
+    background-color: color-mix(in oklch, var(--ink) 12%, var(--paper));
+  }
+  .table tbody tr:has(:checked) {
+    background-color: color-mix(in oklch, var(--ink) 18%, var(--paper));
+  }
+  /* a cell can flag a whole row's tone via :has on the row */
+  .table tbody tr:has(.delta--down) :is(th, td):first-child {
+    box-shadow: inset var(--space-1) 0 0 var(--negative);
+  }
+  .table tbody tr:has(.delta--up) :is(th, td):first-child {
+    box-shadow: inset var(--space-1) 0 0 var(--positive);
+  }
+
+  .table caption {
+    padding-block-end: var(--space-2);
+    font-family: var(--font-display);
+    text-align: start;
+  }
+}

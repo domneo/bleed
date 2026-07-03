@@ -1,0 +1,5 @@
+node_modules/
+*.log
+
+# dist/ IS committed on purpose: index.html links it directly and package.json
+# ships it. Regenerate with `npm run build`.

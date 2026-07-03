@@ -1,0 +1,54 @@
+/* Definition-list stats — semantic key/value pairs. Wrap each pair in a <div> so
+ * flex/grid can group dt+dd:
+ *   <dl class="dl-stats">
+ *     <div><dt>Market cap</dt><dd>$2.9T</dd></div>
+ *     <div><dt>P/E</dt><dd>31.4</dd></div>
+ *   </dl> */
+
+@layer bleed.components {
+  .dl-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+    gap: var(--border-w);
+    margin: 0;
+
+    border: var(--border-w) var(--border-style) var(--ink);
+    background-color: var(--ink); /* shows through the gap as gridlines */
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+
+  .dl-stats > div {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    padding: var(--space-3) var(--space-4);
+    background-color: var(--paper);
+  }
+
+  .dl-stats dt {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    color: color-mix(in oklch, var(--ink) 60%, var(--paper));
+  }
+
+  .dl-stats dd {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 1.35rem;
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+    line-height: 1;
+  }
+
+  /* inline variant: label left, value right, one per row */
+  .dl-inline {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: var(--space-2) var(--space-4);
+    margin: 0;
+  }
+  .dl-inline dt { font-weight: 700; color: color-mix(in oklch, var(--ink) 65%, var(--paper)); }
+  .dl-inline dd { margin: 0; text-align: end; font-variant-numeric: tabular-nums; }
+}

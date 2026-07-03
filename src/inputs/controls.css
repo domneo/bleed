@@ -1,0 +1,46 @@
+/* Checkbox / radio / range — native controls tinted via accent-color (set on :root
+ * in base.css, so they follow the theme). We only size + lay them out.
+ *   <label class="control"><input type="checkbox"> Reinvest dividends</label>
+ *   <input class="range" type="range" min="0" max="100"> */
+
+@layer bleed.components {
+  .control {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    cursor: pointer;
+    font-weight: 600;
+  }
+
+  .control input[type="checkbox"],
+  .control input[type="radio"],
+  .field input[type="checkbox"],
+  .field input[type="radio"] {
+    inline-size: 1.15rem;
+    block-size: 1.15rem;
+    accent-color: var(--ink);
+    cursor: pointer;
+  }
+
+  .control:has(:disabled) { opacity: 0.55; cursor: not-allowed; }
+
+  .range,
+  .field input[type="range"] {
+    inline-size: 100%;
+    accent-color: var(--ink);
+    cursor: pointer;
+  }
+
+  /* vertical stack of options */
+  .control-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  /* native <select> keeps its arrow; we supply the box + a little end padding */
+  .field select {
+    padding-inline-end: var(--space-5);
+    cursor: pointer;
+  }
+}

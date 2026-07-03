@@ -1,0 +1,45 @@
+/* Header bar — <header class="app-header">. Brand on the start edge, meta (a
+ * <time> last-updated, actions) on the end. Add .app-header--sticky to pin it. */
+
+@layer bleed.components {
+  .app-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    padding: var(--space-3) var(--space-5);
+
+    background-color: var(--paper);
+    border-block-end: var(--border-w) var(--border-style) var(--ink);
+  }
+
+  .app-header--sticky {
+    position: sticky;
+    inset-block-start: 0;
+    z-index: 10;
+  }
+
+  .app-header__brand {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 800;
+    text-decoration: none;
+    color: var(--ink);
+  }
+
+  /* pushes everything after it to the end edge */
+  .app-header__meta {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-3);
+    margin-inline-start: auto;
+    font-size: 0.85rem;
+  }
+
+  .app-header__meta time {
+    font-variant-numeric: tabular-nums;
+    color: color-mix(in oklch, var(--ink) 65%, var(--paper));
+  }
+}

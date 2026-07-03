@@ -1,0 +1,85 @@
+/* Form fields — wrap label + control + hint/error in .field.
+ *   <div class="field">
+ *     <label for="amt">Amount</label>
+ *     <input id="amt" class="input" type="number" required>
+ *     <p class="field__hint">Max $10,000</p>
+ *     <p class="field__error">Enter a valid amount</p>
+ *   </div>
+ * Validation is native + CSS: :user-invalid fires only AFTER interaction (not on
+ * first paint), and .field:has(:user-invalid) reveals the error + tints the label. */
+
+@layer bleed.components {
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    min-inline-size: 0;
+  }
+
+  .field > label,
+  .field__label {
+    font-size: 0.85rem;
+    font-weight: 700;
+  }
+
+  .field__hint {
+    font-size: 0.8rem;
+    color: color-mix(in oklch, var(--ink) 60%, var(--paper));
+  }
+
+  .field__error {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--negative);
+  }
+  /* error is hidden until the control is actually invalid post-interaction */
+  .field:not(:has(:user-invalid)) .field__error { display: none; }
+  .field:has(:user-invalid) > label,
+  .field:has(:user-invalid) .field__label { color: var(--negative); }
+
+  /* --- text-like controls ------------------------------------------------- */
+  .input,
+  .field :is(input, select, textarea):not([type="checkbox"]):not([type="radio"]):not([type="range"]) {
+    inline-size: 100%;
+    padding: var(--space-2) var(--space-3);
+    font: inherit;
+    color: var(--ink);
+    background-color: var(--paper);
+    border: var(--border-w) var(--border-style) var(--ink);
+    border-radius: var(--radius);
+    transition: border-color var(--transition), box-shadow var(--transition);
+  }
+
+  .input::placeholder,
+  .field :is(input, textarea)::placeholder {
+    color: color-mix(in oklch, var(--ink) 45%, var(--paper));
+  }
+
+  .field textarea { min-block-size: 5rem; resize: vertical; }
+
+  :is(.input, .field input, .field select, .field textarea):user-invalid {
+    border-color: var(--negative);
+  }
+
+  :is(.input, .field input, .field select, .field textarea):disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+    background-color: color-mix(in oklch, var(--ink) 6%, var(--paper));
+  }
+
+  /* input adornments: <div class="input-group"><span>$</span><input></div> */
+  .input-group {
+    display: flex;
+    align-items: stretch;
+  }
+  .input-group > :is(.input-group__addon, span:first-child) {
+    display: inline-flex;
+    align-items: center;
+    padding-inline: var(--space-3);
+    font-weight: 700;
+    background-color: color-mix(in oklch, var(--ink) 10%, var(--paper));
+    border: var(--border-w) var(--border-style) var(--ink);
+    border-inline-end: none;
+  }
+  .input-group > .input { border-start-start-radius: 0; border-end-start-radius: 0; }
+}

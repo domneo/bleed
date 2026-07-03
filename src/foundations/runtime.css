@@ -1,0 +1,59 @@
+/* runtime.css — hand-written token-layer runtime.
+ *
+ * Three jobs, none of which belong in the generated SD output:
+ *   1. @property registration — makes key tokens typed + animatable, so theme
+ *      switches can interpolate color/length instead of snapping.
+ *   2. Density-derived tokens — the consumed --space-* / --border-w are the raw
+ *      theme *-base values scaled by a density multiplier.
+ *   3. (color-scheme lives in base.css.)
+ *
+ * Why the derived tokens are re-declared on `:root, [data-theme], [data-density]`:
+ * a custom property is substituted where it is DECLARED. If --border-w were declared
+ * only on :root, a subtree that overrides --border-w-base (a scoped [data-theme]) or
+ * --density-* (a scoped [data-density]) would never re-derive. Listing every element
+ * where a base OR the multiplier can change re-runs the calc at that element, so
+ * scoped theming and scoped density both work — not just root-level switching.
+ * The *-base ↔ derived split also dodges the self-reference cycle you'd hit trying to
+ * write `--border-w: calc(var(--border-w) * .7)` on one element.
+ */
+
+/* --- 1. typed, animatable tokens ------------------------------------------- */
+@property --ink       { syntax: "<color>";  inherits: true; initial-value: oklch(0.45 0.31 264); }
+@property --paper     { syntax: "<color>";  inherits: true; initial-value: oklch(0.97 0.01 90); }
+@property --accent-1  { syntax: "<color>";  inherits: true; initial-value: oklch(0.2 0.01 264); }
+@property --accent-2  { syntax: "<color>";  inherits: true; initial-value: oklch(0.2 0.01 264); }
+@property --accent-3  { syntax: "<color>";  inherits: true; initial-value: oklch(0.2 0.01 264); }
+@property --positive  { syntax: "<color>";  inherits: true; initial-value: oklch(0.45 0.31 264); }
+@property --negative  { syntax: "<color>";  inherits: true; initial-value: oklch(0.2 0.01 264); }
+@property --warning   { syntax: "<color>";  inherits: true; initial-value: oklch(0.4 0.16 264); }
+@property --neutral   { syntax: "<color>";  inherits: true; initial-value: oklch(0.6 0.05 264); }
+@property --radius        { syntax: "<length>"; inherits: true; initial-value: 0px; }
+@property --hover-shift-x { syntax: "<length>"; inherits: true; initial-value: 3px; }
+@property --hover-shift-y { syntax: "<length>"; inherits: true; initial-value: 3px; }
+
+/* --- 2. density multipliers + derived spatial tokens ----------------------- */
+@layer bleed.tokens {
+  :root {
+    --density-space: 1;
+    --density-border: 1;
+  }
+
+  /* Compact = denser grids. Scales spacing AND border weight together, because
+     thick borders eat space in dense tables. Applies at :root or any subtree. */
+  [data-density="compact"] {
+    --density-space: 0.62;
+    --density-border: 0.72;
+  }
+
+  :root,
+  [data-theme],
+  [data-density] {
+    --space-1: calc(var(--space-1-base) * var(--density-space));
+    --space-2: calc(var(--space-2-base) * var(--density-space));
+    --space-3: calc(var(--space-3-base) * var(--density-space));
+    --space-4: calc(var(--space-4-base) * var(--density-space));
+    --space-5: calc(var(--space-5-base) * var(--density-space));
+    --space-6: calc(var(--space-6-base) * var(--density-space));
+    --border-w: calc(var(--border-w-base) * var(--density-border));
+  }
+}

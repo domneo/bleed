@@ -1,0 +1,43 @@
+/* Sparkline — inline SVG, styled entirely in CSS, zero JS.
+ *   <svg class="sparkline" viewBox="0 0 100 30" preserveAspectRatio="none">
+ *     <polyline points="0,20 20,12 40,16 60,6 80,10 100,2"/>
+ *   </svg>
+ * vector-effect keeps the stroke crisp under non-uniform scaling; stroke width is
+ * the border token, so it thickens/thins with the theme. */
+
+@layer bleed.components {
+  .sparkline {
+    display: inline-block;
+    inline-size: var(--sparkline-w, 8ch);
+    block-size: var(--sparkline-h, 2.25em);
+    overflow: visible;
+    vertical-align: middle;
+    color: var(--sparkline-color, var(--ink));
+  }
+
+  .sparkline :is(polyline, path, line) {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: var(--border-w);
+    stroke-linejoin: round;
+    stroke-linecap: round;
+    vector-effect: non-scaling-stroke;
+  }
+
+  /* filled area variant: <path class="sparkline__area"> underneath the line */
+  .sparkline .sparkline__area {
+    fill: color-mix(in oklch, currentColor 18%, transparent);
+    stroke: none;
+  }
+
+  /* end marker: <circle class="sparkline__dot" r="2.5"> */
+  .sparkline .sparkline__dot {
+    fill: currentColor;
+    stroke: var(--paper);
+    stroke-width: var(--border-w);
+    vector-effect: non-scaling-stroke;
+  }
+
+  .sparkline--positive { color: var(--positive); }
+  .sparkline--negative { color: var(--negative); }
+}

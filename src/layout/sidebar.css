@@ -1,0 +1,70 @@
+/* Sidebar nav — <nav class="sidebar"> with <details> collapsible groups.
+ *   <nav class="sidebar">
+ *     <a href="#" aria-current="page">Overview</a>
+ *     <details open>
+ *       <summary>Markets</summary>
+ *       <a href="#">Equities</a><a href="#">FX</a>
+ *     </details>
+ *   </nav>
+ * aria-current marks the active link; the <details> marker is replaced with a
+ * rotating chevron. No JS. */
+
+@layer bleed.components {
+  .sidebar {
+    inline-size: var(--sidebar-w, 15rem);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    padding: var(--space-3);
+
+    background-color: var(--paper);
+    border-inline-end: var(--border-w) var(--border-style) var(--ink);
+  }
+
+  .sidebar a {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-3);
+
+    color: var(--ink);
+    text-decoration: none;
+    font-weight: 700;
+    border: var(--border-w) var(--border-style) transparent;
+    border-radius: var(--radius);
+    transition: background-color var(--transition), translate var(--transition);
+  }
+
+  .sidebar a:hover {
+    background-color: color-mix(in oklch, var(--ink) 10%, var(--paper));
+    translate: var(--hover-shift-x) 0;
+  }
+
+  .sidebar a[aria-current] {
+    color: var(--paper);
+    background-color: var(--ink);
+    border-color: var(--ink);
+  }
+
+  .sidebar details { display: flex; flex-direction: column; }
+
+  .sidebar summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-3);
+    cursor: pointer;
+    font-weight: 700;
+    list-style: none;
+  }
+  .sidebar summary::-webkit-details-marker { display: none; }
+  .sidebar summary::after {
+    content: "▸";
+    transition: rotate var(--transition);
+  }
+  .sidebar details[open] > summary::after { rotate: 90deg; }
+
+  /* nested links indent under a group */
+  .sidebar details a { margin-inline-start: var(--space-3); }
+}

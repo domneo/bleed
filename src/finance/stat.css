@@ -1,0 +1,66 @@
+/* Stat / KPI card — big number + label + delta. Container-query responsive:
+ *   <article class="stat">
+ *     <p class="stat__label">Revenue</p>
+ *     <p class="stat__value">$1.24M</p>
+ *     <footer class="stat__foot"><data class="delta delta--up">4.2%</data>
+ *       <span class="stat__caption">vs last qtr</span></footer>
+ *   </article>
+ * The card is its OWN container, so a KPI in a wide slot and one in a narrow tile
+ * restyle themselves without media queries or JS. */
+
+@layer bleed.components {
+  .stat {
+    container-type: inline-size;
+
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    padding: var(--space-5);
+
+    color: var(--ink);
+    background-color: var(--paper);
+    border: var(--border-w) var(--border-style) var(--ink);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+  }
+
+  .stat__label {
+    margin: 0;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: color-mix(in oklch, var(--ink) 65%, var(--paper));
+  }
+
+  .stat__value {
+    margin: 0;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: clamp(1.75rem, 1.2rem + 4cqi, 3rem);
+    font-variant-numeric: tabular-nums;
+    line-height: 1;
+  }
+
+  .stat__foot {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin-block-start: var(--space-1);
+  }
+
+  .stat__caption {
+    font-size: 0.78rem;
+    color: color-mix(in oklch, var(--ink) 55%, var(--paper));
+  }
+
+  /* optional: a trend accent stripe down the inline-start edge */
+  .stat[data-trend="up"]   { border-inline-start-width: var(--space-2); border-inline-start-color: var(--positive); }
+  .stat[data-trend="down"] { border-inline-start-width: var(--space-2); border-inline-start-color: var(--negative); }
+
+  /* compact tile: drop the caption, tighten */
+  @container (max-width: 15rem) {
+    .stat { padding: var(--space-4); gap: var(--space-1); }
+    .stat__caption { display: none; }
+  }
+}

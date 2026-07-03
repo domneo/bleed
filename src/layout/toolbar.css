@@ -1,0 +1,53 @@
+/* Toolbar / filter bar — <form class="toolbar"> grouping controls in <fieldset>s.
+ *   <form class="toolbar">
+ *     <fieldset class="toolbar__group">
+ *       <legend>Range</legend>
+ *       <div class="segmented" role="tablist">…</div>
+ *     </fieldset>
+ *     <div class="toolbar__spacer"></div>
+ *     <button class="btn btn--sm">Export</button>
+ *   </form>
+ * fieldset is set to flex so its legend + controls sit inline. */
+
+@layer bleed.components {
+  .toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-3);
+
+    background-color: var(--paper);
+    border: var(--border-w) var(--border-style) var(--ink);
+    border-radius: var(--radius);
+  }
+
+  .toolbar__group {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin: 0;
+    padding: 0;
+    border: none;
+  }
+
+  .toolbar__group > legend,
+  .toolbar__label {
+    float: none;
+    padding: 0;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    color: color-mix(in oklch, var(--ink) 60%, var(--paper));
+  }
+
+  /* eats the free space, pushing trailing controls to the end edge */
+  .toolbar__spacer { margin-inline-start: auto; }
+
+  /* thin vertical rule between groups */
+  .toolbar__divider {
+    align-self: stretch;
+    inline-size: var(--border-w);
+    background-color: color-mix(in oklch, var(--ink) 30%, var(--paper));
+  }
+}

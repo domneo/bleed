@@ -1,0 +1,38 @@
+/* Tooltip — popover="hint" (non-modal, non-light-dismissing) + anchor positioning.
+ *   <button popovertarget="tt" popovertargetaction="show"
+ *           style="anchor-name:--tt-btn" aria-describedby="tt">?</button>
+ *   <div id="tt" popover="hint" class="tooltip" style="position-anchor:--tt-btn">
+ *     Annualised, net of fees
+ *   </div>
+ * Keep tooltip content non-essential — hint popovers are supplementary. */
+
+@layer bleed.components {
+  .tooltip {
+    margin: 0;
+    max-inline-size: 22ch;
+    padding: var(--space-1) var(--space-2);
+
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--paper);
+    background-color: var(--accent-1);
+    border: var(--border-w) var(--border-style) var(--ink);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+
+    position: fixed;
+    position-area: block-start;
+    margin-block-end: var(--space-1);
+    position-try-fallbacks: flip-block;
+
+    opacity: 0;
+    transition:
+      opacity var(--transition),
+      overlay var(--transition) allow-discrete,
+      display var(--transition) allow-discrete;
+  }
+  .tooltip:popover-open { opacity: 1; }
+  @starting-style {
+    .tooltip:popover-open { opacity: 0; }
+  }
+}

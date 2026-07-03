@@ -1,0 +1,92 @@
+/* Card / Panel — <article class="card">. Optional structure:
+ *   <article class="card">
+ *     <header class="card-header"><h3 class="card-title">…</h3></header>
+ *     <div class="card-body"> …arbitrary content / a BYO chart lib… </div>
+ *     <footer class="card-footer">…</footer>
+ *   </article>
+ * Or the simple form: <article class="card card--pad">…</article>.
+ *
+ * DONUT SCOPE: bare-element defaults (headings, hr) apply to the card CHROME but
+ * stop at .card-body — so a charting library dropped into the body keeps its own
+ * DOM untouched. Styling bare elements inside a card is intentional & documented. */
+
+@layer bleed.components {
+  .card {
+    --_bg: var(--card-bg, var(--paper));
+    --_bd: var(--card-border, var(--ink));
+    --_shadow: var(--card-shadow, var(--shadow));
+
+    display: flex;
+    flex-direction: column;
+    min-inline-size: 0;
+
+    color: var(--ink);
+    background-color: var(--_bg);
+    border: var(--border-w) var(--border-style) var(--_bd);
+    border-radius: var(--radius);
+    box-shadow: var(--_shadow);
+  }
+
+  /* simple card: content sits directly inside with padding */
+  .card--pad {
+    padding: var(--space-5);
+    gap: var(--space-3);
+  }
+
+  .card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    padding: var(--space-4) var(--space-5);
+    border-block-end: var(--border-w) var(--border-style) var(--_bd);
+  }
+
+  .card-title {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    font-weight: 800;
+    line-height: 1.1;
+  }
+
+  .card-body {
+    padding: var(--space-5);
+    min-inline-size: 0;
+  }
+  /* let an embedded viz go edge-to-edge */
+  .card-body--flush { padding: 0; }
+
+  .card-footer {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-4) var(--space-5);
+    border-block-start: var(--border-w) var(--border-style) var(--_bd);
+  }
+
+  /* interactive card (wrap in <a>/<button> or add role) — same press contract */
+  .card--interactive {
+    cursor: pointer;
+    transition: translate var(--transition), box-shadow var(--transition);
+  }
+  .card--interactive:hover {
+    translate: var(--hover-shift-x) var(--hover-shift-y);
+    box-shadow: var(--shadow-hover);
+  }
+  .card--interactive:active {
+    translate: calc(var(--hover-shift-x) * 2) calc(var(--hover-shift-y) * 2);
+    box-shadow: var(--shadow-active);
+  }
+
+  /* bare-element defaults, donut-scoped to the chrome (never into .card-body) */
+  @scope (.card) to (.card-body) {
+    :scope > :is(h1, h2, h3, h4) {
+      font-family: var(--font-display);
+    }
+    hr {
+      inline-size: 100%;
+      border-block-start: var(--border-w) var(--border-style) var(--_bd, var(--ink));
+    }
+  }
+}

@@ -1,0 +1,54 @@
+/* Delta indicator — <data class="delta" value="0.042" data-trend="up">4.2%</data>.
+ *
+ * Direction is encoded THREE ways: a ▲/▼ glyph (::before), font weight, AND color.
+ * Never color alone — colour-blind and grayscale-print safe, and the reason the
+ * palette-constrained bleed mapping (positive→ink, negative→accent) is acceptable. */
+
+@layer bleed.components {
+  .delta {
+    --_tone: var(--neutral);
+
+    display: inline-flex;
+    align-items: baseline;
+    gap: var(--space-1);
+
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    font-style: normal;
+    line-height: 1;
+    color: var(--_tone);
+  }
+
+  .delta::before {
+    content: "•"; /* flat / neutral */
+    font-size: 0.9em;
+    line-height: 1;
+  }
+
+  .delta--up,
+  .delta[data-trend="up"] {
+    --_tone: var(--positive);
+  }
+  .delta--up::before,
+  .delta[data-trend="up"]::before {
+    content: "▲";
+  }
+
+  .delta--down,
+  .delta[data-trend="down"] {
+    --_tone: var(--negative);
+  }
+  .delta--down::before,
+  .delta[data-trend="down"]::before {
+    content: "▼";
+  }
+
+  /* solid pill form for use inside dense tables */
+  .delta--pill {
+    padding-block: var(--space-1);
+    padding-inline: var(--space-2);
+    color: var(--paper);
+    background-color: var(--_tone);
+    border-radius: var(--radius);
+  }
+}

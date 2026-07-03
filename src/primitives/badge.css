@@ -1,0 +1,49 @@
+/* Badge / Tag — <span class="badge">. Tone variants pull from finance semantics,
+ * which are foundational (:root) tokens, so they work in bleed-core.css too.
+ * A badge always carries a text label, so tone is never the sole signal. */
+
+@layer bleed.components {
+  .badge {
+    --_tone: var(--badge-color, var(--ink));
+
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+
+    padding-block: var(--space-1);
+    padding-inline: var(--space-2);
+
+    font-size: 0.72rem;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+
+    color: var(--_tone);
+    background-color: transparent;
+    border: var(--border-w) var(--border-style) var(--_tone);
+    border-radius: var(--radius);
+  }
+
+  /* filled */
+  .badge--solid,
+  .badge[data-variant="solid"] {
+    color: var(--paper);
+    background-color: var(--_tone);
+  }
+
+  /* tones — swap the single tone token */
+  .badge--accent   { --badge-color: var(--accent-1); }
+  .badge--positive { --badge-color: var(--positive); }
+  .badge--negative { --badge-color: var(--negative); }
+  .badge--warning  { --badge-color: var(--warning); }
+  .badge--neutral  { --badge-color: var(--neutral); }
+
+  /* a small leading dot, e.g. status pills */
+  .badge__dot {
+    inline-size: 0.5em;
+    block-size: 0.5em;
+    border-radius: 50%;
+    background-color: currentColor;
+  }
+}

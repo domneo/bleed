@@ -1,0 +1,61 @@
+/* Alert banner — persistent inline message. Use role="alert" for urgent/assertive
+ * content, role="status" for informational.
+ *   <div class="alert alert--warning" role="alert">
+ *     <span class="alert__icon" aria-hidden="true">▲</span>
+ *     <div><p class="alert__title">Margin call</p>
+ *       <p class="alert__text">Deposit by 16:00 EST.</p></div>
+ *     <button class="alert__close" aria-label="Dismiss">✕</button>
+ *   </div>
+ * Tone = start-edge stripe + tinted wash + icon; text always present. */
+
+@layer bleed.components {
+  .alert {
+    --_tone: var(--alert-tone, var(--ink));
+
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-3);
+    padding: var(--space-3) var(--space-4);
+
+    color: var(--ink);
+    background-color: color-mix(in oklch, var(--_tone) 12%, var(--paper));
+    border: var(--border-w) var(--border-style) var(--ink);
+    border-inline-start-width: var(--space-2);
+    border-inline-start-color: var(--_tone);
+    border-radius: var(--radius);
+  }
+
+  .alert__icon {
+    font-size: 1.2rem;
+    line-height: 1.2;
+    color: var(--_tone);
+  }
+
+  .alert__title {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 800;
+  }
+
+  .alert__text {
+    margin: 0;
+    font-size: 0.9rem;
+  }
+
+  .alert__close {
+    margin-inline-start: auto;
+    appearance: none;
+    border: none;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+    font-size: 1.1rem;
+    line-height: 1;
+  }
+
+  .alert--positive { --alert-tone: var(--positive); }
+  .alert--warning  { --alert-tone: var(--warning); }
+  .alert--negative { --alert-tone: var(--negative); }
+  .alert--accent   { --alert-tone: var(--accent-2); }
+}

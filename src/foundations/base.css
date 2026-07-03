@@ -1,0 +1,130 @@
+/* base.css — reset, document typography, focus, color-scheme.
+ * Layer: bleed.base (sits between tokens and components; consumer CSS still wins).
+ * Everything here is token-driven so it re-themes, EXCEPT the a11y guarantees
+ * (focus is always visible; motion respects prefers-reduced-motion) — those are
+ * behaviours, not aesthetics, and are deliberately not themeable away. */
+
+@layer bleed.base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  * {
+    margin: 0;
+  }
+
+  :root {
+    color-scheme: light;
+    /* native form controls (checkbox/radio/range) tint to the theme */
+    accent-color: var(--accent-2, var(--ink));
+    -webkit-text-size-adjust: 100%;
+    tab-size: 4;
+  }
+
+  /* dark is a demo theme; opt its subtree into the UA dark palette */
+  [data-theme="dark"] {
+    color-scheme: dark;
+  }
+
+  html {
+    font-family: var(--font-body);
+    line-height: 1.5;
+  }
+
+  body {
+    min-height: 100svh;
+    color: var(--ink);
+    background-color: var(--paper);
+    font-size: 1rem;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+  }
+
+  h1 { font-size: clamp(1.75rem, 1.2rem + 2.5vw, 2.75rem); }
+  h2 { font-size: clamp(1.4rem, 1.1rem + 1.5vw, 2rem); }
+  h3 { font-size: 1.25rem; }
+  h4 { font-size: 1.05rem; }
+
+  p, ul, ol, dl, table, figure, blockquote {
+    text-wrap: pretty;
+  }
+
+  a {
+    color: var(--ink);
+    text-underline-offset: 0.15em;
+    text-decoration-thickness: max(1px, 0.08em); /* px-ok: hairline floor */
+  }
+
+  code, kbd, samp, pre {
+    font-family: var(--font-body);
+    font-size: 0.9em;
+  }
+
+  img, svg, video, canvas {
+    display: block;
+    max-width: 100%;
+  }
+
+  input, button, textarea, select {
+    font: inherit;
+    color: inherit;
+  }
+
+  hr {
+    border: none;
+    border-top: var(--border-w) var(--border-style) var(--ink);
+  }
+
+  ::selection {
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  :where([hidden]) {
+    display: none !important;
+  }
+
+  /* --- focus: always visible, never themeable away ------------------------- */
+  :where(a, button, input, select, textarea, summary, [tabindex], [popovertarget], dialog):focus-visible {
+    outline: max(2px, var(--border-w)) solid var(--accent-1);
+    outline-offset: 2px; /* px-ok: fixed focus gap */
+  }
+  /* kill the default ring only where we replace it */
+  :where(a, button, input, select, textarea, summary):focus:not(:focus-visible) {
+    outline: none;
+  }
+
+  /* --- a11y utility -------------------------------------------------------- */
+  .visually-hidden:not(:focus):not(:focus-within) {
+    position: absolute !important;
+    width: 1px; height: 1px; /* px-ok */
+    padding: 0; border: 0;
+    clip-path: inset(50%);
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  /* --- respect motion preferences ----------------------------------------- */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+    /* the bleed press is a translate; hold still instead */
+    :where(*):hover, :where(*):active {
+      translate: none !important;
+    }
+  }
+}

@@ -1,0 +1,381 @@
+<!doctype html>
+<html lang="en" data-theme="bleed">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>bleed — aesthetic-agnostic component library</title>
+  <link rel="stylesheet" href="dist/bleed.css">
+  <style>
+    /* Demo-only scaffolding. Deliberately tiny + clearly marked: the point of this
+       page is that the LIBRARY classes carry the look. If a component looks wrong
+       after switching theme (top-right), that's a hardcoded-value bug in src/. */
+    .demo main { max-inline-size: 80rem; }
+    .demo section { margin-block-start: var(--space-6); }
+    .demo section > h2 { margin-block-end: var(--space-4); }
+    .demo .swatch { inline-size: 100%; block-size: 3rem; border: var(--border-w) var(--border-style) var(--ink); border-radius: var(--radius); }
+    .demo .row { display: flex; flex-wrap: wrap; gap: var(--space-3); align-items: center; }
+    .demo [data-set-theme][aria-pressed="true"], .demo [data-toggle-density][aria-pressed="true"] { color: var(--paper); background-color: var(--ink); }
+  </style>
+</head>
+<body class="demo">
+  <header class="app-header app-header--sticky">
+    <a class="app-header__brand" href="#">▚ bleed</a>
+
+    <div class="app-header__meta">
+      <div class="segmented" role="group" aria-label="Theme">
+        <button type="button" class="segmented__theme" data-set-theme="bleed" aria-pressed="true" style="all:unset;padding:var(--space-2) var(--space-3);cursor:pointer;font-weight:700;border-inline-end:var(--border-w) solid var(--ink)">Bleed</button>
+        <button type="button" data-set-theme="newspaper" aria-pressed="false" style="all:unset;padding:var(--space-2) var(--space-3);cursor:pointer;font-weight:700;border-inline-end:var(--border-w) solid var(--ink)">Newspaper</button>
+        <button type="button" data-set-theme="dark" aria-pressed="false" style="all:unset;padding:var(--space-2) var(--space-3);cursor:pointer;font-weight:700;border-inline-end:var(--border-w) solid var(--ink)">Dark</button>
+        <button type="button" data-set-theme="soft" aria-pressed="false" style="all:unset;padding:var(--space-2) var(--space-3);cursor:pointer;font-weight:700">Soft</button>
+      </div>
+      <button type="button" class="btn btn--sm btn--ghost" data-toggle-density aria-pressed="false">Compact</button>
+      <time datetime="2026-07-03T16:00">Updated 16:00 EST</time>
+    </div>
+  </header>
+
+  <div class="app-shell">
+    <nav class="sidebar" aria-label="Primary">
+      <a href="#" aria-current="page">◆ Overview</a>
+      <a href="#components">◆ Components</a>
+      <details open>
+        <summary>Markets</summary>
+        <a href="#">Equities</a>
+        <a href="#">FX</a>
+        <a href="#">Rates</a>
+      </details>
+      <details>
+        <summary>Portfolio</summary>
+        <a href="#">Holdings</a>
+        <a href="#">Risk</a>
+      </details>
+      <a href="#">◆ Settings</a>
+    </nav>
+
+    <main>
+      <h1>Financial dashboard kit</h1>
+      <p>Neo-brutalism is the <em>default theme</em>, not the architecture. Every component below is pure token-driven CSS — flip the theme (top-right) and nothing in the component layer changes. <strong>Soft</strong> proves it: rounded, blurred, no hover-jump, thin borders.</p>
+
+      <!-- ALERTS -->
+      <section aria-label="Alerts">
+        <div class="row" style="flex-direction:column;align-items:stretch">
+          <div class="alert alert--warning" role="alert">
+            <span class="alert__icon" aria-hidden="true">▲</span>
+            <div>
+              <p class="alert__title">Margin call</p>
+              <p class="alert__text">Deposit $12,400 by 16:00 EST to avoid liquidation.</p>
+            </div>
+            <button class="alert__close" type="button" aria-label="Dismiss" onclick="this.parentElement.remove()">✕</button>
+          </div>
+          <div class="alert alert--positive" role="status">
+            <span class="alert__icon" aria-hidden="true">✓</span>
+            <div><p class="alert__title">Settlement complete</p><p class="alert__text">T+1 settlement cleared for 3 trades.</p></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TOOLBAR -->
+      <section aria-label="Filters">
+        <form class="toolbar" onsubmit="return false">
+          <fieldset class="toolbar__group">
+            <legend>Range</legend>
+            <div class="segmented" role="tablist" aria-label="Time range">
+              <button role="tab" aria-selected="true">1D</button>
+              <button role="tab" aria-selected="false" tabindex="-1">1W</button>
+              <button role="tab" aria-selected="false" tabindex="-1">1M</button>
+              <button role="tab" aria-selected="false" tabindex="-1">YTD</button>
+            </div>
+          </fieldset>
+          <span class="toolbar__divider" aria-hidden="true"></span>
+          <label class="control"><input type="checkbox" checked> Live</label>
+          <div class="toolbar__spacer"></div>
+          <button type="button" class="btn btn--icon btn--ghost" popovertarget="tb-menu" style="anchor-name:--tb">⋯</button>
+          <div id="tb-menu" popover class="menu" style="position-anchor:--tb">
+            <button class="menu__item">Refresh</button>
+            <button class="menu__item">Configure columns</button>
+            <hr>
+            <button class="menu__item menu__item--danger">Reset layout</button>
+          </div>
+          <button type="button" class="btn btn--sm btn--accent" data-open-modal="trade-modal">New trade</button>
+        </form>
+      </section>
+
+      <!-- KPI GRID -->
+      <section id="components" aria-label="KPIs">
+        <h2>KPIs & data</h2>
+        <div class="dashboard">
+          <article class="stat" data-trend="up">
+            <p class="stat__label">Net asset value</p>
+            <p class="stat__value">$1.24<span class="num__unit">M</span></p>
+            <footer class="stat__foot">
+              <data class="delta delta--up" value="0.042">4.2%</data>
+              <span class="stat__caption">vs last quarter</span>
+            </footer>
+          </article>
+
+          <article class="stat" data-trend="down">
+            <p class="stat__label">Daily P&amp;L</p>
+            <p class="stat__value">−$8,410</p>
+            <footer class="stat__foot">
+              <data class="delta delta--down" value="-0.018">1.8%</data>
+              <span class="stat__caption">intraday</span>
+            </footer>
+          </article>
+
+          <article class="stat">
+            <p class="stat__label">Sharpe</p>
+            <p class="stat__value">1.93</p>
+            <footer class="stat__foot">
+              <data class="delta" value="0">flat</data>
+              <span class="stat__caption">trailing 12m</span>
+            </footer>
+          </article>
+
+          <section class="card" data-span="2">
+            <header class="card-header">
+              <h3 class="card-title">Equity curve</h3>
+              <data class="delta delta--up" value="0.11">11.0%</data>
+            </header>
+            <div class="card-body">
+              <svg class="sparkline sparkline--positive" viewBox="0 0 100 30" preserveAspectRatio="none" style="--sparkline-w:100%;--sparkline-h:5rem" role="img" aria-label="Equity trending up">
+                <path class="sparkline__area" d="M0,24 L14,20 L28,22 L42,12 L56,15 L70,6 L84,9 L100,3 L100,30 L0,30 Z"/>
+                <polyline points="0,24 14,20 28,22 42,12 56,15 70,6 84,9 100,3"/>
+                <circle class="sparkline__dot" cx="100" cy="3" r="2.5"/>
+              </svg>
+            </div>
+          </section>
+
+          <section class="card">
+            <header class="card-header"><h3 class="card-title">Allocation</h3></header>
+            <div class="card-body">
+              <table class="bar-chart">
+                <caption class="visually-hidden">Portfolio allocation by asset class</caption>
+                <tbody>
+                  <tr><th scope="row">Equities</th><td class="bar"><span class="bar__fill" style="--value:62">62%</span></td></tr>
+                  <tr><th scope="row">Bonds</th><td class="bar"><span class="bar__fill bar__fill--accent" style="--value:24">24%</span></td></tr>
+                  <tr><th scope="row">Cash</th><td class="bar"><span class="bar__fill bar__fill--warning" style="--value:9">9%</span></td></tr>
+                  <tr><th scope="row">Alts</th><td class="bar"><span class="bar__fill bar__fill--positive" style="--value:5">5%</span></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <dl class="dl-stats" data-span="3">
+            <div><dt>Market cap</dt><dd>$2.9T</dd></div>
+            <div><dt>P/E</dt><dd>31.4</dd></div>
+            <div><dt>Div yield</dt><dd>0.52%</dd></div>
+            <div><dt>Beta</dt><dd>1.21</dd></div>
+          </dl>
+
+          <section class="card card--pad">
+            <h3 class="card-title">Budget usage</h3>
+            <div class="capacity">
+              <span class="capacity__label">Compute</span>
+              <span class="capacity__value">82%</span>
+              <meter class="meter" value="82" min="0" max="100" low="50" high="80" optimum="30" aria-label="Compute budget">82%</meter>
+            </div>
+            <div class="capacity">
+              <span class="capacity__label">Storage</span>
+              <span class="capacity__value">41%</span>
+              <meter class="meter" value="41" min="0" max="100" low="50" high="80" optimum="30" aria-label="Storage budget">41%</meter>
+            </div>
+            <label class="capacity__label" for="load">Load</label>
+            <progress class="progress progress--accent" id="load" value="0.6" aria-label="Load"></progress>
+          </section>
+        </div>
+      </section>
+
+      <!-- TABLE -->
+      <section aria-label="Positions">
+        <h2>Positions</h2>
+        <div class="table-scroll" style="max-block-size:20rem">
+          <table class="table table--zebra table--rows">
+            <thead>
+              <tr>
+                <th><label class="control"><input type="checkbox" aria-label="Select all"></label></th>
+                <th>Symbol</th>
+                <th>Name</th>
+                <th class="num">Last</th>
+                <th class="num">Chg</th>
+                <th class="num">Qty</th>
+                <th aria-label="Actions"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><label class="control"><input type="checkbox" aria-label="Select AAPL"></label></td>
+                <td><strong>AAPL</strong></td><td>Apple Inc.</td>
+                <td class="num"><data value="228.5">228.50</data></td>
+                <td class="num"><data class="delta delta--up" value="0.012">1.2%</data></td>
+                <td class="num">1,200</td>
+                <td><button class="btn btn--icon btn--sm btn--ghost" popovertarget="r1" style="anchor-name:--r1">⋯</button>
+                  <div id="r1" popover class="menu" style="position-anchor:--r1"><button class="menu__item">Buy</button><button class="menu__item">Sell</button><hr><button class="menu__item menu__item--danger">Close</button></div></td>
+              </tr>
+              <tr>
+                <td><label class="control"><input type="checkbox" checked aria-label="Select TSLA"></label></td>
+                <td><strong>TSLA</strong></td><td>Tesla, Inc.</td>
+                <td class="num"><data value="242.1">242.10</data></td>
+                <td class="num"><data class="delta delta--down" value="-0.031">3.1%</data></td>
+                <td class="num">300</td>
+                <td><button class="btn btn--icon btn--sm btn--ghost" popovertarget="r2" style="anchor-name:--r2">⋯</button>
+                  <div id="r2" popover class="menu" style="position-anchor:--r2"><button class="menu__item">Buy</button><button class="menu__item">Sell</button><hr><button class="menu__item menu__item--danger">Close</button></div></td>
+              </tr>
+              <tr>
+                <td><label class="control"><input type="checkbox" aria-label="Select MSFT"></label></td>
+                <td><strong>MSFT</strong></td><td>Microsoft Corp.</td>
+                <td class="num"><data value="441.0">441.00</data></td>
+                <td class="num"><data class="delta delta--up" value="0.004">0.4%</data></td>
+                <td class="num">850</td>
+                <td><button class="btn btn--icon btn--sm btn--ghost" popovertarget="r3" style="anchor-name:--r3">⋯</button>
+                  <div id="r3" popover class="menu" style="position-anchor:--r3"><button class="menu__item">Buy</button><button class="menu__item">Sell</button><hr><button class="menu__item menu__item--danger">Close</button></div></td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr><td></td><th colspan="4" scope="row">Net exposure</th><td class="num">2,350</td><td></td></tr>
+            </tfoot>
+          </table>
+        </div>
+      </section>
+
+      <!-- BUTTONS + BADGES -->
+      <section aria-label="Buttons and badges">
+        <h2>Buttons &amp; badges</h2>
+        <div class="btn-group">
+          <button class="btn">Default</button>
+          <button class="btn btn--accent">Accent</button>
+          <button class="btn btn--ghost">Ghost</button>
+          <button class="btn btn--sm">Small</button>
+          <button class="btn btn--lg">Large</button>
+          <button class="btn btn--icon" aria-label="Add">＋</button>
+          <button class="btn" disabled>Disabled</button>
+        </div>
+        <div class="row" style="margin-block-start:var(--space-4)">
+          <span class="badge">Default</span>
+          <span class="badge badge--solid badge--accent">Solid</span>
+          <span class="badge badge--positive"><span class="badge__dot"></span> Filled</span>
+          <span class="badge badge--negative">At risk</span>
+          <span class="badge badge--warning">Pending</span>
+          <span class="badge badge--neutral">Draft</span>
+        </div>
+      </section>
+
+      <!-- FORM -->
+      <section aria-label="Form">
+        <h2>Inputs</h2>
+        <form class="row" style="align-items:flex-start;gap:var(--space-5)" onsubmit="return false">
+          <div class="field" style="flex:1 1 14rem">
+            <label for="amt">Order amount (required)</label>
+            <div class="input-group">
+              <span class="input-group__addon">$</span>
+              <input class="input" id="amt" name="amt" type="number" min="1" required placeholder="0.00">
+            </div>
+            <p class="field__hint">Whole dollars, max $1,000,000.</p>
+            <p class="field__error">Enter an amount of at least $1.</p>
+          </div>
+          <div class="field" style="flex:1 1 12rem">
+            <label for="side">Side</label>
+            <select class="input" id="side"><option>Buy</option><option>Sell</option><option>Short</option></select>
+          </div>
+          <div class="field" style="flex:1 1 12rem">
+            <span class="field__label">Order type</span>
+            <div class="control-list">
+              <label class="control"><input type="radio" name="ot" checked> Market</label>
+              <label class="control"><input type="radio" name="ot"> Limit</label>
+            </div>
+          </div>
+          <div class="field" style="flex:1 1 14rem">
+            <label for="risk">Risk tolerance</label>
+            <input class="range" id="risk" type="range" min="0" max="100" value="40">
+          </div>
+          <button class="btn btn--accent" type="submit">Submit</button>
+        </form>
+      </section>
+
+      <!-- TABS -->
+      <section aria-label="Tabs">
+        <h2>Tabs</h2>
+        <div class="tabs">
+          <div class="tabs__list" role="tablist" aria-label="Report">
+            <button class="tabs__tab" role="tab" id="t-perf" aria-controls="p-perf" aria-selected="true">Performance</button>
+            <button class="tabs__tab" role="tab" id="t-hold" aria-controls="p-hold" aria-selected="false" tabindex="-1">Holdings</button>
+            <button class="tabs__tab" role="tab" id="t-act" aria-controls="p-act" aria-selected="false" tabindex="-1">Activity</button>
+          </div>
+          <section class="tabs__panel" role="tabpanel" id="p-perf" aria-labelledby="t-perf">Trailing return +11.0% YTD, max drawdown −6.4%.</section>
+          <section class="tabs__panel" role="tabpanel" id="p-hold" aria-labelledby="t-hold" hidden>34 positions across 6 sectors.</section>
+          <section class="tabs__panel" role="tabpanel" id="p-act" aria-labelledby="t-act" hidden>12 trades in the last 24h.</section>
+        </div>
+      </section>
+
+      <!-- FEEDBACK -->
+      <section aria-label="Feedback">
+        <h2>Overlays &amp; feedback</h2>
+        <div class="btn-group">
+          <button class="btn" data-open-modal="trade-modal">Open modal</button>
+          <button class="btn" type="button" onclick="bleed.toast('Trade executed: 100 AAPL', {tone:'positive', icon:'✓'})">Toast: success</button>
+          <button class="btn" type="button" onclick="bleed.toast('Connection lost', {tone:'negative', icon:'✕'})">Toast: error</button>
+          <button class="btn btn--icon" popovertarget="tip" popovertargetaction="show" style="anchor-name:--tip" aria-describedby="tip">?</button>
+          <div id="tip" popover="hint" class="tooltip" style="position-anchor:--tip">Annualised, net of fees.</div>
+        </div>
+      </section>
+
+      <!-- LOADING / EMPTY -->
+      <section aria-label="Loading and empty states">
+        <h2>Loading &amp; empty</h2>
+        <div class="dashboard">
+          <section class="card card--pad" aria-busy="true">
+            <div class="skeleton skeleton--circle"></div>
+            <div class="skeleton skeleton--text" style="inline-size:70%"></div>
+            <div class="skeleton skeleton--text"></div>
+            <div class="skeleton" style="block-size:4rem"></div>
+          </section>
+          <div class="empty" data-span="2">
+            <span class="empty__icon" aria-hidden="true">▚</span>
+            <h3 class="empty__title">No open positions</h3>
+            <p class="empty__text">Your portfolio is all cash. Place a trade to get started.</p>
+            <div class="empty__actions"><button class="btn btn--accent" data-open-modal="trade-modal">New trade</button></div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- MODAL -->
+  <dialog class="modal" id="trade-modal">
+    <form method="dialog" class="modal__wrap">
+      <header class="modal__header">
+        <h2 class="modal__title">New trade</h2>
+        <button class="btn btn--icon btn--ghost btn--sm" type="button" data-close-modal aria-label="Close">✕</button>
+      </header>
+      <div class="modal__body">
+        <div class="field">
+          <label for="m-sym">Symbol</label>
+          <input class="input" id="m-sym" placeholder="AAPL" required>
+        </div>
+        <p style="margin-block-start:var(--space-4)">Native <code>&lt;dialog&gt;</code>: focus trap, Esc-to-close, inert background, and <code>::backdrop</code> — all free.</p>
+      </div>
+      <footer class="modal__footer">
+        <button class="btn btn--ghost" type="button" data-close-modal>Cancel</button>
+        <button class="btn btn--accent" value="confirm">Place order</button>
+      </footer>
+    </form>
+  </dialog>
+
+  <div class="toast-region" id="toasts"></div>
+
+  <script src="dist/bleed.js"></script>
+  <script>
+    // Demo-only: theme + density switchers. In a real app you'd set data-theme
+    // server-side or persist to localStorage.
+    const root = document.documentElement;
+    const themeButtons = document.querySelectorAll('[data-set-theme]');
+    themeButtons.forEach((b) => b.addEventListener('click', () => {
+      root.dataset.theme = b.dataset.setTheme;
+      themeButtons.forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+    }));
+    document.querySelector('[data-toggle-density]').addEventListener('click', (e) => {
+      const on = root.dataset.density === 'compact';
+      if (on) delete root.dataset.density; else root.dataset.density = 'compact';
+      e.currentTarget.setAttribute('aria-pressed', String(!on));
+    });
+  </script>
+</body>
+</html>

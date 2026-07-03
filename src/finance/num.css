@@ -1,0 +1,33 @@
+/* Numeric utility + <data> convention.
+ *
+ * CSS guarantees ALIGNMENT and tone only. Currency/locale FORMATTING is HTML/JS-land
+ * (put the machine value in <data value="1234.5"> and the formatted string as text):
+ *   <data class="num" value="1234.5">$1,234.50</data>
+ * tabular-nums keeps columns of figures vertically aligned regardless of digits. */
+
+@layer bleed.components {
+  .num,
+  data {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum" 1;
+    font-style: normal; /* <data> is not italic */
+  }
+
+  /* right-align a figure in its cell/box */
+  .num--end {
+    display: block;
+    text-align: end;
+  }
+
+  /* tone helpers — same semantics as .delta, for a bare figure */
+  .num--positive { color: var(--positive); }
+  .num--negative { color: var(--negative); }
+  .num--warning  { color: var(--warning); }
+  .num--muted    { color: color-mix(in oklch, var(--ink) 55%, var(--paper)); }
+
+  /* de-emphasise currency symbols / units without losing them */
+  .num__unit {
+    opacity: 0.6;
+    font-size: 0.85em;
+  }
+}

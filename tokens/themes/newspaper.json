@@ -1,0 +1,34 @@
+{
+  "$description": "Newspaper — monochrome bleed. Black ink on bright white, serif display, tighter borders. Milestone-1 exit: restyles every component by COLOR/font swap alone, zero component-CSS edits.",
+
+  "ink": { "$type": "color", "$value": "oklch(0.16 0 0)" },
+  "paper": { "$type": "color", "$value": "oklch(0.98 0 0)" },
+
+  "accent-1": { "$type": "color", "$value": "oklch(0.16 0 0)" },
+  "accent-2": { "$type": "color", "$value": "oklch(0.16 0 0)" },
+  "accent-3": { "$type": "color", "$value": "oklch(0.16 0 0)" },
+
+  "border-w-base": { "$type": "dimension", "$value": "2px" },
+  "border-style": { "$type": "other", "$value": "solid" },
+
+  "shadow":        { "$type": "other", "$value": "5px 5px 0 {ink}" },
+  "shadow-hover":  { "$type": "other", "$value": "2px 2px 0 {ink}" },
+  "shadow-active": { "$type": "other", "$value": "0 0 0 {ink}" },
+
+  "hover-shift-x": { "$type": "dimension", "$value": "2px" },
+  "hover-shift-y": { "$type": "dimension", "$value": "2px" },
+
+  "radius": { "$type": "dimension", "$value": "0px" },
+
+  "transition": { "$type": "other", "$value": "100ms ease" },
+
+  "font-display": { "$type": "fontFamily", "$value": "\"Playfair Display\", \"Times New Roman\", Georgia, serif" },
+  "font-body":    { "$type": "fontFamily", "$value": "Georgia, \"Times New Roman\", \"Iowan Old Style\", serif" },
+
+  "space-1-base": { "$type": "dimension", "$value": "0.25rem" },
+  "space-2-base": { "$type": "dimension", "$value": "0.5rem" },
+  "space-3-base": { "$type": "dimension", "$value": "0.75rem" },
+  "space-4-base": { "$type": "dimension", "$value": "1rem" },
+  "space-5-base": { "$type": "dimension", "$value": "1.5rem" },
+  "space-6-base": { "$type": "dimension", "$value": "2rem" }
+}

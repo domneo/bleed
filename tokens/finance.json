@@ -1,0 +1,8 @@
+{
+  "$description": "Finance semantics. Live at :root ONLY (built alongside the default bleed primitives) and reference primitives via var() so they ripple when a theme overrides ink/accent. Palette-constrained: bleed maps direction WITHIN its 3 base colors. Direction must ALSO be carried by glyph/weight (see .delta), never color alone — good a11y regardless. A louder theme (see soft.json) may remap these to literal green/red.",
+
+  "positive": { "$type": "color", "$value": "{ink}" },
+  "negative": { "$type": "color", "$value": "{accent-1}" },
+  "warning":  { "$type": "color", "$value": "color-mix(in oklch, var(--ink), var(--accent-1) 45%)" },
+  "neutral":  { "$type": "color", "$value": "color-mix(in oklch, var(--ink) 45%, var(--paper))" }
+}

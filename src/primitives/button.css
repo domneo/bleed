@@ -1,0 +1,121 @@
+/* Button — <button class="btn"> (also fine on <a>/<input type=submit>).
+ *
+ * Interaction contract (shared by every pressable component: btn, interactive card,
+ * tab, nav link). All of it is token-driven so a theme can change OR remove it:
+ *   rest    → box-shadow: --shadow
+ *   :hover  → translate by --hover-shift-*, box-shadow: --shadow-hover
+ *   :active → translate 2×,               box-shadow: --shadow-active
+ * Bleed moves the element INTO its offset shadow (press). Soft sets --hover-shift 0
+ * and swaps blur via the shadow tokens (lift), proving the motion lives in tokens.
+ *
+ * Public override tokens: --btn-bg --btn-fg --btn-border. Internals are --_*. */
+
+@layer bleed.components {
+  .btn {
+    --_bg: var(--btn-bg, var(--accent-1));
+    --_fg: var(--btn-fg, var(--paper));
+    --_bd: var(--btn-border, var(--ink));
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+
+    padding-block: var(--space-2);
+    padding-inline: var(--space-4);
+    min-block-size: 2.75rem;
+
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    font-weight: 700;
+    line-height: 1;
+    text-decoration: none;
+    white-space: nowrap;
+    cursor: pointer;
+
+    color: var(--_fg);
+    background-color: var(--_bg);
+    border: var(--border-w) var(--border-style) var(--_bd);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+
+    transition:
+      translate var(--transition),
+      box-shadow var(--transition),
+      background-color var(--transition),
+      color var(--transition);
+  }
+
+  .btn:hover {
+    translate: var(--hover-shift-x) var(--hover-shift-y);
+    box-shadow: var(--shadow-hover);
+    background-color: color-mix(in oklch, var(--_bg), var(--ink) 12%);
+  }
+
+  .btn:active {
+    translate: calc(var(--hover-shift-x) * 2) calc(var(--hover-shift-y) * 2);
+    box-shadow: var(--shadow-active);
+  }
+
+  .btn:disabled,
+  .btn[aria-disabled="true"] {
+    cursor: not-allowed;
+    opacity: 0.5;
+    box-shadow: var(--shadow-active);
+    translate: none;
+    pointer-events: none;
+  }
+
+  /* --- variants: swap only tokens ----------------------------------------- */
+  .btn--accent,
+  .btn[data-variant="accent"] {
+    --btn-bg: var(--ink);
+    --btn-fg: var(--paper);
+    --btn-border: var(--accent-1);
+  }
+
+  .btn--ghost,
+  .btn[data-variant="ghost"] {
+    --btn-bg: transparent;
+    --btn-fg: var(--ink);
+    --btn-border: var(--ink);
+  }
+
+  /* --- sizes: scale via space + font, geometry stays tokenised ------------- */
+  .btn--sm {
+    padding-block: var(--space-1);
+    padding-inline: var(--space-3);
+    min-block-size: 2rem;
+    font-size: 0.8rem;
+  }
+
+  .btn--lg {
+    padding-block: var(--space-3);
+    padding-inline: var(--space-5);
+    min-block-size: 3.25rem;
+    font-size: 1.1rem;
+  }
+
+  /* --- icon-only: square, centres a glyph/SVG ----------------------------- */
+  .btn--icon {
+    padding: var(--space-2);
+    min-block-size: 2.75rem;
+    inline-size: 2.75rem;
+    aspect-ratio: 1;
+  }
+  .btn--icon.btn--sm { min-block-size: 2rem; inline-size: 2rem; padding: var(--space-1); }
+  .btn--icon.btn--lg { min-block-size: 3.25rem; inline-size: 3.25rem; }
+  .btn--icon > svg { inline-size: 1.25rem; block-size: 1.25rem; }
+
+  .btn--full {
+    display: flex;
+    inline-size: 100%;
+  }
+
+  /* horizontal cluster of related buttons */
+  .btn-group {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+  }
+}

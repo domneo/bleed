@@ -1,0 +1,76 @@
+/* Popover / dropdown menu — the popover attribute (zero JS for open/close/light-
+ * dismiss) + CSS anchor positioning. Primary use: a row "⋯" actions menu.
+ *   <button class="btn btn--icon" popovertarget="row-menu"
+ *           style="anchor-name:--row1">⋯</button>
+ *   <div id="row-menu" popover class="menu" style="position-anchor:--row1">
+ *     <button class="menu__item">Edit</button>
+ *     <button class="menu__item">Duplicate</button>
+ *     <hr>
+ *     <button class="menu__item menu__item--danger">Delete</button>
+ *   </div>
+ * Anchor positioning is bleeding-edge; where unsupported the popover still opens
+ * (UA-centered) — degraded, not broken. See README support-cliff note. */
+
+@layer bleed.components {
+  .menu {
+    margin: 0;
+    padding: var(--space-1);
+    min-inline-size: 11rem;
+    color: var(--ink);
+    background-color: var(--paper);
+    border: var(--border-w) var(--border-style) var(--ink);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+
+    /* anchored below the trigger, aligned to its inline-end, flipping if clipped */
+    position: fixed;
+    position-area: block-end span-inline-start;
+    margin-block-start: var(--space-1);
+    position-try-fallbacks: flip-block, flip-inline;
+  }
+
+  /* entry animation */
+  .menu {
+    opacity: 0;
+    transition:
+      opacity var(--transition),
+      translate var(--transition),
+      overlay var(--transition) allow-discrete,
+      display var(--transition) allow-discrete;
+    translate: 0 calc(-1 * var(--space-1));
+  }
+  .menu:popover-open { opacity: 1; translate: 0 0; }
+  @starting-style {
+    .menu:popover-open { opacity: 0; translate: 0 calc(-1 * var(--space-1)); }
+  }
+
+  .menu__item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    inline-size: 100%;
+    padding: var(--space-2) var(--space-3);
+
+    font: inherit;
+    font-weight: 600;
+    text-align: start;
+    text-decoration: none;
+    color: var(--ink);
+    background-color: transparent;
+    border: none;
+    border-radius: var(--radius);
+    cursor: pointer;
+  }
+  .menu__item:hover,
+  .menu__item:focus-visible {
+    background-color: color-mix(in oklch, var(--ink) 12%, var(--paper));
+  }
+  .menu__item--danger { color: var(--negative); }
+
+  .menu hr {
+    margin-block: var(--space-1);
+    border: none;
+    border-block-start: var(--border-w) var(--border-style)
+      color-mix(in oklch, var(--ink) 25%, var(--paper));
+  }
+}

@@ -1,0 +1,73 @@
+/* Tabs & segmented control — the ONE JS component (see bleed.js: role=tablist +
+ * arrow-key roving focus). No radio hack — that breaks the a11y model.
+ *
+ * Segmented (boxed) — primary use is a period switcher:
+ *   <div class="segmented" role="tablist" aria-label="Range">
+ *     <button role="tab" aria-selected="true">1D</button>
+ *     <button role="tab" aria-selected="false" tabindex="-1">1W</button> …
+ *   </div>
+ *
+ * Tabs (underlined) — .tabs__list[role=tablist] + .tabs__tab, with
+ *   <section role="tabpanel">…</section> panels (add hidden to inactive ones). */
+
+@layer bleed.components {
+  /* --- segmented ---------------------------------------------------------- */
+  .segmented {
+    display: inline-flex;
+    border: var(--border-w) var(--border-style) var(--ink);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+
+  .segmented > [role="tab"] {
+    appearance: none;
+    padding: var(--space-2) var(--space-4);
+    font: inherit;
+    font-weight: 700;
+    color: var(--ink);
+    background-color: var(--paper);
+    border: none;
+    border-inline-end: var(--border-w) var(--border-style) var(--ink);
+    cursor: pointer;
+    transition: background-color var(--transition), color var(--transition);
+  }
+  .segmented > [role="tab"]:last-child { border-inline-end: none; }
+  .segmented > [role="tab"]:hover {
+    background-color: color-mix(in oklch, var(--ink) 10%, var(--paper));
+  }
+  .segmented > [role="tab"][aria-selected="true"] {
+    color: var(--paper);
+    background-color: var(--ink);
+  }
+
+  /* --- underlined tabs ---------------------------------------------------- */
+  .tabs__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-1);
+    border-block-end: var(--border-w) var(--border-style) var(--ink);
+  }
+
+  .tabs__tab {
+    appearance: none;
+    padding: var(--space-2) var(--space-4);
+    font: inherit;
+    font-weight: 700;
+    color: color-mix(in oklch, var(--ink) 65%, var(--paper));
+    background-color: transparent;
+    border: none;
+    /* reserve space so selection doesn't shift layout */
+    border-block-end: var(--border-w) var(--border-style) transparent;
+    margin-block-end: calc(-1 * var(--border-w));
+    cursor: pointer;
+  }
+  .tabs__tab:hover { color: var(--ink); }
+  .tabs__tab[aria-selected="true"] {
+    color: var(--ink);
+    border-block-end-color: var(--accent-2);
+  }
+
+  .tabs__panel {
+    padding-block: var(--space-4);
+  }
+}

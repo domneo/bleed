@@ -1,0 +1,50 @@
+/* Skeleton loader — <div class="skeleton"> for a block, or add .skeleton--text on a
+ * line, .skeleton--circle for an avatar. The sweep is driven by an @property-typed
+ * custom property animated in keyframes (a bare custom prop can't be animated; a
+ * registered <percentage> can), so the shimmer interpolates smoothly. Honoured by
+ * prefers-reduced-motion via base.css (it neutralises animation-duration). */
+
+@property --skeleton-sweep {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 0%;
+}
+
+@layer bleed.components {
+  .skeleton {
+    --skeleton-sweep: 120%;
+
+    display: block;
+    min-block-size: 1.25rem;
+    border-radius: var(--radius);
+    background-color: color-mix(in oklch, var(--ink) 14%, var(--paper));
+    background-image: linear-gradient(
+      100deg,
+      transparent 0 35%,
+      color-mix(in oklch, var(--paper) 55%, transparent) 50%,
+      transparent 65% 100%
+    );
+    background-repeat: no-repeat;
+    background-size: 250% 100%;
+    background-position: var(--skeleton-sweep) 0;
+    animation: skeleton-sweep 1.3s ease-in-out infinite;
+  }
+
+  .skeleton--text {
+    block-size: 0.75em;
+    margin-block: 0.25em;
+    border-radius: var(--radius);
+  }
+  .skeleton--text:last-child { inline-size: 70%; }
+
+  .skeleton--circle {
+    border-radius: 50%;
+    aspect-ratio: 1;
+    inline-size: 2.75rem;
+  }
+
+  @keyframes skeleton-sweep {
+    from { --skeleton-sweep: 120%; }
+    to   { --skeleton-sweep: -120%; }
+  }
+}

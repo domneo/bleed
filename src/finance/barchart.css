@@ -1,0 +1,53 @@
+/* CSS bar chart — a REAL <table>, so it stays readable to screen readers and
+ * degrades to a data grid with CSS off. Bar length comes from an inline --value
+ * (0–100). Beyond simple bars, drop a BYO chart lib into a donut-scoped .card-body.
+ *   <table class="bar-chart">
+ *     <tbody>
+ *       <tr><th scope="row">AAPL</th>
+ *         <td class="bar"><span class="bar__fill" style="--value:73">73</span></td></tr>
+ *     </tbody>
+ *   </table> */
+
+@layer bleed.components {
+  .bar-chart {
+    inline-size: 100%;
+    border-collapse: collapse;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .bar-chart th[scope="row"] {
+    inline-size: 1%;
+    white-space: nowrap;
+    text-align: start;
+    font-weight: 700;
+    padding-block: var(--space-1);
+    padding-inline-end: var(--space-3);
+  }
+
+  .bar-chart td.bar {
+    inline-size: 100%;
+    padding-block: var(--space-1);
+  }
+
+  .bar-chart .bar__fill {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    min-inline-size: fit-content;
+    inline-size: clamp(0%, calc(var(--value, 0) * 1%), 100%);
+    block-size: 1.5rem;
+    padding-inline: var(--space-2);
+
+    color: var(--paper);
+    font-size: 0.78rem;
+    font-weight: 700;
+    background-color: var(--bar-color, var(--ink));
+    border: var(--border-w) var(--border-style) var(--ink);
+    border-radius: var(--radius);
+  }
+
+  .bar-chart .bar__fill--positive { --bar-color: var(--positive); }
+  .bar-chart .bar__fill--negative { --bar-color: var(--negative); }
+  .bar-chart .bar__fill--warning  { --bar-color: var(--warning); }
+  .bar-chart .bar__fill--accent   { --bar-color: var(--accent-2); }
+}
