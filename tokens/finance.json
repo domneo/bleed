@@ -3,6 +3,6 @@
 
   "positive": { "$type": "color", "$value": "{ink}" },
   "negative": { "$type": "color", "$value": "{accent-1}" },
-  "warning":  { "$type": "color", "$value": "color-mix(in oklch, var(--ink), var(--accent-1) 45%)" },
-  "neutral":  { "$type": "color", "$value": "color-mix(in oklch, var(--ink) 45%, var(--paper))" }
+  "warning": { "$type": "color", "$value": "color-mix(in oklch, var(--ink), var(--accent-1) 45%)" },
+  "neutral": { "$type": "color", "$value": "color-mix(in oklch, var(--ink) 45%, var(--paper))" }
 }

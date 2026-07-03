@@ -11,8 +11,8 @@
   "border-w-base": { "$type": "dimension", "$value": "2px" },
   "border-style": { "$type": "other", "$value": "solid" },
 
-  "shadow":        { "$type": "other", "$value": "5px 5px 0 {ink}" },
-  "shadow-hover":  { "$type": "other", "$value": "2px 2px 0 {ink}" },
+  "shadow": { "$type": "other", "$value": "5px 5px 0 {ink}" },
+  "shadow-hover": { "$type": "other", "$value": "2px 2px 0 {ink}" },
   "shadow-active": { "$type": "other", "$value": "0 0 0 {ink}" },
 
   "hover-shift-x": { "$type": "dimension", "$value": "2px" },
@@ -23,7 +23,7 @@
   "transition": { "$type": "other", "$value": "100ms ease" },
 
   "font-display": { "$type": "fontFamily", "$value": "\"Playfair Display\", \"Times New Roman\", Georgia, serif" },
-  "font-body":    { "$type": "fontFamily", "$value": "Georgia, \"Times New Roman\", \"Iowan Old Style\", serif" },
+  "font-body": { "$type": "fontFamily", "$value": "Georgia, \"Times New Roman\", \"Iowan Old Style\", serif" },
 
   "space-1-base": { "$type": "dimension", "$value": "0.25rem" },
   "space-2-base": { "$type": "dimension", "$value": "0.5rem" },

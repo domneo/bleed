@@ -29,7 +29,8 @@ tokens/                       DTCG JSON — the single source of truth
   themes/{bleed,newspaper,dark,soft}.json   complete primitive sets per theme
   finance.json                positive/negative/warning/neutral (reference primitives)
 sd.config.js                  Style Dictionary: custom css/layered format, outputReferences:true
-build.js                      SD build + dependency-free concat + a lint gate
+scripts/
+  build.js                    SD build + dependency-free concat + a lint gate
 src/
   foundations/  tokens.css (generated) themes/*.css (generated) runtime.css base.css
   primitives/ finance/ layout/ inputs/ feedback/     one .css per component

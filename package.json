@@ -11,10 +11,7 @@
     "tokens"
   ],
   "scripts": {
-    "build:tokens": "node build.js tokens",
-    "build": "node build.js",
-    "watch": "node build.js && node --watch-path=./src --watch-path=./tokens build.js",
-    "test": "node build.js && node build.js --check"
+    "build": "node scripts/build.js"
   },
   "devDependencies": {
     "style-dictionary": "^5.5.0"

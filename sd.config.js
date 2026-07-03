@@ -1,4 +1,4 @@
-// Style Dictionary v4 configuration for the bleed design system.
+// Style Dictionary v5 configuration for the bleed design system.
 //
 // Two hard requirements from the design:
 //   1. outputReferences: true — a semantic token that references a primitive must
@@ -13,38 +13,35 @@
 // All output is wrapped in `@layer bleed.tokens { <selector> { ... } }` by the
 // custom `css/layered` format, so consumer unlayered CSS always wins the cascade.
 
-import StyleDictionary from 'style-dictionary';
-import { fileHeader, createPropertyFormatter, sortByReference } from 'style-dictionary/utils';
-import { transforms } from 'style-dictionary/enums';
+import StyleDictionary from "style-dictionary";
+import { fileHeader, createPropertyFormatter, sortByReference } from "style-dictionary/utils";
+import { transforms } from "style-dictionary/enums";
 
 // --- custom format: css/layered ------------------------------------------------
 // Like css/variables, but emits the block inside a named cascade layer and lets us
-// pass an arbitrary selector (:root, [data-theme="soft"], ...).
+// pass an arbitrary selector (:root, [data-theme="bleed"], ...).
 StyleDictionary.registerFormat({
-  name: 'css/layered',
+  name: "css/layered",
   format: async ({ dictionary, file, options }) => {
-    const {
-      outputReferences = true,
-      selector = ':root',
-      layer = 'bleed.tokens',
-    } = options;
+    const { outputReferences = true, selector = ":root", layer = "bleed.tokens" } = options;
 
     const header = await fileHeader({ file });
 
     const format = createPropertyFormatter({
       outputReferences,
       dictionary,
-      format: 'css',
+      format: "css",
       usesDtcg: true, // read $value/$type (DTCG), not the legacy value/type
       // two levels of indentation because we nest selector inside @layer
-      formatting: { indentation: '    ' },
+      formatting: { indentation: "    " },
     });
 
-    const tokens = outputReferences
-      ? [...dictionary.allTokens].sort(sortByReference(dictionary))
-      : dictionary.allTokens;
+    const tokens = outputReferences ? [...dictionary.allTokens].sort(sortByReference(dictionary)) : dictionary.allTokens;
 
-    const body = tokens.map((t) => format(t)).filter(Boolean).join('\n');
+    const body = tokens
+      .map((t) => format(t))
+      .filter(Boolean)
+      .join("\n");
 
     return `${header}@layer ${layer} {\n  ${selector} {\n${body}\n  }\n}\n`;
   },
@@ -58,21 +55,20 @@ StyleDictionary.registerFormat({
 // Every theme file is a COMPLETE primitive set: data-theme is a single mutually
 // exclusive attribute, so a theme must define everything it needs; anything it omits
 // falls back to :root (bleed), which is only safe for the default itself.
-export const THEMES = ['bleed', 'newspaper', 'dark', 'soft'];
+export const THEMES = ["bleed", "newspaper", "dark", "soft"];
 
 const NAME_ONLY = { transforms: [transforms.nameKebab] };
 
-// Build one Style Dictionary instance per output file. Separate instances keep each
-// theme's reference graph self-contained (a theme's shadow -> {ink} resolves against
-// that theme's own ink).
+// Build one Style Dictionary instance per output file.
+// Separate instances keep each theme's reference graph self-contained.
 export async function buildTokens() {
   const jobs = [];
 
   // :root defaults = bleed primitives + finance semantics.
   jobs.push({
-    source: ['tokens/themes/bleed.json', 'tokens/finance.json'],
-    destination: 'tokens.css',
-    selector: ':root',
+    source: ["tokens/themes/bleed.json", "tokens/finance.json"],
+    destination: "tokens.css",
+    selector: ":root",
   });
 
   // [data-theme="x"] override blocks, one file per theme.
@@ -87,15 +83,15 @@ export async function buildTokens() {
   for (const job of jobs) {
     const sd = new StyleDictionary({
       source: job.source,
-      log: { verbosity: 'silent' },
+      log: { verbosity: "silent" },
       platforms: {
         css: {
           ...NAME_ONLY,
-          buildPath: 'src/foundations/',
+          buildPath: "src/foundations/",
           files: [
             {
               destination: job.destination,
-              format: 'css/layered',
+              format: "css/layered",
               options: { outputReferences: true, selector: job.selector },
             },
           ],
