@@ -588,7 +588,7 @@
     color: color-mix(in oklch, var(--ink) 65%, var(--paper));
   }
 }
-/* Modal — native <dialog class="modal">, opened with showModal() (see bleed.js,
+/* Modal — native <dialog class="modal">, opened with showModal() (see runtime.js,
  * ~5 lines: wire [data-open-modal] / [data-close-modal]). Native gives focus trap,
  * Esc-to-close, inert background, and ::backdrop for free.
  *   <dialog class="modal">
@@ -869,7 +869,7 @@
     to   { --skeleton-sweep: -120%; }
   }
 }
-/* Tabs & segmented control — the ONE JS component (see bleed.js: role=tablist +
+/* Tabs & segmented control — the ONE JS component (see runtime.js: role=tablist +
  * arrow-key roving focus). No radio hack — that breaks the a11y model.
  *
  * Segmented (boxed) — primary use is a period switcher:
@@ -943,7 +943,7 @@
   }
 }
 /* Toast — transient status. Each toast is an <output role="status"> (polite live
- * region) inside a fixed region; bleed.js appends one and auto-removes it (~10
+ * region) inside a fixed region; runtime.js appends one and auto-removes it (~10
  * lines). Tone is a start-edge stripe + label, never colour alone.
  *   <div class="toast-region" id="toasts"></div>
  *   bleed.toast('Trade executed', { tone: 'positive' }) */

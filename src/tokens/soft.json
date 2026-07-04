@@ -1,5 +1,5 @@
 {
-  "$description": "Soft — the PROOF theme. Rounded corners, blurred ambient shadows, hairline borders, NO hover translate (hover-shift = 0; feedback comes from shadow lift). If soft restyles everything with zero component-CSS edits, brutalism is confirmed to live entirely in the theme layer. Also remaps finance semantics to literal green/red to show that louder themes can escape the palette-constrained mapping.",
+  "$description": "WIP",
 
   "ink": { "$type": "color", "$value": "oklch(0.55 0.13 255)" },
   "paper": { "$type": "color", "$value": "oklch(0.99 0.004 250)" },

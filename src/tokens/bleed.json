@@ -1,5 +1,5 @@
 {
-  "$description": "Bleed — the DEFAULT theme. Blue ink on warm cream, single near-black accent, thick borders, hard offset shadows, no radius. This file defines primitive VALUES only; component CSS carries no aesthetic opinion.",
+  "$description": "Bleed — the default theme. Semi-monotone blue/white/black scheme featuring brutalist fonts and hard edges.",
 
   "ink": { "$type": "color", "$value": "oklch(0.45 0.31 264)" },
   "paper": { "$type": "color", "$value": "oklch(0.97 0.005 280)" },

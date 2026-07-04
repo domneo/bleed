@@ -1,4 +1,4 @@
-/* Tabs & segmented control — the ONE JS component (see bleed.js: role=tablist +
+/* Tabs & segmented control — the ONE JS component (see runtime.js: role=tablist +
  * arrow-key roving focus). No radio hack — that breaks the a11y model.
  *
  * Segmented (boxed) — primary use is a period switcher:

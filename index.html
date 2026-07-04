@@ -5,13 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>bleed — aesthetic-agnostic component library</title>
   <link rel="stylesheet" href="dist/fonts.css">
-  <link rel="stylesheet" href="dist/base.css">
   <link rel="stylesheet" href="dist/themes.css">
+  <link rel="stylesheet" href="dist/base.css">
   <link rel="stylesheet" href="dist/components.css">
   <style>
-    /* Demo-only scaffolding. Deliberately tiny + clearly marked: the point of this
-       page is that the LIBRARY classes carry the look. If a component looks wrong
-       after switching theme (top-right), that's a hardcoded-value bug in src/. */
+    /* Demo-only styles */
     main > h1 { margin-block-end: var(--space-2); }
     .demo main { max-inline-size: 80rem; }
     .demo section { margin-block-start: var(--space-6); }
@@ -19,9 +17,6 @@
     .demo .swatch { inline-size: 100%; block-size: 3rem; border: var(--border-w) var(--border-style) var(--ink); border-radius: var(--radius); }
     .demo .row { display: flex; flex-wrap: wrap; gap: var(--space-3); align-items: center; }
     .demo [data-set-theme][aria-pressed="true"], .demo [data-toggle-density][aria-pressed="true"] { color: var(--paper); background-color: var(--ink); }
-
-    /* Token grid: every demo below reads its var(--token) directly, so switching
-       theme re-renders this section exactly like it re-renders every component. */
     .demo .token-section > h3 { margin-block-start: var(--space-6); margin-block-end: var(--space-2); }
     .demo .token-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(8rem, 1fr)); gap: var(--space-5); margin-block-start: var(--space-4); }
     .demo .token-item { display: flex; flex-direction: column; gap: var(--space-2); }
@@ -434,8 +429,7 @@
 
   <script src="dist/runtime.js"></script>
   <script>
-    // Demo-only: theme + density switchers. In a real app you'd set data-theme
-    // server-side or persist to localStorage.
+    // Demo-only: theme + density switchers
     const root = document.documentElement;
     const themeButtons = document.querySelectorAll('[data-set-theme]');
     themeButtons.forEach((b) => b.addEventListener('click', () => {

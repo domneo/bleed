@@ -1,11 +1,7 @@
-/* base.css — @property registration, density-derived tokens, reset, document
- * typography, focus. Layer: bleed.base (sits between tokens and components;
- * consumer CSS still wins) plus a bit of bleed.tokens for the density math below.
- * Everything here is token-driven so it re-themes, EXCEPT the a11y guarantees
- * (focus is always visible; motion respects prefers-reduced-motion) — those are
- * behaviours, not aesthetics, and are deliberately not themeable away.
-
-/* Cascade layer order, declared first so it holds regardless of where layers appear later in the page. */
+/*
+ * Cascade layer order, declared first so it holds
+ * regardless of where layers appear later in the page.
+ */
 @layer bleed.tokens, bleed.base, bleed.components;
 
 /* --- @property: typed, animatable tokens ----------------------------------- */

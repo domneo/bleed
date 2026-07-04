@@ -1,17 +1,4 @@
-// Style Dictionary v5 configuration for the bleed design system.
-//
-// Two hard requirements from the design:
-//   1. outputReferences: true — a semantic token that references a primitive must
-//      emit `var(--primitive)`, NOT the resolved value. That preserved var() chain
-//      is what makes runtime re-theming work: flip [data-theme] and every semantic
-//      token re-resolves through the overridden primitive.
-//   2. Values pass through VERBATIM. oklch(), color-mix(), var(), composite shadow
-//      strings must survive untouched. The stock `css` transformGroup runs color
-//      transforms that would rewrite oklch() — so we use ONLY name/kebab (name
-//      transform, zero value transforms).
-//
-// All output is wrapped in `@layer bleed.tokens { <selector> { ... } }` by the
-// custom `css/layered` format, so consumer unlayered CSS always wins the cascade.
+// Style Dictionary v5 configuration
 
 import { readFileSync, writeFileSync, rmSync } from "node:fs";
 import StyleDictionary from "style-dictionary";
@@ -49,17 +36,7 @@ StyleDictionary.registerFormat({
 });
 
 // --- theme catalogue -----------------------------------------------------------
-// `bleed` is special: its selector is `:root, [data-theme="bleed"]` — the default
-// AND the explicit switcher target, so re-selecting it fully resets state without
-// needing a separate foundations/tokens.css. Every theme is a COMPLETE primitive
-// set: data-theme is a single mutually exclusive attribute, so a theme must define
-// everything it needs; anything it omits falls back to :root (bleed), which is
-// only safe for the default itself.
 export const THEMES = ["bleed", "newspaper", "dark", "soft"];
-
-function selectorFor(theme) {
-  return theme === "bleed" ? `:root, [data-theme="bleed"]` : `[data-theme="${theme}"]`;
-}
 
 // color-scheme is a UA behavior (native form control chrome), not a themeable custom
 // property — it's appended to each theme block directly rather than flowing through
@@ -87,7 +64,7 @@ export async function buildTokens() {
             {
               destination: `${theme}.css`,
               format: "css/layered",
-              options: { outputReferences: true, selector: selectorFor(theme) },
+              options: { outputReferences: true, selector: `[data-theme="${theme}"]` },
             },
           ],
         },
@@ -99,7 +76,7 @@ export async function buildTokens() {
   let merged = `/**\n * Do not edit directly, this file was auto-generated.\n */\n`;
   for (const theme of THEMES) {
     const body = readFileSync(`${tmpDir}/${theme}.css`, "utf8").replace(/^\/\*\*[\s\S]*?\*\/\n\n?/, "");
-    const colorScheme = `@layer bleed.tokens {\n  ${selectorFor(theme)} {\n    color-scheme: ${COLOR_SCHEME[theme]};\n  }\n}\n`;
+    const colorScheme = `@layer bleed.tokens {\n  ${`[data-theme="${theme}"]`} {\n    color-scheme: ${COLOR_SCHEME[theme]};\n  }\n}\n`;
     merged += `\n/* ---- ${theme} ---- */\n${body}${colorScheme}`;
   }
   writeFileSync("src/foundations/themes.css", merged);

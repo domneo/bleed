@@ -1,4 +1,4 @@
-/* Modal — native <dialog class="modal">, opened with showModal() (see bleed.js,
+/* Modal — native <dialog class="modal">, opened with showModal() (see runtime.js,
  * ~5 lines: wire [data-open-modal] / [data-close-modal]). Native gives focus trap,
  * Esc-to-close, inert background, and ::backdrop for free.
  *   <dialog class="modal">

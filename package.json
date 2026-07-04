@@ -4,7 +4,6 @@
   "description": "My personal design system.",
   "author": "Dominic Neo",
   "type": "module",
-  "main": "dist/base.css",
   "files": [
     "dist",
     "src"

@@ -4,7 +4,7 @@
 
 /* ---- bleed ---- */
 @layer bleed.tokens {
-  :root, [data-theme="bleed"] {
+  [data-theme="bleed"] {
     --ink: oklch(0.45 0.31 264);
     --paper: oklch(0.97 0.005 280);
     --accent-1: oklch(0.2 0.01 264);
@@ -34,7 +34,7 @@
   }
 }
 @layer bleed.tokens {
-  :root, [data-theme="bleed"] {
+  [data-theme="bleed"] {
     color-scheme: light;
   }
 }

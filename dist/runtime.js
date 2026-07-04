@@ -1,13 +1,12 @@
 /*!
- * bleed.js — the entire JS budget for the library. Dependency-free, progressive
- * enhancement (everything degrades to working HTML without it). Three things that
- * genuinely need script:
- *   1. Tabs / segmented — roving tabindex + arrow-key nav (the a11y tablist pattern
- *      a radio hack can't provide).
- *   2. Modal open — native <dialog> gives close/Esc/focus-trap; only showModal()
- *      needs a hook.
+ * The entire JS budget for the library. Dependency-free, progressive
+ * enhancement (everything degrades to working HTML without it).
+ *
+ * Three things that need scripting:
+ *   1. Tabs / segmented — roving tabindex + arrow-key nav
+ *      (the a11y tablist pattern a radio hack can't provide).
+ *   2. Modal open — native <dialog> gives close/Esc/focus-trap; only showModal() needs a hook.
  *   3. Toasts — inject an <output role="status"> and auto-remove it.
- * Popover, tooltip, dropdown, collapsibles, validation = zero JS (platform).
  */
 (() => {
   'use strict';

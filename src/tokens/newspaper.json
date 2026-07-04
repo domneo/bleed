@@ -1,5 +1,5 @@
 {
-  "$description": "Newspaper — monochrome bleed. Black ink on bright white, serif display, tighter borders. Milestone-1 exit: restyles every component by COLOR/font swap alone, zero component-CSS edits.",
+  "$description": "WIP",
 
   "ink": { "$type": "color", "$value": "oklch(0.16 0 0)" },
   "paper": { "$type": "color", "$value": "oklch(0.98 0 0)" },

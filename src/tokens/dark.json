@@ -1,5 +1,5 @@
 {
-  "$description": "Dark — demo theme (not a maintained mode). Light blue ink on deep blue-black paper; sets color-scheme:dark in runtime.css. Still bleed geometry (hard shadows, no radius).",
+  "$description": "WIP",
 
   "ink": { "$type": "color", "$value": "oklch(0.78 0.16 264)" },
   "paper": { "$type": "color", "$value": "oklch(0.19 0.02 264)" },

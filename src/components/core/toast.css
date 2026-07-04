@@ -1,5 +1,5 @@
 /* Toast — transient status. Each toast is an <output role="status"> (polite live
- * region) inside a fixed region; bleed.js appends one and auto-removes it (~10
+ * region) inside a fixed region; runtime.js appends one and auto-removes it (~10
  * lines). Tone is a start-edge stripe + label, never colour alone.
  *   <div class="toast-region" id="toasts"></div>
  *   bleed.toast('Trade executed', { tone: 'positive' }) */
