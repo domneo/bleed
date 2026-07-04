@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>bleed — aesthetic-agnostic component library</title>
+  <link rel="stylesheet" href="dist/fonts.css">
   <link rel="stylesheet" href="dist/base.css">
   <link rel="stylesheet" href="dist/themes.css">
   <link rel="stylesheet" href="dist/components.css">
@@ -11,17 +12,32 @@
     /* Demo-only scaffolding. Deliberately tiny + clearly marked: the point of this
        page is that the LIBRARY classes carry the look. If a component looks wrong
        after switching theme (top-right), that's a hardcoded-value bug in src/. */
+    main > h1 { margin-block-end: var(--space-2); }
     .demo main { max-inline-size: 80rem; }
     .demo section { margin-block-start: var(--space-6); }
-    .demo section > h2 { margin-block-end: var(--space-4); }
+    .demo section > h2 { margin-block-end: var(--space-2); }
     .demo .swatch { inline-size: 100%; block-size: 3rem; border: var(--border-w) var(--border-style) var(--ink); border-radius: var(--radius); }
     .demo .row { display: flex; flex-wrap: wrap; gap: var(--space-3); align-items: center; }
     .demo [data-set-theme][aria-pressed="true"], .demo [data-toggle-density][aria-pressed="true"] { color: var(--paper); background-color: var(--ink); }
+
+    /* Token grid: every demo below reads its var(--token) directly, so switching
+       theme re-renders this section exactly like it re-renders every component. */
+    .demo .token-section > h3 { margin-block-start: var(--space-6); margin-block-end: var(--space-2); }
+    .demo .token-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(8rem, 1fr)); gap: var(--space-5); margin-block-start: var(--space-4); }
+    .demo .token-item { display: flex; flex-direction: column; gap: var(--space-2); }
+    .demo .token-item__label { font-size: 0.8rem; color: var(--ink); }
+    .demo .token-box { inline-size: 100%; block-size: 4rem; background-color: var(--paper); border: var(--border-w) var(--border-style) var(--ink); border-radius: var(--radius); }
+    .demo .token-box--shadow { margin: var(--space-3); }
+    .demo .token-hover-demo { display: flex; align-items: center; justify-content: center; font-size: 0.8rem; transition: translate var(--transition); }
+    .demo .token-hover-demo:hover { translate: var(--hover-shift-x) var(--hover-shift-y); }
+    .demo .token-scale { display: flex; flex-direction: column; gap: var(--space-2); margin-block-start: var(--space-4); }
+    .demo .token-scale__row { display: flex; align-items: center; gap: var(--space-3); }
+    .demo .token-scale__bar { block-size: 1.25rem; background-color: var(--ink); }
   </style>
 </head>
 <body class="demo">
   <header class="app-header app-header--sticky">
-    <a class="app-header__brand" href="#">▚ bleed</a>
+    <a class="app-header__brand" href="#">bleed</a>
 
     <div class="app-header__meta">
       <div class="segmented" role="group" aria-label="Theme">
@@ -38,6 +54,7 @@
   <div class="app-shell">
     <nav class="sidebar" aria-label="Primary">
       <a href="#" aria-current="page">◆ Overview</a>
+      <a href="#tokens">◆ Tokens</a>
       <a href="#components">◆ Components</a>
       <details open>
         <summary>Markets</summary>
@@ -56,6 +73,58 @@
     <main>
       <h1>Financial dashboard kit</h1>
       <p>Neo-brutalism is the <em>default theme</em>, not the architecture. Every component below is pure token-driven CSS — flip the theme (top-right) and nothing in the component layer changes. <strong>Soft</strong> proves it: rounded, blurred, no hover-jump, thin borders.</p>
+
+      <!-- TOKENS -->
+      <section aria-label="Design tokens" id="tokens" class="token-section">
+        <h2>Design tokens</h2>
+        <p>Every swatch and box below is rendered with nothing but <code>var(--token)</code> — no hardcoded values. Switch theme (top-right) and this section re-renders exactly like every component does.</p>
+
+        <h3>Color</h3>
+        <div class="token-grid">
+          <div class="token-item"><div class="swatch" style="background-color:var(--ink)"></div><p class="token-item__label"><code>--ink</code></p></div>
+          <div class="token-item"><div class="swatch" style="background-color:var(--paper)"></div><p class="token-item__label"><code>--paper</code></p></div>
+          <div class="token-item"><div class="swatch" style="background-color:var(--accent-1)"></div><p class="token-item__label"><code>--accent-1</code></p></div>
+          <div class="token-item"><div class="swatch" style="background-color:var(--accent-2)"></div><p class="token-item__label"><code>--accent-2</code></p></div>
+          <div class="token-item"><div class="swatch" style="background-color:var(--accent-3)"></div><p class="token-item__label"><code>--accent-3</code></p></div>
+          <div class="token-item"><div class="swatch" style="background-color:var(--positive)"></div><p class="token-item__label"><code>--positive</code></p></div>
+          <div class="token-item"><div class="swatch" style="background-color:var(--negative)"></div><p class="token-item__label"><code>--negative</code></p></div>
+          <div class="token-item"><div class="swatch" style="background-color:var(--warning)"></div><p class="token-item__label"><code>--warning</code></p></div>
+          <div class="token-item"><div class="swatch" style="background-color:var(--neutral)"></div><p class="token-item__label"><code>--neutral</code></p></div>
+        </div>
+
+        <h3>Border &amp; radius</h3>
+        <div class="token-grid">
+          <div class="token-item"><div class="token-box"></div><p class="token-item__label"><code>--border-w</code> · <code>--border-style</code> · <code>--radius</code></p></div>
+        </div>
+
+        <h3>Shadow</h3>
+        <div class="token-grid">
+          <div class="token-item"><div class="token-box token-box--shadow" style="box-shadow:var(--shadow)"></div><p class="token-item__label"><code>--shadow</code></p></div>
+          <div class="token-item"><div class="token-box token-box--shadow" style="box-shadow:var(--shadow-hover)"></div><p class="token-item__label"><code>--shadow-hover</code></p></div>
+          <div class="token-item"><div class="token-box token-box--shadow" style="box-shadow:var(--shadow-active)"></div><p class="token-item__label"><code>--shadow-active</code></p></div>
+        </div>
+
+        <h3>Hover shift &amp; transition</h3>
+        <div class="token-grid">
+          <div class="token-item"><div class="token-box token-hover-demo">Hover me</div><p class="token-item__label"><code>--hover-shift-x/y</code> · <code>--transition</code></p></div>
+        </div>
+
+        <h3>Spacing scale</h3>
+        <div class="token-scale">
+          <div class="token-scale__row"><span class="token-scale__bar" style="inline-size:var(--space-1)"></span><code>--space-1</code></div>
+          <div class="token-scale__row"><span class="token-scale__bar" style="inline-size:var(--space-2)"></span><code>--space-2</code></div>
+          <div class="token-scale__row"><span class="token-scale__bar" style="inline-size:var(--space-3)"></span><code>--space-3</code></div>
+          <div class="token-scale__row"><span class="token-scale__bar" style="inline-size:var(--space-4)"></span><code>--space-4</code></div>
+          <div class="token-scale__row"><span class="token-scale__bar" style="inline-size:var(--space-5)"></span><code>--space-5</code></div>
+          <div class="token-scale__row"><span class="token-scale__bar" style="inline-size:var(--space-6)"></span><code>--space-6</code></div>
+        </div>
+
+        <h3>Typography</h3>
+        <div class="token-grid" style="grid-template-columns:1fr 1fr">
+          <div class="token-item"><p style="font-family:var(--font-display);font-size:1.25rem;font-weight:800">Aa Bb Cc</p><p class="token-item__label"><code>--font-display</code></p></div>
+          <div class="token-item"><p style="font-family:var(--font-body)">Aa Bb Cc 0123</p><p class="token-item__label"><code>--font-body</code></p></div>
+        </div>
+      </section>
 
       <!-- ALERTS -->
       <section aria-label="Alerts">

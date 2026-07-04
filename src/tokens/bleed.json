@@ -2,7 +2,7 @@
   "$description": "Bleed — the DEFAULT theme. Blue ink on warm cream, single near-black accent, thick borders, hard offset shadows, no radius. This file defines primitive VALUES only; component CSS carries no aesthetic opinion.",
 
   "ink": { "$type": "color", "$value": "oklch(0.45 0.31 264)" },
-  "paper": { "$type": "color", "$value": "oklch(0.97 0.01 90)" },
+  "paper": { "$type": "color", "$value": "oklch(0.97 0.005 280)" },
 
   "accent-1": { "$type": "color", "$value": "oklch(0.2 0.01 264)" },
   "accent-2": { "$type": "color", "$value": "oklch(0.2 0.01 264)" },
@@ -10,25 +10,25 @@
 
   "positive": { "$type": "color", "$value": "{ink}" },
   "negative": { "$type": "color", "$value": "{accent-1}" },
-  "warning": { "$type": "color", "$value": "color-mix(in oklch, var(--ink), var(--accent-1) 45%)" },
-  "neutral": { "$type": "color", "$value": "color-mix(in oklch, var(--ink) 45%, var(--paper))" },
+  "warning": { "$type": "color", "$value": "{ink}" },
+  "neutral": { "$type": "color", "$value": "{paper}" },
 
-  "border-w-base": { "$type": "dimension", "$value": "3px" },
+  "border-w-base": { "$type": "dimension", "$value": "2px" },
   "border-style": { "$type": "other", "$value": "solid" },
 
-  "shadow": { "$type": "other", "$value": "6px 6px 0 {ink}" },
-  "shadow-hover": { "$type": "other", "$value": "3px 3px 0 {ink}" },
+  "shadow": { "$type": "other", "$value": "4px 4px 0 {ink}" },
+  "shadow-hover": { "$type": "other", "$value": "2px 2px 0 {ink}" },
   "shadow-active": { "$type": "other", "$value": "0 0 0 {ink}" },
 
-  "hover-shift-x": { "$type": "dimension", "$value": "3px" },
-  "hover-shift-y": { "$type": "dimension", "$value": "3px" },
+  "hover-shift-x": { "$type": "dimension", "$value": "2px" },
+  "hover-shift-y": { "$type": "dimension", "$value": "2px" },
 
   "radius": { "$type": "dimension", "$value": "0px" },
 
   "transition": { "$type": "other", "$value": "120ms cubic-bezier(0.2, 0, 0, 1)" },
 
-  "font-display": { "$type": "fontFamily", "$value": "\"Archivo Black\", \"Arial Black\", system-ui, sans-serif" },
-  "font-body": { "$type": "fontFamily", "$value": "\"IBM Plex Mono\", ui-monospace, \"SF Mono\", Menlo, monospace" },
+  "font-display": { "$type": "fontFamily", "$value": "\"BBH Bartle\", \"Arial Black\", system-ui, sans-serif" },
+  "font-body": { "$type": "fontFamily", "$value": "\"DM Mono\", ui-monospace, \"SF Mono\", Menlo, monospace" },
 
   "space-1-base": { "$type": "dimension", "$value": "0.25rem" },
   "space-2-base": { "$type": "dimension", "$value": "0.5rem" },
