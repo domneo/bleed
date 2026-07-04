@@ -50,19 +50,16 @@ function assembleComponents() {
 
 // --- main ----------------------------------------------------------------------
 
-// build tokens
-console.log("› building tokens...");
-await buildTokens();
-console.log(`› wrote src/foundations/themes.css (${THEMES.length} themes)`);
-
 // build css files into dist
 if (!existsSync(join(ROOT, "dist"))) mkdirSync(join(ROOT, "dist"), { recursive: true });
 
+// build tokens (writes dist/themes.css directly)
+console.log("› building tokens...");
+await buildTokens();
+console.log(`› wrote dist/themes.css (${THEMES.length} themes)`);
+
 copyFileSync(join(ROOT, "src/foundations/base.css"), join(ROOT, "dist/base.css"));
 console.log("› copied dist/base.css");
-
-copyFileSync(join(ROOT, "src/foundations/themes.css"), join(ROOT, "dist/themes.css"));
-console.log("› copied dist/themes.css");
 
 copyFileSync(join(ROOT, "src/foundations/fonts.css"), join(ROOT, "dist/fonts.css"));
 console.log("› copied dist/fonts.css");

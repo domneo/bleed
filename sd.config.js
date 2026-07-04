@@ -1,6 +1,6 @@
 // Style Dictionary v5 configuration
 
-import { readFileSync, writeFileSync, rmSync } from "node:fs";
+import { readFileSync, writeFileSync, rmSync, existsSync, mkdirSync } from "node:fs";
 import StyleDictionary from "style-dictionary";
 import { fileHeader, createPropertyFormatter, sortByReference } from "style-dictionary/utils";
 import { transforms } from "style-dictionary/enums";
@@ -47,10 +47,11 @@ const NAME_ONLY = { transforms: [transforms.nameKebab] };
 
 // Build one Style Dictionary instance per theme (separate instances keep each
 // theme's reference graph self-contained), then merge all of them into a single
-// src/foundations/themes.css — every theme is data-theme-scoped, so they can all
+// dist/themes.css — every theme is data-theme-scoped, so they can all
 // coexist in one stylesheet without conflicting.
 export async function buildTokens() {
-  const tmpDir = "src/foundations/_themes-tmp";
+  const tmpDir = "dist/_themes-tmp";
+  if (!existsSync("dist")) mkdirSync("dist", { recursive: true });
 
   for (const theme of THEMES) {
     const sd = new StyleDictionary({
@@ -79,6 +80,6 @@ export async function buildTokens() {
     const colorScheme = `@layer bleed.tokens {\n  ${`[data-theme="${theme}"]`} {\n    color-scheme: ${COLOR_SCHEME[theme]};\n  }\n}\n`;
     merged += `\n/* ---- ${theme} ---- */\n${body}${colorScheme}`;
   }
-  writeFileSync("src/foundations/themes.css", merged);
+  writeFileSync("dist/themes.css", merged);
   rmSync(tmpDir, { recursive: true, force: true });
 }
