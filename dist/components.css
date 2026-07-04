@@ -582,11 +582,6 @@
     margin-inline-start: auto;
     font-size: 0.85rem;
   }
-
-  .app-header__meta time {
-    font-variant-numeric: tabular-nums;
-    color: color-mix(in oklch, var(--ink) 65%, var(--paper));
-  }
 }
 /* Modal — native <dialog class="modal">, opened with showModal() (see runtime.js,
  * ~5 lines: wire [data-open-modal] / [data-close-modal]). Native gives focus trap,

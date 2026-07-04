@@ -12,6 +12,7 @@
     /* Demo-only styles */
     main > h1 { margin-block-end: var(--space-2); }
     .demo main { max-inline-size: 80rem; }
+    .demo .app-shell { display: block; }
     .demo section { margin-block-start: var(--space-6); }
     .demo section > h2 { margin-block-end: var(--space-2); }
     .demo .swatch { inline-size: 100%; block-size: 3rem; border: var(--border-w) var(--border-style) var(--ink); border-radius: var(--radius); }
@@ -44,24 +45,6 @@
   </header>
 
   <div class="app-shell">
-    <nav class="sidebar" aria-label="Primary">
-      <a href="#" aria-current="page">◆ Overview</a>
-      <a href="#tokens">◆ Tokens</a>
-      <a href="#components">◆ Components</a>
-      <details open>
-        <summary>Markets</summary>
-        <a href="#">Equities</a>
-        <a href="#">FX</a>
-        <a href="#">Rates</a>
-      </details>
-      <details>
-        <summary>Portfolio</summary>
-        <a href="#">Holdings</a>
-        <a href="#">Risk</a>
-      </details>
-      <a href="#">◆ Settings</a>
-    </nav>
-
     <main>
       <h1>Financial dashboard kit</h1>
       <p>Neo-brutalism is the <em>default theme</em>, not the architecture. Every component below is pure token-driven CSS — flip the theme (top-right) and nothing in the component layer changes. <strong>Boring</strong> proves it: rounded, blurred, no hover-jump, thin borders.</p>
