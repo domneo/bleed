@@ -17,6 +17,10 @@
     --accent-1: oklch(0.2 0.01 264);
     --accent-2: oklch(0.2 0.01 264);
     --accent-3: oklch(0.2 0.01 264);
+    --positive: var(--ink);
+    --negative: var(--accent-1);
+    --warning: color-mix(in oklch, var(--ink), var(--accent-1) 45%);
+    --neutral: color-mix(in oklch, var(--ink) 45%, var(--paper));
     --border-w-base: 3px;
     --border-style: solid;
     --shadow: 6px 6px 0 var(--ink);
@@ -34,10 +38,6 @@
     --space-4-base: 1rem;
     --space-5-base: 1.5rem;
     --space-6-base: 2rem;
-    --positive: var(--ink);
-    --negative: var(--accent-1);
-    --warning: color-mix(in oklch, var(--ink), var(--accent-1) 45%);
-    --neutral: color-mix(in oklch, var(--ink) 45%, var(--paper));
   }
 }
 /**
@@ -51,6 +51,10 @@
     --accent-1: oklch(0.2 0.01 264);
     --accent-2: oklch(0.2 0.01 264);
     --accent-3: oklch(0.2 0.01 264);
+    --positive: var(--ink);
+    --negative: var(--accent-1);
+    --warning: color-mix(in oklch, var(--ink), var(--accent-1) 45%);
+    --neutral: color-mix(in oklch, var(--ink) 45%, var(--paper));
     --border-w-base: 3px;
     --border-style: solid;
     --shadow: 6px 6px 0 var(--ink);
@@ -81,6 +85,10 @@
     --accent-1: oklch(0.16 0 0);
     --accent-2: oklch(0.16 0 0);
     --accent-3: oklch(0.16 0 0);
+    --positive: var(--ink);
+    --negative: var(--accent-1);
+    --warning: color-mix(in oklch, var(--ink), var(--accent-1) 45%);
+    --neutral: color-mix(in oklch, var(--ink) 45%, var(--paper));
     --border-w-base: 2px;
     --border-style: solid;
     --shadow: 5px 5px 0 var(--ink);
@@ -111,6 +119,10 @@
     --accent-1: oklch(0.9 0.03 264);
     --accent-2: oklch(0.9 0.03 264);
     --accent-3: oklch(0.9 0.03 264);
+    --positive: var(--ink);
+    --negative: var(--accent-1);
+    --warning: color-mix(in oklch, var(--ink), var(--accent-1) 45%);
+    --neutral: color-mix(in oklch, var(--ink) 45%, var(--paper));
     --border-w-base: 2px;
     --border-style: solid;
     --shadow: 4px 4px 0 var(--ink);
@@ -141,6 +153,10 @@
     --accent-1: oklch(0.5 0.08 255);
     --accent-2: oklch(0.62 0.11 255);
     --accent-3: oklch(0.66 0.09 200);
+    --positive: oklch(0.62 0.17 150);
+    --negative: oklch(0.58 0.21 25);
+    --warning: oklch(0.75 0.16 75);
+    --neutral: oklch(0.62 0.02 255);
     --border-w-base: 1px;
     --border-style: solid;
     --shadow: 0 4px 12px oklch(0.5 0.05 255 / 0.18);
@@ -152,10 +168,6 @@
     --transition: 220ms cubic-bezier(0.2, 0, 0, 1);
     --font-display: "Inter", system-ui, -apple-system, sans-serif;
     --font-body: "Inter", system-ui, -apple-system, sans-serif;
-    --positive: oklch(0.62 0.17 150);
-    --negative: oklch(0.58 0.21 25);
-    --warning: oklch(0.75 0.16 75);
-    --neutral: oklch(0.62 0.02 255);
     --space-1-base: 0.25rem;
     --space-2-base: 0.5rem;
     --space-3-base: 0.75rem;
@@ -354,7 +366,68 @@
   }
 }
 
-/* ==== PRIMITIVES ========================================================== */
+/* ==== CORE ================================================================ */
+/* Alert banner — persistent inline message. Use role="alert" for urgent/assertive
+ * content, role="status" for informational.
+ *   <div class="alert alert--warning" role="alert">
+ *     <span class="alert__icon" aria-hidden="true">▲</span>
+ *     <div><p class="alert__title">Margin call</p>
+ *       <p class="alert__text">Deposit by 16:00 EST.</p></div>
+ *     <button class="alert__close" aria-label="Dismiss">✕</button>
+ *   </div>
+ * Tone = start-edge stripe + tinted wash + icon; text always present. */
+
+@layer bleed.components {
+  .alert {
+    --_tone: var(--alert-tone, var(--ink));
+
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-3);
+    padding: var(--space-3) var(--space-4);
+
+    color: var(--ink);
+    background-color: color-mix(in oklch, var(--_tone) 12%, var(--paper));
+    border: var(--border-w) var(--border-style) var(--ink);
+    border-inline-start-width: var(--space-2);
+    border-inline-start-color: var(--_tone);
+    border-radius: var(--radius);
+  }
+
+  .alert__icon {
+    font-size: 1.2rem;
+    line-height: 1.2;
+    color: var(--_tone);
+  }
+
+  .alert__title {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 800;
+  }
+
+  .alert__text {
+    margin: 0;
+    font-size: 0.9rem;
+  }
+
+  .alert__close {
+    margin-inline-start: auto;
+    appearance: none;
+    border: none;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+    font-size: 1.1rem;
+    line-height: 1;
+  }
+
+  .alert--positive { --alert-tone: var(--positive); }
+  .alert--warning  { --alert-tone: var(--warning); }
+  .alert--negative { --alert-tone: var(--negative); }
+  .alert--accent   { --alert-tone: var(--accent-2); }
+}
 /* Badge / Tag — <span class="badge">. Tone variants pull from finance semantics,
  * which are foundational (:root) tokens, so they work in bleed-core.css too.
  * A badge always carries a text label, so tone is never the sole signal. */
@@ -617,6 +690,52 @@
     }
   }
 }
+/* Checkbox / radio / range — native controls tinted via accent-color (set on :root
+ * in base.css, so they follow the theme). We only size + lay them out.
+ *   <label class="control"><input type="checkbox"> Reinvest dividends</label>
+ *   <input class="range" type="range" min="0" max="100"> */
+
+@layer bleed.components {
+  .control {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    cursor: pointer;
+    font-weight: 600;
+  }
+
+  .control input[type="checkbox"],
+  .control input[type="radio"],
+  .field input[type="checkbox"],
+  .field input[type="radio"] {
+    inline-size: 1.15rem;
+    block-size: 1.15rem;
+    accent-color: var(--ink);
+    cursor: pointer;
+  }
+
+  .control:has(:disabled) { opacity: 0.55; cursor: not-allowed; }
+
+  .range,
+  .field input[type="range"] {
+    inline-size: 100%;
+    accent-color: var(--ink);
+    cursor: pointer;
+  }
+
+  /* vertical stack of options */
+  .control-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  /* native <select> keeps its arrow; we supply the box + a little end padding */
+  .field select {
+    padding-inline-end: var(--space-5);
+    cursor: pointer;
+  }
+}
 /* Empty state — <div class="empty"> with an optional icon, title, text, action.
  * Muted text uses a color-mix of tokens (no literal), so it re-themes. */
 
@@ -661,58 +780,91 @@
     margin-block-start: var(--space-2);
   }
 }
-/* Skeleton loader — <div class="skeleton"> for a block, or add .skeleton--text on a
- * line, .skeleton--circle for an avatar. The sweep is driven by an @property-typed
- * custom property animated in keyframes (a bare custom prop can't be animated; a
- * registered <percentage> can), so the shimmer interpolates smoothly. Honoured by
- * prefers-reduced-motion via base.css (it neutralises animation-duration). */
-
-@property --skeleton-sweep {
-  syntax: "<percentage>";
-  inherits: false;
-  initial-value: 0%;
-}
+/* Form fields — wrap label + control + hint/error in .field.
+ *   <div class="field">
+ *     <label for="amt">Amount</label>
+ *     <input id="amt" class="input" type="number" required>
+ *     <p class="field__hint">Max $10,000</p>
+ *     <p class="field__error">Enter a valid amount</p>
+ *   </div>
+ * Validation is native + CSS: :user-invalid fires only AFTER interaction (not on
+ * first paint), and .field:has(:user-invalid) reveals the error + tints the label. */
 
 @layer bleed.components {
-  .skeleton {
-    --skeleton-sweep: 120%;
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    min-inline-size: 0;
+  }
 
-    display: block;
-    min-block-size: 1.25rem;
+  .field > label,
+  .field__label {
+    font-size: 0.85rem;
+    font-weight: 700;
+  }
+
+  .field__hint {
+    font-size: 0.8rem;
+    color: color-mix(in oklch, var(--ink) 60%, var(--paper));
+  }
+
+  .field__error {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--negative);
+  }
+  /* error is hidden until the control is actually invalid post-interaction */
+  .field:not(:has(:user-invalid)) .field__error { display: none; }
+  .field:has(:user-invalid) > label,
+  .field:has(:user-invalid) .field__label { color: var(--negative); }
+
+  /* --- text-like controls ------------------------------------------------- */
+  .input,
+  .field :is(input, select, textarea):not([type="checkbox"]):not([type="radio"]):not([type="range"]) {
+    inline-size: 100%;
+    padding: var(--space-2) var(--space-3);
+    font: inherit;
+    color: var(--ink);
+    background-color: var(--paper);
+    border: var(--border-w) var(--border-style) var(--ink);
     border-radius: var(--radius);
-    background-color: color-mix(in oklch, var(--ink) 14%, var(--paper));
-    background-image: linear-gradient(
-      100deg,
-      transparent 0 35%,
-      color-mix(in oklch, var(--paper) 55%, transparent) 50%,
-      transparent 65% 100%
-    );
-    background-repeat: no-repeat;
-    background-size: 250% 100%;
-    background-position: var(--skeleton-sweep) 0;
-    animation: skeleton-sweep 1.3s ease-in-out infinite;
+    transition: border-color var(--transition), box-shadow var(--transition);
   }
 
-  .skeleton--text {
-    block-size: 0.75em;
-    margin-block: 0.25em;
-    border-radius: var(--radius);
-  }
-  .skeleton--text:last-child { inline-size: 70%; }
-
-  .skeleton--circle {
-    border-radius: 50%;
-    aspect-ratio: 1;
-    inline-size: 2.75rem;
+  .input::placeholder,
+  .field :is(input, textarea)::placeholder {
+    color: color-mix(in oklch, var(--ink) 45%, var(--paper));
   }
 
-  @keyframes skeleton-sweep {
-    from { --skeleton-sweep: 120%; }
-    to   { --skeleton-sweep: -120%; }
+  .field textarea { min-block-size: 5rem; resize: vertical; }
+
+  :is(.input, .field input, .field select, .field textarea):user-invalid {
+    border-color: var(--negative);
   }
+
+  :is(.input, .field input, .field select, .field textarea):disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+    background-color: color-mix(in oklch, var(--ink) 6%, var(--paper));
+  }
+
+  /* input adornments: <div class="input-group"><span>$</span><input></div> */
+  .input-group {
+    display: flex;
+    align-items: stretch;
+  }
+  .input-group > :is(.input-group__addon, span:first-child) {
+    display: inline-flex;
+    align-items: center;
+    padding-inline: var(--space-3);
+    font-weight: 700;
+    background-color: color-mix(in oklch, var(--ink) 10%, var(--paper));
+    border: var(--border-w) var(--border-style) var(--ink);
+    border-inline-end: none;
+  }
+  .input-group > .input { border-start-start-radius: 0; border-end-start-radius: 0; }
 }
-
-/* ==== LAYOUT ============================================================== */
 /* Dashboard grid — auto-fit tiles that span via data-span.
  *   <div class="dashboard">
  *     <article class="stat">…</article>
@@ -804,398 +956,6 @@
     font-variant-numeric: tabular-nums;
     color: color-mix(in oklch, var(--ink) 65%, var(--paper));
   }
-}
-/* Sidebar nav — <nav class="sidebar"> with <details> collapsible groups.
- *   <nav class="sidebar">
- *     <a href="#" aria-current="page">Overview</a>
- *     <details open>
- *       <summary>Markets</summary>
- *       <a href="#">Equities</a><a href="#">FX</a>
- *     </details>
- *   </nav>
- * aria-current marks the active link; the <details> marker is replaced with a
- * rotating chevron. No JS. */
-
-@layer bleed.components {
-  .sidebar {
-    inline-size: var(--sidebar-w, 15rem);
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-1);
-    padding: var(--space-3);
-
-    background-color: var(--paper);
-    border-inline-end: var(--border-w) var(--border-style) var(--ink);
-  }
-
-  .sidebar a {
-    display: flex;
-    align-items: center;
-    gap: var(--space-2);
-    padding: var(--space-2) var(--space-3);
-
-    color: var(--ink);
-    text-decoration: none;
-    font-weight: 700;
-    border: var(--border-w) var(--border-style) transparent;
-    border-radius: var(--radius);
-    transition: background-color var(--transition), translate var(--transition);
-  }
-
-  .sidebar a:hover {
-    background-color: color-mix(in oklch, var(--ink) 10%, var(--paper));
-    translate: var(--hover-shift-x) 0;
-  }
-
-  .sidebar a[aria-current] {
-    color: var(--paper);
-    background-color: var(--ink);
-    border-color: var(--ink);
-  }
-
-  .sidebar details { display: flex; flex-direction: column; }
-
-  .sidebar summary {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--space-2);
-    padding: var(--space-2) var(--space-3);
-    cursor: pointer;
-    font-weight: 700;
-    list-style: none;
-  }
-  .sidebar summary::-webkit-details-marker { display: none; }
-  .sidebar summary::after {
-    content: "▸";
-    transition: rotate var(--transition);
-  }
-  .sidebar details[open] > summary::after { rotate: 90deg; }
-
-  /* nested links indent under a group */
-  .sidebar details a { margin-inline-start: var(--space-3); }
-}
-/* Toolbar / filter bar — <form class="toolbar"> grouping controls in <fieldset>s.
- *   <form class="toolbar">
- *     <fieldset class="toolbar__group">
- *       <legend>Range</legend>
- *       <div class="segmented" role="tablist">…</div>
- *     </fieldset>
- *     <div class="toolbar__spacer"></div>
- *     <button class="btn btn--sm">Export</button>
- *   </form>
- * fieldset is set to flex so its legend + controls sit inline. */
-
-@layer bleed.components {
-  .toolbar {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: var(--space-3);
-    padding: var(--space-3);
-
-    background-color: var(--paper);
-    border: var(--border-w) var(--border-style) var(--ink);
-    border-radius: var(--radius);
-  }
-
-  .toolbar__group {
-    display: flex;
-    align-items: center;
-    gap: var(--space-2);
-    margin: 0;
-    padding: 0;
-    border: none;
-  }
-
-  .toolbar__group > legend,
-  .toolbar__label {
-    float: none;
-    padding: 0;
-    font-size: 0.78rem;
-    font-weight: 700;
-    letter-spacing: 0.03em;
-    color: color-mix(in oklch, var(--ink) 60%, var(--paper));
-  }
-
-  /* eats the free space, pushing trailing controls to the end edge */
-  .toolbar__spacer { margin-inline-start: auto; }
-
-  /* thin vertical rule between groups */
-  .toolbar__divider {
-    align-self: stretch;
-    inline-size: var(--border-w);
-    background-color: color-mix(in oklch, var(--ink) 30%, var(--paper));
-  }
-}
-
-/* ==== INPUTS ============================================================== */
-/* Checkbox / radio / range — native controls tinted via accent-color (set on :root
- * in base.css, so they follow the theme). We only size + lay them out.
- *   <label class="control"><input type="checkbox"> Reinvest dividends</label>
- *   <input class="range" type="range" min="0" max="100"> */
-
-@layer bleed.components {
-  .control {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--space-2);
-    cursor: pointer;
-    font-weight: 600;
-  }
-
-  .control input[type="checkbox"],
-  .control input[type="radio"],
-  .field input[type="checkbox"],
-  .field input[type="radio"] {
-    inline-size: 1.15rem;
-    block-size: 1.15rem;
-    accent-color: var(--ink);
-    cursor: pointer;
-  }
-
-  .control:has(:disabled) { opacity: 0.55; cursor: not-allowed; }
-
-  .range,
-  .field input[type="range"] {
-    inline-size: 100%;
-    accent-color: var(--ink);
-    cursor: pointer;
-  }
-
-  /* vertical stack of options */
-  .control-list {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-2);
-  }
-
-  /* native <select> keeps its arrow; we supply the box + a little end padding */
-  .field select {
-    padding-inline-end: var(--space-5);
-    cursor: pointer;
-  }
-}
-/* Form fields — wrap label + control + hint/error in .field.
- *   <div class="field">
- *     <label for="amt">Amount</label>
- *     <input id="amt" class="input" type="number" required>
- *     <p class="field__hint">Max $10,000</p>
- *     <p class="field__error">Enter a valid amount</p>
- *   </div>
- * Validation is native + CSS: :user-invalid fires only AFTER interaction (not on
- * first paint), and .field:has(:user-invalid) reveals the error + tints the label. */
-
-@layer bleed.components {
-  .field {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-1);
-    min-inline-size: 0;
-  }
-
-  .field > label,
-  .field__label {
-    font-size: 0.85rem;
-    font-weight: 700;
-  }
-
-  .field__hint {
-    font-size: 0.8rem;
-    color: color-mix(in oklch, var(--ink) 60%, var(--paper));
-  }
-
-  .field__error {
-    font-size: 0.8rem;
-    font-weight: 700;
-    color: var(--negative);
-  }
-  /* error is hidden until the control is actually invalid post-interaction */
-  .field:not(:has(:user-invalid)) .field__error { display: none; }
-  .field:has(:user-invalid) > label,
-  .field:has(:user-invalid) .field__label { color: var(--negative); }
-
-  /* --- text-like controls ------------------------------------------------- */
-  .input,
-  .field :is(input, select, textarea):not([type="checkbox"]):not([type="radio"]):not([type="range"]) {
-    inline-size: 100%;
-    padding: var(--space-2) var(--space-3);
-    font: inherit;
-    color: var(--ink);
-    background-color: var(--paper);
-    border: var(--border-w) var(--border-style) var(--ink);
-    border-radius: var(--radius);
-    transition: border-color var(--transition), box-shadow var(--transition);
-  }
-
-  .input::placeholder,
-  .field :is(input, textarea)::placeholder {
-    color: color-mix(in oklch, var(--ink) 45%, var(--paper));
-  }
-
-  .field textarea { min-block-size: 5rem; resize: vertical; }
-
-  :is(.input, .field input, .field select, .field textarea):user-invalid {
-    border-color: var(--negative);
-  }
-
-  :is(.input, .field input, .field select, .field textarea):disabled {
-    opacity: 0.55;
-    cursor: not-allowed;
-    background-color: color-mix(in oklch, var(--ink) 6%, var(--paper));
-  }
-
-  /* input adornments: <div class="input-group"><span>$</span><input></div> */
-  .input-group {
-    display: flex;
-    align-items: stretch;
-  }
-  .input-group > :is(.input-group__addon, span:first-child) {
-    display: inline-flex;
-    align-items: center;
-    padding-inline: var(--space-3);
-    font-weight: 700;
-    background-color: color-mix(in oklch, var(--ink) 10%, var(--paper));
-    border: var(--border-w) var(--border-style) var(--ink);
-    border-inline-end: none;
-  }
-  .input-group > .input { border-start-start-radius: 0; border-end-start-radius: 0; }
-}
-/* Tabs & segmented control — the ONE JS component (see bleed.js: role=tablist +
- * arrow-key roving focus). No radio hack — that breaks the a11y model.
- *
- * Segmented (boxed) — primary use is a period switcher:
- *   <div class="segmented" role="tablist" aria-label="Range">
- *     <button role="tab" aria-selected="true">1D</button>
- *     <button role="tab" aria-selected="false" tabindex="-1">1W</button> …
- *   </div>
- *
- * Tabs (underlined) — .tabs__list[role=tablist] + .tabs__tab, with
- *   <section role="tabpanel">…</section> panels (add hidden to inactive ones). */
-
-@layer bleed.components {
-  /* --- segmented ---------------------------------------------------------- */
-  .segmented {
-    display: inline-flex;
-    border: var(--border-w) var(--border-style) var(--ink);
-    border-radius: var(--radius);
-    overflow: hidden;
-  }
-
-  .segmented > [role="tab"] {
-    appearance: none;
-    padding: var(--space-2) var(--space-4);
-    font: inherit;
-    font-weight: 700;
-    color: var(--ink);
-    background-color: var(--paper);
-    border: none;
-    border-inline-end: var(--border-w) var(--border-style) var(--ink);
-    cursor: pointer;
-    transition: background-color var(--transition), color var(--transition);
-  }
-  .segmented > [role="tab"]:last-child { border-inline-end: none; }
-  .segmented > [role="tab"]:hover {
-    background-color: color-mix(in oklch, var(--ink) 10%, var(--paper));
-  }
-  .segmented > [role="tab"][aria-selected="true"] {
-    color: var(--paper);
-    background-color: var(--ink);
-  }
-
-  /* --- underlined tabs ---------------------------------------------------- */
-  .tabs__list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-1);
-    border-block-end: var(--border-w) var(--border-style) var(--ink);
-  }
-
-  .tabs__tab {
-    appearance: none;
-    padding: var(--space-2) var(--space-4);
-    font: inherit;
-    font-weight: 700;
-    color: color-mix(in oklch, var(--ink) 65%, var(--paper));
-    background-color: transparent;
-    border: none;
-    /* reserve space so selection doesn't shift layout */
-    border-block-end: var(--border-w) var(--border-style) transparent;
-    margin-block-end: calc(-1 * var(--border-w));
-    cursor: pointer;
-  }
-  .tabs__tab:hover { color: var(--ink); }
-  .tabs__tab[aria-selected="true"] {
-    color: var(--ink);
-    border-block-end-color: var(--accent-2);
-  }
-
-  .tabs__panel {
-    padding-block: var(--space-4);
-  }
-}
-
-/* ==== FEEDBACK ============================================================ */
-/* Alert banner — persistent inline message. Use role="alert" for urgent/assertive
- * content, role="status" for informational.
- *   <div class="alert alert--warning" role="alert">
- *     <span class="alert__icon" aria-hidden="true">▲</span>
- *     <div><p class="alert__title">Margin call</p>
- *       <p class="alert__text">Deposit by 16:00 EST.</p></div>
- *     <button class="alert__close" aria-label="Dismiss">✕</button>
- *   </div>
- * Tone = start-edge stripe + tinted wash + icon; text always present. */
-
-@layer bleed.components {
-  .alert {
-    --_tone: var(--alert-tone, var(--ink));
-
-    display: flex;
-    align-items: flex-start;
-    gap: var(--space-3);
-    padding: var(--space-3) var(--space-4);
-
-    color: var(--ink);
-    background-color: color-mix(in oklch, var(--_tone) 12%, var(--paper));
-    border: var(--border-w) var(--border-style) var(--ink);
-    border-inline-start-width: var(--space-2);
-    border-inline-start-color: var(--_tone);
-    border-radius: var(--radius);
-  }
-
-  .alert__icon {
-    font-size: 1.2rem;
-    line-height: 1.2;
-    color: var(--_tone);
-  }
-
-  .alert__title {
-    margin: 0;
-    font-family: var(--font-display);
-    font-size: 1rem;
-    font-weight: 800;
-  }
-
-  .alert__text {
-    margin: 0;
-    font-size: 0.9rem;
-  }
-
-  .alert__close {
-    margin-inline-start: auto;
-    appearance: none;
-    border: none;
-    background: transparent;
-    color: inherit;
-    cursor: pointer;
-    font-size: 1.1rem;
-    line-height: 1;
-  }
-
-  .alert--positive { --alert-tone: var(--positive); }
-  .alert--warning  { --alert-tone: var(--warning); }
-  .alert--negative { --alert-tone: var(--negative); }
-  .alert--accent   { --alert-tone: var(--accent-2); }
 }
 /* Modal — native <dialog class="modal">, opened with showModal() (see bleed.js,
  * ~5 lines: wire [data-open-modal] / [data-close-modal]). Native gives focus trap,
@@ -1358,6 +1118,199 @@
       color-mix(in oklch, var(--ink) 25%, var(--paper));
   }
 }
+/* Sidebar nav — <nav class="sidebar"> with <details> collapsible groups.
+ *   <nav class="sidebar">
+ *     <a href="#" aria-current="page">Overview</a>
+ *     <details open>
+ *       <summary>Markets</summary>
+ *       <a href="#">Equities</a><a href="#">FX</a>
+ *     </details>
+ *   </nav>
+ * aria-current marks the active link; the <details> marker is replaced with a
+ * rotating chevron. No JS. */
+
+@layer bleed.components {
+  .sidebar {
+    inline-size: var(--sidebar-w, 15rem);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    padding: var(--space-3);
+
+    background-color: var(--paper);
+    border-inline-end: var(--border-w) var(--border-style) var(--ink);
+  }
+
+  .sidebar a {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-3);
+
+    color: var(--ink);
+    text-decoration: none;
+    font-weight: 700;
+    border: var(--border-w) var(--border-style) transparent;
+    border-radius: var(--radius);
+    transition: background-color var(--transition), translate var(--transition);
+  }
+
+  .sidebar a:hover {
+    background-color: color-mix(in oklch, var(--ink) 10%, var(--paper));
+    translate: var(--hover-shift-x) 0;
+  }
+
+  .sidebar a[aria-current] {
+    color: var(--paper);
+    background-color: var(--ink);
+    border-color: var(--ink);
+  }
+
+  .sidebar details { display: flex; flex-direction: column; }
+
+  .sidebar summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-3);
+    cursor: pointer;
+    font-weight: 700;
+    list-style: none;
+  }
+  .sidebar summary::-webkit-details-marker { display: none; }
+  .sidebar summary::after {
+    content: "▸";
+    transition: rotate var(--transition);
+  }
+  .sidebar details[open] > summary::after { rotate: 90deg; }
+
+  /* nested links indent under a group */
+  .sidebar details a { margin-inline-start: var(--space-3); }
+}
+/* Skeleton loader — <div class="skeleton"> for a block, or add .skeleton--text on a
+ * line, .skeleton--circle for an avatar. The sweep is driven by an @property-typed
+ * custom property animated in keyframes (a bare custom prop can't be animated; a
+ * registered <percentage> can), so the shimmer interpolates smoothly. Honoured by
+ * prefers-reduced-motion via base.css (it neutralises animation-duration). */
+
+@property --skeleton-sweep {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 0%;
+}
+
+@layer bleed.components {
+  .skeleton {
+    --skeleton-sweep: 120%;
+
+    display: block;
+    min-block-size: 1.25rem;
+    border-radius: var(--radius);
+    background-color: color-mix(in oklch, var(--ink) 14%, var(--paper));
+    background-image: linear-gradient(
+      100deg,
+      transparent 0 35%,
+      color-mix(in oklch, var(--paper) 55%, transparent) 50%,
+      transparent 65% 100%
+    );
+    background-repeat: no-repeat;
+    background-size: 250% 100%;
+    background-position: var(--skeleton-sweep) 0;
+    animation: skeleton-sweep 1.3s ease-in-out infinite;
+  }
+
+  .skeleton--text {
+    block-size: 0.75em;
+    margin-block: 0.25em;
+    border-radius: var(--radius);
+  }
+  .skeleton--text:last-child { inline-size: 70%; }
+
+  .skeleton--circle {
+    border-radius: 50%;
+    aspect-ratio: 1;
+    inline-size: 2.75rem;
+  }
+
+  @keyframes skeleton-sweep {
+    from { --skeleton-sweep: 120%; }
+    to   { --skeleton-sweep: -120%; }
+  }
+}
+/* Tabs & segmented control — the ONE JS component (see bleed.js: role=tablist +
+ * arrow-key roving focus). No radio hack — that breaks the a11y model.
+ *
+ * Segmented (boxed) — primary use is a period switcher:
+ *   <div class="segmented" role="tablist" aria-label="Range">
+ *     <button role="tab" aria-selected="true">1D</button>
+ *     <button role="tab" aria-selected="false" tabindex="-1">1W</button> …
+ *   </div>
+ *
+ * Tabs (underlined) — .tabs__list[role=tablist] + .tabs__tab, with
+ *   <section role="tabpanel">…</section> panels (add hidden to inactive ones). */
+
+@layer bleed.components {
+  /* --- segmented ---------------------------------------------------------- */
+  .segmented {
+    display: inline-flex;
+    border: var(--border-w) var(--border-style) var(--ink);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+
+  .segmented > [role="tab"] {
+    appearance: none;
+    padding: var(--space-2) var(--space-4);
+    font: inherit;
+    font-weight: 700;
+    color: var(--ink);
+    background-color: var(--paper);
+    border: none;
+    border-inline-end: var(--border-w) var(--border-style) var(--ink);
+    cursor: pointer;
+    transition: background-color var(--transition), color var(--transition);
+  }
+  .segmented > [role="tab"]:last-child { border-inline-end: none; }
+  .segmented > [role="tab"]:hover {
+    background-color: color-mix(in oklch, var(--ink) 10%, var(--paper));
+  }
+  .segmented > [role="tab"][aria-selected="true"] {
+    color: var(--paper);
+    background-color: var(--ink);
+  }
+
+  /* --- underlined tabs ---------------------------------------------------- */
+  .tabs__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-1);
+    border-block-end: var(--border-w) var(--border-style) var(--ink);
+  }
+
+  .tabs__tab {
+    appearance: none;
+    padding: var(--space-2) var(--space-4);
+    font: inherit;
+    font-weight: 700;
+    color: color-mix(in oklch, var(--ink) 65%, var(--paper));
+    background-color: transparent;
+    border: none;
+    /* reserve space so selection doesn't shift layout */
+    border-block-end: var(--border-w) var(--border-style) transparent;
+    margin-block-end: calc(-1 * var(--border-w));
+    cursor: pointer;
+  }
+  .tabs__tab:hover { color: var(--ink); }
+  .tabs__tab[aria-selected="true"] {
+    color: var(--ink);
+    border-block-end-color: var(--accent-2);
+  }
+
+  .tabs__panel {
+    padding-block: var(--space-4);
+  }
+}
 /* Toast — transient status. Each toast is an <output role="status"> (polite live
  * region) inside a fixed region; bleed.js appends one and auto-removes it (~10
  * lines). Tone is a start-edge stripe + label, never colour alone.
@@ -1424,6 +1377,59 @@
   @keyframes toast-out {
     from { opacity: 1; translate: 0 0; }
     to   { opacity: 0; translate: var(--space-4) 0; }
+  }
+}
+/* Toolbar / filter bar — <form class="toolbar"> grouping controls in <fieldset>s.
+ *   <form class="toolbar">
+ *     <fieldset class="toolbar__group">
+ *       <legend>Range</legend>
+ *       <div class="segmented" role="tablist">…</div>
+ *     </fieldset>
+ *     <div class="toolbar__spacer"></div>
+ *     <button class="btn btn--sm">Export</button>
+ *   </form>
+ * fieldset is set to flex so its legend + controls sit inline. */
+
+@layer bleed.components {
+  .toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-3);
+
+    background-color: var(--paper);
+    border: var(--border-w) var(--border-style) var(--ink);
+    border-radius: var(--radius);
+  }
+
+  .toolbar__group {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin: 0;
+    padding: 0;
+    border: none;
+  }
+
+  .toolbar__group > legend,
+  .toolbar__label {
+    float: none;
+    padding: 0;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    color: color-mix(in oklch, var(--ink) 60%, var(--paper));
+  }
+
+  /* eats the free space, pushing trailing controls to the end edge */
+  .toolbar__spacer { margin-inline-start: auto; }
+
+  /* thin vertical rule between groups */
+  .toolbar__divider {
+    align-self: stretch;
+    inline-size: var(--border-w);
+    background-color: color-mix(in oklch, var(--ink) 30%, var(--paper));
   }
 }
 /* Tooltip — popover="hint" (non-modal, non-light-dismissing) + anchor positioning.

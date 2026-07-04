@@ -3,15 +3,15 @@
 An **aesthetic-agnostic** HTML/CSS component library for financial dashboards.
 Neo-brutalism is the *default theme*, **not the architecture**: component CSS carries
 zero aesthetic opinion — every border width, shadow, radius, colour, and hover motion
-comes from a token. All personality lives in `tokens/themes/`.
+comes from a token. All personality lives in `src/tokens/`.
 
 The proof is the **soft** theme. It restyles every component to be rounded, blurred,
 hairline-bordered, with no hover-jump — **without a single edit to component CSS**.
 If brutalism could be turned off entirely from the theme layer, it was never baked in.
 
 ```html
-<link rel="stylesheet" href="dist/bleed.css">
-<script src="dist/bleed.js"></script>          <!-- optional: tabs, modal, toasts -->
+<link rel="stylesheet" href="dist/themes/bleed.css">
+<script src="dist/runtime.js"></script>          <!-- optional: tabs, modal, toasts -->
 <html data-theme="bleed">                       <!-- bleed | newspaper | dark | soft -->
 ```
 
@@ -25,18 +25,19 @@ and toasts.
 ## Architecture
 
 ```
-tokens/                       DTCG JSON — the single source of truth
-  themes/{bleed,newspaper,dark,soft}.json   complete primitive sets per theme
-  finance.json                positive/negative/warning/neutral (reference primitives)
 sd.config.js                  Style Dictionary: custom css/layered format, outputReferences:true
 scripts/
   build.js                    SD build + dependency-free concat + a lint gate
 src/
+  tokens/{bleed,newspaper,dark,soft}.json    DTCG JSON — single source of truth,
+                                              complete primitive + finance-semantic set per theme
   foundations/  tokens.css (generated) themes/*.css (generated) runtime.css base.css
-  primitives/ finance/ layout/ inputs/ feedback/     one .css per component
-  bleed.js
-dist/                         bleed.css · bleed-core.css (no finance/) · bleed.js
-index.html                    kitchen sink + live theme/density switcher
+  components/
+    core/                      buttons, badges, cards, layout, inputs, feedback — one .css per component
+    finance/                   stat/KPI, table, delta, sparkline, bar chart, progress, dl, num
+  runtime.js
+dist/                          themes/bleed.css · runtime.js
+index.html                     kitchen sink + live theme/density switcher
 ```
 
 Everything is wrapped in `@layer bleed.tokens, bleed.base, bleed.components` so

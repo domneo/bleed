@@ -9,6 +9,10 @@
     --accent-1: oklch(0.9 0.03 264);
     --accent-2: oklch(0.9 0.03 264);
     --accent-3: oklch(0.9 0.03 264);
+    --positive: var(--ink);
+    --negative: var(--accent-1);
+    --warning: color-mix(in oklch, var(--ink), var(--accent-1) 45%);
+    --neutral: color-mix(in oklch, var(--ink) 45%, var(--paper));
     --border-w-base: 2px;
     --border-style: solid;
     --shadow: 4px 4px 0 var(--ink);

@@ -14,11 +14,8 @@ const ROOT = new URL("../", import.meta.url).pathname;
 
 // component groups
 const GROUPS = [
-  { name: "PRIMITIVES", dir: "src/primitives" },
-  { name: "LAYOUT", dir: "src/layout" },
-  { name: "INPUTS", dir: "src/inputs" },
-  { name: "FEEDBACK", dir: "src/feedback" },
-  { name: "FINANCE", dir: "src/finance" },
+  { name: "CORE", dir: "src/components/core" },
+  { name: "FINANCE", dir: "src/components/finance" },
 ];
 
 // generate section title
@@ -87,15 +84,15 @@ await buildTokens();
 console.log(`› wrote src/foundations/tokens.css + ${THEMES.length} theme files`);
 
 // build css file into dist
-if (!existsSync(join(ROOT, "dist"))) mkdirSync(join(ROOT, "dist"));
+if (!existsSync(join(ROOT, "dist/themes"))) mkdirSync(join(ROOT, "dist/themes"), { recursive: true });
 const full = assemble();
-writeFileSync(join(ROOT, "dist/bleed.css"), full);
-console.log(`› wrote dist/bleed.css (${(full.length / 1024).toFixed(1)} kB)`);
+writeFileSync(join(ROOT, "dist/themes/bleed.css"), full);
+console.log(`› wrote dist/themes/bleed.css (${(full.length / 1024).toFixed(1)} kB)`);
 
 // copy js file into dist
-if (existsSync(join(ROOT, "src/bleed.js"))) {
-  copyFileSync(join(ROOT, "src/bleed.js"), join(ROOT, "dist/bleed.js"));
-  console.log("› copied dist/bleed.js");
+if (existsSync(join(ROOT, "src/runtime.js"))) {
+  copyFileSync(join(ROOT, "src/runtime.js"), join(ROOT, "dist/runtime.js"));
+  console.log("› copied dist/runtime.js");
 }
 
 console.log("done.");

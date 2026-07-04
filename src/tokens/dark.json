@@ -8,6 +8,11 @@
   "accent-2": { "$type": "color", "$value": "oklch(0.9 0.03 264)" },
   "accent-3": { "$type": "color", "$value": "oklch(0.9 0.03 264)" },
 
+  "positive": { "$type": "color", "$value": "{ink}" },
+  "negative": { "$type": "color", "$value": "{accent-1}" },
+  "warning": { "$type": "color", "$value": "color-mix(in oklch, var(--ink), var(--accent-1) 45%)" },
+  "neutral": { "$type": "color", "$value": "color-mix(in oklch, var(--ink) 45%, var(--paper))" },
+
   "border-w-base": { "$type": "dimension", "$value": "2px" },
   "border-style": { "$type": "other", "$value": "solid" },
 

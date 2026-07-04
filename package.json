@@ -4,11 +4,10 @@
   "description": "My personal design system.",
   "author": "Dominic Neo",
   "type": "module",
-  "main": "dist/bleed.css",
+  "main": "dist/themes/bleed.css",
   "files": [
     "dist",
-    "src",
-    "tokens"
+    "src"
   ],
   "scripts": {
     "build": "node scripts/build.js"

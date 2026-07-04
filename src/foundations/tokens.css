@@ -9,6 +9,10 @@
     --accent-1: oklch(0.2 0.01 264);
     --accent-2: oklch(0.2 0.01 264);
     --accent-3: oklch(0.2 0.01 264);
+    --positive: var(--ink);
+    --negative: var(--accent-1);
+    --warning: color-mix(in oklch, var(--ink), var(--accent-1) 45%);
+    --neutral: color-mix(in oklch, var(--ink) 45%, var(--paper));
     --border-w-base: 3px;
     --border-style: solid;
     --shadow: 6px 6px 0 var(--ink);
@@ -26,9 +30,5 @@
     --space-4-base: 1rem;
     --space-5-base: 1.5rem;
     --space-6-base: 2rem;
-    --positive: var(--ink);
-    --negative: var(--accent-1);
-    --warning: color-mix(in oklch, var(--ink), var(--accent-1) 45%);
-    --neutral: color-mix(in oklch, var(--ink) 45%, var(--paper));
   }
 }

@@ -66,7 +66,7 @@ export async function buildTokens() {
 
   // :root defaults = bleed primitives + finance semantics.
   jobs.push({
-    source: ["tokens/themes/bleed.json", "tokens/finance.json"],
+    source: ["src/tokens/bleed.json"],
     destination: "tokens.css",
     selector: ":root",
   });
@@ -74,7 +74,7 @@ export async function buildTokens() {
   // [data-theme="x"] override blocks, one file per theme.
   for (const theme of THEMES) {
     jobs.push({
-      source: [`tokens/themes/${theme}.json`],
+      source: [`src/tokens/${theme}.json`],
       destination: `themes/${theme}.css`,
       selector: `[data-theme="${theme}"]`,
     });
