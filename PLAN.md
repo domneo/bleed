@@ -4,7 +4,7 @@ Aesthetic-agnostic HTML/CSS component library. Neo-brutalism = default THEME onl
 
 ## Stack / constraints
 - Modern browsers only (last ~1yr). OK: `popover`, anchor positioning, `@scope`, `:has()`, `:user-invalid`, `<dialog>`, container queries, nesting, `@property`, `light-dark()`, oklch, `color-mix()`, logical properties.
-- Tokens: Style Dictionary v4+, DTCG JSON source → `tokens.css`. **`outputReferences: true` mandatory** (preserves var() chains = runtime re-theming).
+- Tokens: Style Dictionary v4+, DTCG JSON source → `foundations/themes.css`, one `[data-theme=...]` block per theme merged into a single generated file (no separate tokens.css). **`outputReferences: true` mandatory** (preserves var() chains = runtime re-theming).
 - All CSS wrapped in `@layer bleed.tokens, bleed.base, bleed.components` → consumer unlayered CSS always wins.
 - Selectors: flat block class public API (`.card`, `.btn`) + `@scope` internally instead of BEM `__element`. Donut scope (`@scope (.card) to (.card-body)`) so nested content (chart libs etc) untouched. Variants: `.btn--accent` or `data-variant`.
 - No raw color/size values in component CSS. Everything via token. Enforce.
@@ -16,7 +16,7 @@ Aesthetic-agnostic HTML/CSS component library. Neo-brutalism = default THEME onl
 - Finance semantics: `--positive --negative --warning --neutral` (oklch). Delta/badge/table/sparkline use these, never green/red literals.
 - `--density` token (comfortable/compact): scales spacing + border-w together. Needed — thick borders eat space in dense grids.
 - Register key tokens w/ `@property` (typed, animatable). Hover/active via `color-mix(in oklch, var(--x), var(--ink) 15%)`, no shade tokens.
-- Themes = primitive overrides under `[data-theme=...]`, controlling color AND geometry/effects (radius, shadows, borders, hover motion). Ship 4: bleed (default), newspaper (mono bleed), dark (`light-dark()` + `color-scheme`), soft (rounded, blurred shadows, thin borders — exists to PROVE brutalism is fully in the theme layer). Dark/soft = demos not maintained modes.
+- Themes = primitive overrides under `[data-theme=...]`, controlling color AND geometry/effects (radius, shadows, borders, hover motion). All four ship in one generated `themes.css`; which is active is set by the `data-theme` attribute (on `<html>` or any subtree). Ship 4: bleed (default), newspaper (mono bleed), dark (`color-scheme: dark`), soft (rounded, blurred shadows, thin borders — exists to PROVE brutalism is fully in the theme layer). Dark/soft = demos not maintained modes.
 
 ## Default theme: "bleed" (lives ENTIRELY in src/tokens/, never in component CSS)
 Paper: slightly off-white warm `oklch(0.97 0.01 90)` (~#F7F4EC). Ink: vivid blue `oklch(0.45 0.31 264)` (~#1F2DE6, Klein-blue territory — deep enough for body-text contrast ~7:1 on paper; don't go brighter or small text fails contrast). Ink drives ALL borders + shadows → theme reads blue-on-cream. Accent: single near-black `oklch(0.2 0.01 264)` (~#17181F, hint of blue so it sits w/ ink, not dead #000). 3 base colors TOTAL for now: paper/ink/accent. Palette-constrained ripple: finance semantics map within the 3 — `--positive: var(--ink)`, `--negative: var(--accent)`, `--warning/--neutral` = mixes via `color-mix()`. Direction MUST also be carried by ▲/▼ glyphs/weight, never color alone (good a11y practice regardless; louder themes can remap to green/red later). `--border-w:3px`, `--shadow: 6px 6px 0 var(--ink)`, `--hover-shift: 3px 3px`, `--radius:0`, no gradients/transparency. Display font (Archivo Black-ish) + mono body. Focus = thick accent outline, always visible (focus visibility is base.css, not theme — a11y isn't themeable away).
@@ -24,7 +24,7 @@ Paper: slightly off-white warm `oklch(0.97 0.01 90)` (~#F7F4EC). Ink: vivid blue
 ## Components by group
 
 ### 0. Foundations
-tokens.css, base.css (reset/type/focus/@layer/color-scheme), themes/
+base.css (@property/density/reset/type/focus/@layer), themes.css (generated, one [data-theme] block per theme, incl. color-scheme)
 
 ### 1. Primitives (generic)
 - Button (`<button>`) + icon variant
@@ -66,12 +66,12 @@ tokens.css, base.css (reset/type/focus/@layer/color-scheme), themes/
 sd.config.js     outputReferences:true, per-theme file entries
 src/
   tokens/        *.json (DTCG), per-theme, finance semantics inline
-  foundations/   tokens.css(generated) base.css themes/
+  foundations/   base.css themes.css (generated, one [data-theme] block per theme)
   components/
     core/        primitives + layout + inputs + feedback
     finance/
   runtime.js
-dist/            themes/bleed.css, runtime.js
+dist/            base.css, components.css, themes.css, runtime.js
 index.html       kitchen sink + live theme switcher
 build: npm run build (SD + concat). Note in README: was "no build step", traded for JSON single source of truth
 ```

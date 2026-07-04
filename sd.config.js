@@ -13,6 +13,7 @@
 // All output is wrapped in `@layer bleed.tokens { <selector> { ... } }` by the
 // custom `css/layered` format, so consumer unlayered CSS always wins the cascade.
 
+import { readFileSync, writeFileSync, rmSync } from "node:fs";
 import StyleDictionary from "style-dictionary";
 import { fileHeader, createPropertyFormatter, sortByReference } from "style-dictionary/utils";
 import { transforms } from "style-dictionary/enums";
@@ -48,51 +49,45 @@ StyleDictionary.registerFormat({
 });
 
 // --- theme catalogue -----------------------------------------------------------
-// `bleed` is special: it is emitted twice.
-//   - as :root defaults (WITH finance semantics) -> foundations/tokens.css
-//   - as [data-theme="bleed"] overrides         -> foundations/themes/bleed.css
-// so that explicitly selecting the default theme in the switcher fully resets state.
-// Every theme file is a COMPLETE primitive set: data-theme is a single mutually
-// exclusive attribute, so a theme must define everything it needs; anything it omits
-// falls back to :root (bleed), which is only safe for the default itself.
+// `bleed` is special: its selector is `:root, [data-theme="bleed"]` — the default
+// AND the explicit switcher target, so re-selecting it fully resets state without
+// needing a separate foundations/tokens.css. Every theme is a COMPLETE primitive
+// set: data-theme is a single mutually exclusive attribute, so a theme must define
+// everything it needs; anything it omits falls back to :root (bleed), which is
+// only safe for the default itself.
 export const THEMES = ["bleed", "newspaper", "dark", "soft"];
+
+function selectorFor(theme) {
+  return theme === "bleed" ? `:root, [data-theme="bleed"]` : `[data-theme="${theme}"]`;
+}
+
+// color-scheme is a UA behavior (native form control chrome), not a themeable custom
+// property — it's appended to each theme block directly rather than flowing through
+// the token/format pipeline above.
+const COLOR_SCHEME = { bleed: "light", newspaper: "light", dark: "dark", soft: "light" };
 
 const NAME_ONLY = { transforms: [transforms.nameKebab] };
 
-// Build one Style Dictionary instance per output file.
-// Separate instances keep each theme's reference graph self-contained.
+// Build one Style Dictionary instance per theme (separate instances keep each
+// theme's reference graph self-contained), then merge all of them into a single
+// src/foundations/themes.css — every theme is data-theme-scoped, so they can all
+// coexist in one stylesheet without conflicting.
 export async function buildTokens() {
-  const jobs = [];
+  const tmpDir = "src/foundations/_themes-tmp";
 
-  // :root defaults = bleed primitives + finance semantics.
-  jobs.push({
-    source: ["src/tokens/bleed.json"],
-    destination: "tokens.css",
-    selector: ":root",
-  });
-
-  // [data-theme="x"] override blocks, one file per theme.
   for (const theme of THEMES) {
-    jobs.push({
-      source: [`src/tokens/${theme}.json`],
-      destination: `themes/${theme}.css`,
-      selector: `[data-theme="${theme}"]`,
-    });
-  }
-
-  for (const job of jobs) {
     const sd = new StyleDictionary({
-      source: job.source,
+      source: [`src/tokens/${theme}.json`],
       log: { verbosity: "silent" },
       platforms: {
         css: {
           ...NAME_ONLY,
-          buildPath: "src/foundations/",
+          buildPath: `${tmpDir}/`,
           files: [
             {
-              destination: job.destination,
+              destination: `${theme}.css`,
               format: "css/layered",
-              options: { outputReferences: true, selector: job.selector },
+              options: { outputReferences: true, selector: selectorFor(theme) },
             },
           ],
         },
@@ -100,4 +95,13 @@ export async function buildTokens() {
     });
     await sd.buildAllPlatforms();
   }
+
+  let merged = `/**\n * Do not edit directly, this file was auto-generated.\n */\n`;
+  for (const theme of THEMES) {
+    const body = readFileSync(`${tmpDir}/${theme}.css`, "utf8").replace(/^\/\*\*[\s\S]*?\*\/\n\n?/, "");
+    const colorScheme = `@layer bleed.tokens {\n  ${selectorFor(theme)} {\n    color-scheme: ${COLOR_SCHEME[theme]};\n  }\n}\n`;
+    merged += `\n/* ---- ${theme} ---- */\n${body}${colorScheme}`;
+  }
+  writeFileSync("src/foundations/themes.css", merged);
+  rmSync(tmpDir, { recursive: true, force: true });
 }

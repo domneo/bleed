@@ -10,7 +10,9 @@ hairline-bordered, with no hover-jump — **without a single edit to component C
 If brutalism could be turned off entirely from the theme layer, it was never baked in.
 
 ```html
-<link rel="stylesheet" href="dist/themes/bleed.css">
+<link rel="stylesheet" href="dist/base.css">
+<link rel="stylesheet" href="dist/components.css">
+<link rel="stylesheet" href="dist/themes.css">
 <script src="dist/runtime.js"></script>          <!-- optional: tabs, modal, toasts -->
 <html data-theme="bleed">                       <!-- bleed | newspaper | dark | soft -->
 ```
@@ -30,13 +32,13 @@ scripts/
   build.js                    SD build + dependency-free concat + a lint gate
 src/
   tokens/{bleed,newspaper,dark,soft}.json    DTCG JSON — single source of truth,
-                                              complete primitive + finance-semantic set per theme
-  foundations/  tokens.css (generated) themes/*.css (generated) runtime.css base.css
+                                              complete primitive set per theme, [data-theme=…] selector
+  foundations/  themes.css (generated, one [data-theme] block per theme) base.css (reset/typography/focus/@property/density)
   components/
     core/                      buttons, badges, cards, layout, inputs, feedback — one .css per component
     finance/                   stat/KPI, table, delta, sparkline, bar chart, progress, dl, num
   runtime.js
-dist/                          themes/bleed.css · runtime.js
+dist/                          base.css · components.css · themes.css · runtime.js
 index.html                     kitchen sink + live theme/density switcher
 ```
 
@@ -113,7 +115,8 @@ switches can interpolate rather than snap, and the skeleton shimmer animates a t
 ## Theming
 
 Themes are primitive overrides under `[data-theme=…]` controlling colour **and**
-geometry/effects. Four ship:
+geometry/effects. All four ship in one `dist/themes.css`; which one applies is set by
+the `data-theme` attribute on `<html>` (or any subtree). Four ship:
 
 - **bleed** — default. Klein-blue ink on warm cream, one near-black accent, `--border-w:3px`,
   `6px 6px 0` shadow, no radius. 3 base colours total.
