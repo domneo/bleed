@@ -16,7 +16,7 @@
     .demo section > h2 { margin-block-end: var(--space-2); }
     .demo .swatch { inline-size: 100%; block-size: 3rem; border: var(--border-w) var(--border-style) var(--ink); border-radius: var(--radius); }
     .demo .row { display: flex; flex-wrap: wrap; gap: var(--space-3); align-items: center; }
-    .demo [data-set-theme][aria-pressed="true"], .demo [data-toggle-density][aria-pressed="true"] { color: var(--paper); background-color: var(--ink); }
+    .demo [data-set-theme][aria-pressed="true"] { color: var(--paper); background-color: var(--ink); }
     .demo .token-section > h3 { margin-block-start: var(--space-6); margin-block-end: var(--space-2); }
     .demo .token-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(8rem, 1fr)); gap: var(--space-5); margin-block-start: var(--space-4); }
     .demo .token-item { display: flex; flex-direction: column; gap: var(--space-2); }
@@ -37,12 +37,9 @@
     <div class="app-header__meta">
       <div class="segmented" role="group" aria-label="Theme">
         <button type="button" class="segmented__theme" data-set-theme="bleed" aria-pressed="true" style="all:unset;padding:var(--space-2) var(--space-3);cursor:pointer;font-weight:700;border-inline-end:var(--border-w) solid var(--ink)">Bleed</button>
-        <button type="button" data-set-theme="newspaper" aria-pressed="false" style="all:unset;padding:var(--space-2) var(--space-3);cursor:pointer;font-weight:700;border-inline-end:var(--border-w) solid var(--ink)">Newspaper</button>
-        <button type="button" data-set-theme="dark" aria-pressed="false" style="all:unset;padding:var(--space-2) var(--space-3);cursor:pointer;font-weight:700;border-inline-end:var(--border-w) solid var(--ink)">Dark</button>
-        <button type="button" data-set-theme="soft" aria-pressed="false" style="all:unset;padding:var(--space-2) var(--space-3);cursor:pointer;font-weight:700">Soft</button>
+        <button type="button" data-set-theme="blip" aria-pressed="false" style="all:unset;padding:var(--space-2) var(--space-3);cursor:pointer;font-weight:700;border-inline-end:var(--border-w) solid var(--ink)">Blip</button>
+        <button type="button" data-set-theme="boring" aria-pressed="false" style="all:unset;padding:var(--space-2) var(--space-3);cursor:pointer;font-weight:700">Boring</button>
       </div>
-      <button type="button" class="btn btn--sm btn--ghost" data-toggle-density aria-pressed="false">Compact</button>
-      <time datetime="2026-07-03T16:00">Updated 16:00 EST</time>
     </div>
   </header>
 
@@ -67,7 +64,7 @@
 
     <main>
       <h1>Financial dashboard kit</h1>
-      <p>Neo-brutalism is the <em>default theme</em>, not the architecture. Every component below is pure token-driven CSS — flip the theme (top-right) and nothing in the component layer changes. <strong>Soft</strong> proves it: rounded, blurred, no hover-jump, thin borders.</p>
+      <p>Neo-brutalism is the <em>default theme</em>, not the architecture. Every component below is pure token-driven CSS — flip the theme (top-right) and nothing in the component layer changes. <strong>Boring</strong> proves it: rounded, blurred, no hover-jump, thin borders.</p>
 
       <!-- TOKENS -->
       <section aria-label="Design tokens" id="tokens" class="token-section">
@@ -429,18 +426,13 @@
 
   <script src="dist/runtime.js"></script>
   <script>
-    // Demo-only: theme + density switchers
+    // Demo-only: theme switcher
     const root = document.documentElement;
     const themeButtons = document.querySelectorAll('[data-set-theme]');
     themeButtons.forEach((b) => b.addEventListener('click', () => {
       root.dataset.theme = b.dataset.setTheme;
       themeButtons.forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
     }));
-    document.querySelector('[data-toggle-density]').addEventListener('click', (e) => {
-      const on = root.dataset.density === 'compact';
-      if (on) delete root.dataset.density; else root.dataset.density = 'compact';
-      e.currentTarget.setAttribute('aria-pressed', String(!on));
-    });
   </script>
 </body>
 </html>

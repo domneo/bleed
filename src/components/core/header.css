@@ -37,9 +37,4 @@
     margin-inline-start: auto;
     font-size: 0.85rem;
   }
-
-  .app-header__meta time {
-    font-variant-numeric: tabular-nums;
-    color: color-mix(in oklch, var(--ink) 65%, var(--paper));
-  }
 }

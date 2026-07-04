@@ -20,43 +20,6 @@
 @property --hover-shift-x { syntax: "<length>"; inherits: true; initial-value: 3px; }
 @property --hover-shift-y { syntax: "<length>"; inherits: true; initial-value: 3px; }
 
-/* --- density multipliers + derived spatial tokens --------------------------
- * The consumed --space-* / --border-w are the raw theme *-base values scaled by
- * a density multiplier. Re-declared on `:root, [data-theme], [data-density]`:
- * a custom property is substituted where it is DECLARED. If --border-w were
- * declared only on :root, a subtree that overrides --border-w-base (a scoped
- * [data-theme]) or --density-* (a scoped [data-density]) would never re-derive.
- * Listing every element where a base OR the multiplier can change re-runs the
- * calc at that element, so scoped theming and scoped density both work — not
- * just root-level switching. The *-base ↔ derived split also dodges the
- * self-reference cycle you'd hit trying to write
- * `--border-w: calc(var(--border-w) * .7)` on one element. */
-@layer bleed.tokens {
-  :root {
-    --density-space: 1;
-    --density-border: 1;
-  }
-
-  /* Compact = denser grids. Scales spacing AND border weight together, because
-     thick borders eat space in dense tables. Applies at :root or any subtree. */
-  [data-density="compact"] {
-    --density-space: 0.62;
-    --density-border: 0.72;
-  }
-
-  :root,
-  [data-theme],
-  [data-density] {
-    --space-1: calc(var(--space-1-base) * var(--density-space));
-    --space-2: calc(var(--space-2-base) * var(--density-space));
-    --space-3: calc(var(--space-3-base) * var(--density-space));
-    --space-4: calc(var(--space-4-base) * var(--density-space));
-    --space-5: calc(var(--space-5-base) * var(--density-space));
-    --space-6: calc(var(--space-6-base) * var(--density-space));
-    --border-w: calc(var(--border-w-base) * var(--density-border));
-  }
-}
-
 @layer bleed.base {
   *,
   *::before,

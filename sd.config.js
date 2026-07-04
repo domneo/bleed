@@ -36,12 +36,12 @@ StyleDictionary.registerFormat({
 });
 
 // --- theme catalogue -----------------------------------------------------------
-export const THEMES = ["bleed", "newspaper", "dark", "soft"];
+export const THEMES = ["bleed", "blip", "boring"];
 
 // color-scheme is a UA behavior (native form control chrome), not a themeable custom
 // property — it's appended to each theme block directly rather than flowing through
 // the token/format pipeline above.
-const COLOR_SCHEME = { bleed: "light", newspaper: "light", dark: "dark", soft: "light" };
+const COLOR_SCHEME = { bleed: "light", blip: "dark", boring: "light" };
 
 const NAME_ONLY = { transforms: [transforms.nameKebab] };
 

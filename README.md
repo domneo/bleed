@@ -8,7 +8,7 @@ Themes are achieved via design tokens using Style Dictionary.
 ```html
 <!--
   Switch themes with [data-theme]
-  Theme options: bleed | newspaper | dark | soft
+  Theme options: bleed | blip | boring
 -->
 <html data-theme="bleed">
   <head>
@@ -33,13 +33,13 @@ Themes are achieved via design tokens using Style Dictionary.
 bleed/
 ├── sd.config.js               Style Dictionary: custom css/layered format, outputReferences:true
 ├── src/
-│   ├── tokens/{bleed,newspaper,dark,soft}.json
+│   ├── tokens/{bleed,blip,boring}.json
 │   │                          DTCG JSON – single source of truth, complete primitive set per theme
 │   ├── fonts/                 font files (.ttf)
 │   ├── foundations/
 │   │   ├── fonts.css          @font-face declarations
 │   │   ├── themes.css         generated, one [data-theme] block per theme
-│   │   └── base.css           reset/typography/focus/@property/density
+│   │   └── base.css           reset/typography/focus/@property
 │   ├── components/
 │   │   ├── core/              common/base components — one .css per component
 │   │   └── finance/           components for financial use cases
@@ -47,7 +47,7 @@ bleed/
 ├── scripts/
 │   └── build.js               Style Dictionary build, concat + copy src/ to dist/
 ├── dist/                      output files for applications to consume from
-└── index.html                 kitchen sink + live theme/density switcher
+└── index.html                 kitchen sink + live theme switcher
 ```
 
 Everything is wrapped in `@layer bleed.tokens, bleed.base, bleed.components` so that styles are all encapsulated.
@@ -67,10 +67,9 @@ Themes are primitive overrides controlling colour and geometry/effects. All them
 
 Available themes:
 
-- **bleed** — default. Semi-monotone blue/white/black scheme featuring brutalist fonts and hard edges.
-- **[WIP] dark**
-- **[WIP] newspaper**
-- **[WIP] soft**
+- **bleed** — Default. Semi-monotone blue/white/black scheme featuring brutalist fonts and hard edges.
+- **[WIP] blip** – Terminal-style UI
+- **[WIP] boring** – AI-generated theme
 
 ---
 
@@ -91,10 +90,6 @@ Every pressable element (button, interactive card, tab, nav link) presses the sa
 | rest      | —                                | `--shadow`        |
 | `:hover`  | `translate` by `--hover-shift-*` | `--shadow-hover`  |
 | `:active` | `translate` ×2                   | `--shadow-active` |
-
-### Density
-
-`data-density="compact"` scales spacing and border weight together (thick borders eat space in dense grids). It's an axis orthogonal to theme: the consumed `--space-*` / `--border-w` are the theme's `*-base` values times a density multiplier, re-derived on `:root, [data-theme], [data-density]` so it works at the root or on any subtree.
 
 ### `@property`
 
