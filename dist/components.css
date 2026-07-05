@@ -537,7 +537,7 @@
     grid-template-columns: auto 1fr;
     min-block-size: 100svh;
   }
-  .app-shell > main { min-inline-size: 0; padding: var(--space-5); }
+  .app-shell > main { min-inline-size: 0; padding: 0 var(--space-6) var(--space-6); }
 
   @container (max-width: 48rem) {
     .app-shell { grid-template-columns: 1fr; }
@@ -551,10 +551,7 @@
     display: flex;
     align-items: center;
     gap: var(--space-4);
-    padding: var(--space-3) var(--space-5);
-
-    background-color: var(--paper);
-    border-block-end: var(--border-w) var(--border-style) var(--ink);
+    padding: var(--space-5);
   }
 
   .app-header--sticky {
@@ -579,7 +576,6 @@
     display: inline-flex;
     align-items: center;
     gap: var(--space-3);
-    margin-inline-start: auto;
     font-size: 0.85rem;
   }
 }

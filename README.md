@@ -1,6 +1,6 @@
 # bleed component library
 
-Themable component library implemented primarily with HTML, CSS, and minimal JS.
+Themable component library implemented with HTML, CSS, and minimal JS.
 Themes are achieved via design tokens using Style Dictionary.
 
 ## Usage

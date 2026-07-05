@@ -39,7 +39,7 @@
     grid-template-columns: auto 1fr;
     min-block-size: 100svh;
   }
-  .app-shell > main { min-inline-size: 0; padding: var(--space-5); }
+  .app-shell > main { min-inline-size: 0; padding: 0 var(--space-6) var(--space-6); }
 
   @container (max-width: 48rem) {
     .app-shell { grid-template-columns: 1fr; }

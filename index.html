@@ -3,27 +3,27 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>bleed — aesthetic-agnostic component library</title>
+  <title>bleed design system</title>
   <link rel="stylesheet" href="dist/fonts.css">
   <link rel="stylesheet" href="dist/themes.css">
   <link rel="stylesheet" href="dist/base.css">
   <link rel="stylesheet" href="dist/components.css">
   <style>
-    /* Demo-only styles */
-    main > h1 { margin-block-end: var(--space-2); }
-    .demo main { max-inline-size: 80rem; }
+    /* Demo styles */
+    .demo header { position: sticky; top: 0; padding: var(--space-6); }
     .demo .app-shell { display: block; }
-    .demo section { margin-block-start: var(--space-6); }
-    .demo section > h2 { margin-block-end: var(--space-2); }
+    .demo main { max-inline-size: 80rem; }
+    .demo h1 { margin-block-end: var(--space-2); }
+    .demo .demo-section { margin-block-start: calc(var(--space-6) * 2); }
+    .demo .demo-section > h2 { margin-block-end: var(--space-2); }
     .demo .swatch { inline-size: 100%; block-size: 3rem; border: var(--border-w) var(--border-style) var(--ink); border-radius: var(--radius); }
     .demo .row { display: flex; flex-wrap: wrap; gap: var(--space-3); align-items: center; }
     .demo [data-set-theme][aria-pressed="true"] { color: var(--paper); background-color: var(--ink); }
-    .demo .token-section > h3 { margin-block-start: var(--space-6); margin-block-end: var(--space-2); }
     .demo .token-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(8rem, 1fr)); gap: var(--space-5); margin-block-start: var(--space-4); }
     .demo .token-item { display: flex; flex-direction: column; gap: var(--space-2); }
     .demo .token-item__label { font-size: 0.8rem; color: var(--ink); }
     .demo .token-box { inline-size: 100%; block-size: 4rem; background-color: var(--paper); border: var(--border-w) var(--border-style) var(--ink); border-radius: var(--radius); }
-    .demo .token-box--shadow { margin: var(--space-3); }
+    .demo .token-box--shadow { margin-bottom: var(--space-2); }
     .demo .token-hover-demo { display: flex; align-items: center; justify-content: center; font-size: 0.8rem; transition: translate var(--transition); }
     .demo .token-hover-demo:hover { translate: var(--hover-shift-x) var(--hover-shift-y); }
     .demo .token-scale { display: flex; flex-direction: column; gap: var(--space-2); margin-block-start: var(--space-4); }
@@ -32,29 +32,25 @@
   </style>
 </head>
 <body class="demo">
-  <header class="app-header app-header--sticky">
-    <a class="app-header__brand" href="#">bleed</a>
-
-    <div class="app-header__meta">
-      <div class="segmented" role="group" aria-label="Theme">
-        <button type="button" class="segmented__theme" data-set-theme="bleed" aria-pressed="true" style="all:unset;padding:var(--space-2) var(--space-3);cursor:pointer;font-weight:700;border-inline-end:var(--border-w) solid var(--ink)">Bleed</button>
-        <button type="button" data-set-theme="blip" aria-pressed="false" style="all:unset;padding:var(--space-2) var(--space-3);cursor:pointer;font-weight:700;border-inline-end:var(--border-w) solid var(--ink)">Blip</button>
-        <button type="button" data-set-theme="boring" aria-pressed="false" style="all:unset;padding:var(--space-2) var(--space-3);cursor:pointer;font-weight:700">Boring</button>
-      </div>
+  <header>
+    <div class="segmented" role="group" aria-label="Theme">
+      <button type="button" class="segmented__theme" data-set-theme="bleed" aria-pressed="true" style="all:unset;padding:var(--space-2) var(--space-3);cursor:pointer;font-weight:700;border-inline-end:var(--border-w) solid var(--ink)">Bleed</button>
+      <button type="button" data-set-theme="blip" aria-pressed="false" style="all:unset;padding:var(--space-2) var(--space-3);cursor:pointer;font-weight:700;border-inline-end:var(--border-w) solid var(--ink)">Blip</button>
+      <button type="button" data-set-theme="boring" aria-pressed="false" style="all:unset;padding:var(--space-2) var(--space-3);cursor:pointer;font-weight:700">Boring</button>
     </div>
   </header>
 
   <div class="app-shell">
     <main>
-      <h1>Financial dashboard kit</h1>
-      <p>Neo-brutalism is the <em>default theme</em>, not the architecture. Every component below is pure token-driven CSS — flip the theme (top-right) and nothing in the component layer changes. <strong>Boring</strong> proves it: rounded, blurred, no hover-jump, thin borders.</p>
+      <section class="demo-section">
+        <h1>bleed<br />design system</h1>
+        <p>Themable component library implemented with HTML, CSS, and minimal JS.</p>
+        <p>Themes are achieved via design tokens using <a href="https://styledictionary.com/" target="_blank">Style Dictionary</a>.</p>
+      </section>
 
-      <!-- TOKENS -->
-      <section aria-label="Design tokens" id="tokens" class="token-section">
-        <h2>Design tokens</h2>
-        <p>Every swatch and box below is rendered with nothing but <code>var(--token)</code> — no hardcoded values. Switch theme (top-right) and this section re-renders exactly like every component does.</p>
-
-        <h3>Color</h3>
+      <!-- TOKENS: COLOR -->
+      <section id="tokens" class="demo-section" aria-labelledby="h-color">
+        <h2 id="h-color">Color</h2>
         <div class="token-grid">
           <div class="token-item"><div class="swatch" style="background-color:var(--ink)"></div><p class="token-item__label"><code>--ink</code></p></div>
           <div class="token-item"><div class="swatch" style="background-color:var(--paper)"></div><p class="token-item__label"><code>--paper</code></p></div>
@@ -66,25 +62,37 @@
           <div class="token-item"><div class="swatch" style="background-color:var(--warning)"></div><p class="token-item__label"><code>--warning</code></p></div>
           <div class="token-item"><div class="swatch" style="background-color:var(--neutral)"></div><p class="token-item__label"><code>--neutral</code></p></div>
         </div>
+      </section>
 
-        <h3>Border &amp; radius</h3>
+      <!-- TOKENS: BORDER & RADIUS -->
+      <section class="demo-section" aria-labelledby="h-border-radius">
+        <h2 id="h-border-radius">Border &amp; radius</h2>
         <div class="token-grid">
           <div class="token-item"><div class="token-box"></div><p class="token-item__label"><code>--border-w</code> · <code>--border-style</code> · <code>--radius</code></p></div>
         </div>
+      </section>
 
-        <h3>Shadow</h3>
+      <!-- TOKENS: SHADOW -->
+      <section class="demo-section" aria-labelledby="h-shadow">
+        <h2 id="h-shadow">Shadow</h2>
         <div class="token-grid">
           <div class="token-item"><div class="token-box token-box--shadow" style="box-shadow:var(--shadow)"></div><p class="token-item__label"><code>--shadow</code></p></div>
           <div class="token-item"><div class="token-box token-box--shadow" style="box-shadow:var(--shadow-hover)"></div><p class="token-item__label"><code>--shadow-hover</code></p></div>
           <div class="token-item"><div class="token-box token-box--shadow" style="box-shadow:var(--shadow-active)"></div><p class="token-item__label"><code>--shadow-active</code></p></div>
         </div>
+      </section>
 
-        <h3>Hover shift &amp; transition</h3>
+      <!-- TOKENS: HOVER SHIFT & TRANSITION -->
+      <section class="demo-section" aria-labelledby="h-hover-transition">
+        <h2 id="h-hover-transition">Hover shift &amp; transition</h2>
         <div class="token-grid">
           <div class="token-item"><div class="token-box token-hover-demo">Hover me</div><p class="token-item__label"><code>--hover-shift-x/y</code> · <code>--transition</code></p></div>
         </div>
+      </section>
 
-        <h3>Spacing scale</h3>
+      <!-- TOKENS: SPACING SCALE -->
+      <section class="demo-section" aria-labelledby="h-spacing-scale">
+        <h2 id="h-spacing-scale">Spacing scale</h2>
         <div class="token-scale">
           <div class="token-scale__row"><span class="token-scale__bar" style="inline-size:var(--space-1)"></span><code>--space-1</code></div>
           <div class="token-scale__row"><span class="token-scale__bar" style="inline-size:var(--space-2)"></span><code>--space-2</code></div>
@@ -93,8 +101,11 @@
           <div class="token-scale__row"><span class="token-scale__bar" style="inline-size:var(--space-5)"></span><code>--space-5</code></div>
           <div class="token-scale__row"><span class="token-scale__bar" style="inline-size:var(--space-6)"></span><code>--space-6</code></div>
         </div>
+      </section>
 
-        <h3>Typography</h3>
+      <!-- TOKENS: TYPOGRAPHY -->
+      <section class="demo-section" aria-labelledby="h-typography">
+        <h2 id="h-typography">Typography</h2>
         <div class="token-grid" style="grid-template-columns:1fr 1fr">
           <div class="token-item"><p style="font-family:var(--font-display);font-size:1.25rem;font-weight:800">Aa Bb Cc</p><p class="token-item__label"><code>--font-display</code></p></div>
           <div class="token-item"><p style="font-family:var(--font-body)">Aa Bb Cc 0123</p><p class="token-item__label"><code>--font-body</code></p></div>
@@ -102,7 +113,8 @@
       </section>
 
       <!-- ALERTS -->
-      <section aria-label="Alerts">
+      <section class="demo-section" aria-labelledby="h-alerts">
+        <h2 id="h-alerts">Alerts</h2>
         <div class="row" style="flex-direction:column;align-items:stretch">
           <div class="alert alert--warning" role="alert">
             <span class="alert__icon" aria-hidden="true">▲</span>
@@ -120,7 +132,8 @@
       </section>
 
       <!-- TOOLBAR -->
-      <section aria-label="Filters">
+      <section class="demo-section" aria-labelledby="h-filters">
+        <h2 id="h-filters">Filters</h2>
         <form class="toolbar" onsubmit="return false">
           <fieldset class="toolbar__group">
             <legend>Range</legend>
@@ -146,8 +159,8 @@
       </section>
 
       <!-- KPI GRID -->
-      <section id="components" aria-label="KPIs">
-        <h2>KPIs & data</h2>
+      <section id="components" class="demo-section" aria-labelledby="h-kpis">
+        <h2 id="h-kpis">KPIs &amp; data</h2>
         <div class="dashboard">
           <article class="stat" data-trend="up">
             <p class="stat__label">Net asset value</p>
@@ -231,8 +244,8 @@
       </section>
 
       <!-- TABLE -->
-      <section aria-label="Positions">
-        <h2>Positions</h2>
+      <section class="demo-section" aria-labelledby="h-positions">
+        <h2 id="h-positions">Positions</h2>
         <div class="table-scroll" style="max-block-size:20rem">
           <table class="table table--zebra table--rows">
             <thead>
@@ -283,8 +296,8 @@
       </section>
 
       <!-- BUTTONS + BADGES -->
-      <section aria-label="Buttons and badges">
-        <h2>Buttons &amp; badges</h2>
+      <section class="demo-section" aria-labelledby="h-buttons-badges">
+        <h2 id="h-buttons-badges">Buttons &amp; badges</h2>
         <div class="btn-group">
           <button class="btn">Default</button>
           <button class="btn btn--accent">Accent</button>
@@ -305,8 +318,8 @@
       </section>
 
       <!-- FORM -->
-      <section aria-label="Form">
-        <h2>Inputs</h2>
+      <section class="demo-section" aria-labelledby="h-inputs">
+        <h2 id="h-inputs">Inputs</h2>
         <form class="row" style="align-items:flex-start;gap:var(--space-5)" onsubmit="return false">
           <div class="field" style="flex:1 1 14rem">
             <label for="amt">Order amount (required)</label>
@@ -337,8 +350,8 @@
       </section>
 
       <!-- TABS -->
-      <section aria-label="Tabs">
-        <h2>Tabs</h2>
+      <section class="demo-section" aria-labelledby="h-tabs">
+        <h2 id="h-tabs">Tabs</h2>
         <div class="tabs">
           <div class="tabs__list" role="tablist" aria-label="Report">
             <button class="tabs__tab" role="tab" id="t-perf" aria-controls="p-perf" aria-selected="true">Performance</button>
@@ -352,8 +365,8 @@
       </section>
 
       <!-- FEEDBACK -->
-      <section aria-label="Feedback">
-        <h2>Overlays &amp; feedback</h2>
+      <section class="demo-section" aria-labelledby="h-feedback">
+        <h2 id="h-feedback">Overlays &amp; feedback</h2>
         <div class="btn-group">
           <button class="btn" data-open-modal="trade-modal">Open modal</button>
           <button class="btn" type="button" onclick="bleed.toast('Trade executed: 100 AAPL', {tone:'positive', icon:'✓'})">Toast: success</button>
@@ -364,8 +377,8 @@
       </section>
 
       <!-- LOADING / EMPTY -->
-      <section aria-label="Loading and empty states">
-        <h2>Loading &amp; empty</h2>
+      <section class="demo-section" aria-labelledby="h-loading-empty">
+        <h2 id="h-loading-empty">Loading &amp; empty</h2>
         <div class="dashboard">
           <section class="card card--pad" aria-busy="true">
             <div class="skeleton skeleton--circle"></div>
