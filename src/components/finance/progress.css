@@ -31,7 +31,7 @@
 
   .progress--positive { --progress-color: var(--positive); }
   .progress--negative { --progress-color: var(--negative); }
-  .progress--accent   { --progress-color: var(--accent-2); }
+  .progress--accent   { --progress-color: var(--accent); }
 
   /* --- <meter> ------------------------------------------------------------ */
   .meter::-webkit-meter-inner-element { block-size: 100%; }

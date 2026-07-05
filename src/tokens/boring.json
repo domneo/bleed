@@ -4,9 +4,7 @@
   "ink": { "$type": "color", "$value": "oklch(0.55 0.13 255)" },
   "paper": { "$type": "color", "$value": "oklch(0.99 0.004 250)" },
 
-  "accent-1": { "$type": "color", "$value": "oklch(0.5 0.08 255)" },
-  "accent-2": { "$type": "color", "$value": "oklch(0.62 0.11 255)" },
-  "accent-3": { "$type": "color", "$value": "oklch(0.66 0.09 200)" },
+  "accent": { "$type": "color", "$value": "oklch(0.5 0.08 255)" },
 
   "positive": { "$type": "color", "$value": "oklch(0.62 0.17 150)" },
   "negative": { "$type": "color", "$value": "oklch(0.58 0.21 25)" },

@@ -64,7 +64,7 @@
   .tabs__tab:hover { color: var(--ink); }
   .tabs__tab[aria-selected="true"] {
     color: var(--ink);
-    border-block-end-color: var(--accent-2);
+    border-block-end-color: var(--accent);
   }
 
   .tabs__panel {

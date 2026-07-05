@@ -4,13 +4,11 @@
   "ink": { "$type": "color", "$value": "oklch(0.78 0.16 264)" },
   "paper": { "$type": "color", "$value": "oklch(0.19 0.02 264)" },
 
-  "accent-1": { "$type": "color", "$value": "oklch(0.9 0.03 264)" },
-  "accent-2": { "$type": "color", "$value": "oklch(0.9 0.03 264)" },
-  "accent-3": { "$type": "color", "$value": "oklch(0.9 0.03 264)" },
+  "accent": { "$type": "color", "$value": "oklch(0.9 0.03 264)" },
 
   "positive": { "$type": "color", "$value": "{ink}" },
-  "negative": { "$type": "color", "$value": "{accent-1}" },
-  "warning": { "$type": "color", "$value": "color-mix(in oklch, var(--ink), var(--accent-1) 45%)" },
+  "negative": { "$type": "color", "$value": "{accent}" },
+  "warning": { "$type": "color", "$value": "color-mix(in oklch, var(--ink), var(--accent) 45%)" },
   "neutral": { "$type": "color", "$value": "color-mix(in oklch, var(--ink) 45%, var(--paper))" },
 
   "border-w": { "$type": "dimension", "$value": "2px" },

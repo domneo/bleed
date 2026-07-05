@@ -75,7 +75,7 @@ Available themes:
 
 ## Design Tokens
 
-**Primitive tokens** (per theme) — the raw material: `--ink --paper --accent-1/2/3 --border-w --border-style --shadow / --shadow-hover / --shadow-active --hover-shift-x/y --radius --transition --font-display --font-body --space-1..6`.
+**Primitive tokens** (per theme) — the raw material: `--ink --paper --accent --border-w --border-style --shadow / --shadow-hover / --shadow-active --hover-shift-x/y --radius --transition --font-display --font-body --space-1..6`.
 
 **Semantic tokens** are declared per-theme alongside the primitives: `--positive --negative --warning --neutral`. Direction is also carried by ▲/▼ glyph + weight in `.delta` — never colour alone.
 

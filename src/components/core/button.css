@@ -12,7 +12,7 @@
 
 @layer bleed.components {
   .btn {
-    --_bg: var(--btn-bg, var(--accent-1));
+    --_bg: var(--btn-bg, var(--accent));
     --_fg: var(--btn-fg, var(--paper));
     --_bd: var(--btn-border, var(--ink));
 
@@ -71,7 +71,7 @@
   .btn[data-variant="accent"] {
     --btn-bg: var(--ink);
     --btn-fg: var(--paper);
-    --btn-border: var(--accent-1);
+    --btn-border: var(--accent);
   }
 
   .btn--ghost,

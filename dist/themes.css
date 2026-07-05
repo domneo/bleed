@@ -7,11 +7,9 @@
   [data-theme="bleed"] {
     --ink: oklch(0.45 0.31 264);
     --paper: oklch(0.97 0.005 280);
-    --accent-1: oklch(0.2 0.01 264);
-    --accent-2: oklch(0.2 0.01 264);
-    --accent-3: oklch(0.2 0.01 264);
+    --accent: oklch(0.2 0.01 264);
     --positive: var(--ink);
-    --negative: var(--accent-1);
+    --negative: var(--accent);
     --warning: var(--ink);
     --neutral: var(--paper);
     --border-w: 2px;
@@ -44,12 +42,10 @@
   [data-theme="blip"] {
     --ink: oklch(0.78 0.16 264);
     --paper: oklch(0.19 0.02 264);
-    --accent-1: oklch(0.9 0.03 264);
-    --accent-2: oklch(0.9 0.03 264);
-    --accent-3: oklch(0.9 0.03 264);
+    --accent: oklch(0.9 0.03 264);
     --positive: var(--ink);
-    --negative: var(--accent-1);
-    --warning: color-mix(in oklch, var(--ink), var(--accent-1) 45%);
+    --negative: var(--accent);
+    --warning: color-mix(in oklch, var(--ink), var(--accent) 45%);
     --neutral: color-mix(in oklch, var(--ink) 45%, var(--paper));
     --border-w: 2px;
     --border-style: solid;
@@ -81,9 +77,7 @@
   [data-theme="boring"] {
     --ink: oklch(0.55 0.13 255);
     --paper: oklch(0.99 0.004 250);
-    --accent-1: oklch(0.5 0.08 255);
-    --accent-2: oklch(0.62 0.11 255);
-    --accent-3: oklch(0.66 0.09 200);
+    --accent: oklch(0.5 0.08 255);
     --positive: oklch(0.62 0.17 150);
     --negative: oklch(0.58 0.21 25);
     --warning: oklch(0.75 0.16 75);

@@ -33,7 +33,7 @@
   }
 
   /* tones — swap the single tone token */
-  .badge--accent   { --badge-color: var(--accent-1); }
+  .badge--accent   { --badge-color: var(--accent); }
   .badge--positive { --badge-color: var(--positive); }
   .badge--negative { --badge-color: var(--negative); }
   .badge--warning  { --badge-color: var(--warning); }

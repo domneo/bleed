@@ -15,7 +15,7 @@
     font-size: 0.8rem;
     font-weight: 600;
     color: var(--paper);
-    background-color: var(--accent-1);
+    background-color: var(--accent);
     border: var(--border-w) var(--border-style) var(--ink);
     border-radius: var(--radius);
     box-shadow: var(--shadow);

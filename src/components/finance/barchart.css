@@ -49,5 +49,5 @@
   .bar-chart .bar__fill--positive { --bar-color: var(--positive); }
   .bar-chart .bar__fill--negative { --bar-color: var(--negative); }
   .bar-chart .bar__fill--warning  { --bar-color: var(--warning); }
-  .bar-chart .bar__fill--accent   { --bar-color: var(--accent-2); }
+  .bar-chart .bar__fill--accent   { --bar-color: var(--accent); }
 }

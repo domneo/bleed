@@ -57,5 +57,5 @@
   .alert--positive { --alert-tone: var(--positive); }
   .alert--warning  { --alert-tone: var(--warning); }
   .alert--negative { --alert-tone: var(--negative); }
-  .alert--accent   { --alert-tone: var(--accent-2); }
+  .alert--accent   { --alert-tone: var(--accent); }
 }

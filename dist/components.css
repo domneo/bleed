@@ -57,7 +57,7 @@
   .alert--positive { --alert-tone: var(--positive); }
   .alert--warning  { --alert-tone: var(--warning); }
   .alert--negative { --alert-tone: var(--negative); }
-  .alert--accent   { --alert-tone: var(--accent-2); }
+  .alert--accent   { --alert-tone: var(--accent); }
 }
 /* Badge / Tag — <span class="badge">. Tone variants pull from finance semantics,
  * which are foundational (:root) tokens, so they work in bleed-core.css too.
@@ -94,7 +94,7 @@
   }
 
   /* tones — swap the single tone token */
-  .badge--accent   { --badge-color: var(--accent-1); }
+  .badge--accent   { --badge-color: var(--accent); }
   .badge--positive { --badge-color: var(--positive); }
   .badge--negative { --badge-color: var(--negative); }
   .badge--warning  { --badge-color: var(--warning); }
@@ -122,7 +122,7 @@
 
 @layer bleed.components {
   .btn {
-    --_bg: var(--btn-bg, var(--accent-1));
+    --_bg: var(--btn-bg, var(--accent));
     --_fg: var(--btn-fg, var(--paper));
     --_bd: var(--btn-border, var(--ink));
 
@@ -181,7 +181,7 @@
   .btn[data-variant="accent"] {
     --btn-bg: var(--ink);
     --btn-fg: var(--paper);
-    --btn-border: var(--accent-1);
+    --btn-border: var(--accent);
   }
 
   .btn--ghost,
@@ -926,7 +926,7 @@
   .tabs__tab:hover { color: var(--ink); }
   .tabs__tab[aria-selected="true"] {
     color: var(--ink);
-    border-block-end-color: var(--accent-2);
+    border-block-end-color: var(--accent);
   }
 
   .tabs__panel {
@@ -1071,7 +1071,7 @@
     font-size: 0.8rem;
     font-weight: 600;
     color: var(--paper);
-    background-color: var(--accent-1);
+    background-color: var(--accent);
     border: var(--border-w) var(--border-style) var(--ink);
     border-radius: var(--radius);
     box-shadow: var(--shadow);
@@ -1143,7 +1143,7 @@
   .bar-chart .bar__fill--positive { --bar-color: var(--positive); }
   .bar-chart .bar__fill--negative { --bar-color: var(--negative); }
   .bar-chart .bar__fill--warning  { --bar-color: var(--warning); }
-  .bar-chart .bar__fill--accent   { --bar-color: var(--accent-2); }
+  .bar-chart .bar__fill--accent   { --bar-color: var(--accent); }
 }
 /* Delta indicator — <data class="delta" value="0.042" data-trend="up">4.2%</data>.
  *
@@ -1319,7 +1319,7 @@
 
   .progress--positive { --progress-color: var(--positive); }
   .progress--negative { --progress-color: var(--negative); }
-  .progress--accent   { --progress-color: var(--accent-2); }
+  .progress--accent   { --progress-color: var(--accent); }
 
   /* --- <meter> ------------------------------------------------------------ */
   .meter::-webkit-meter-inner-element { block-size: 100%; }
