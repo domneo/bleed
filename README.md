@@ -75,7 +75,7 @@ Available themes:
 
 ## Design Tokens
 
-**Primitive tokens** (per theme) — the raw material: `--ink --paper --accent --border-w --border-style --shadow / --shadow-hover / --shadow-active --hover-shift-x/y --radius --transition --font-display --font-body --space-1..6`.
+**Primitive tokens** (per theme) — the raw material: `--ink --paper --accent --border-w --border-style --shadow / --shadow-hover / --shadow-active --hover-shift-x/y --radius --transition --font-display --font-body --font-size-1..7 --line-height-{tight,snug,normal} --letter-spacing-{tight,normal,wide,wider} --space-1..6`.
 
 **Semantic tokens** are declared per-theme alongside the primitives: `--positive --negative --warning --neutral`. Direction is also carried by ▲/▼ glyph + weight in `.delta` — never colour alone.
 
@@ -94,3 +94,11 @@ Every pressable element (button, interactive card, tab, nav link) presses the sa
 ### `@property`
 
 Key colour/length tokens are registered with `@property` (typed + animatable), so theme switches can interpolate rather than snap, and the skeleton shimmer animates a typed `<percentage>`.
+
+---
+
+## Typography
+
+HTML elements carry no visual type styling; `h1..h6` are structural only. Size, weight, and space are applied to text with the `--font-size-* / --line-height-* / --letter-spacing-*` tokens, so the whole type scale re-themes per `[data-theme]`.
+
+`--font-size-1..7` are **fluid**: each is a `clamp(min, preferred + vw, max)` that scales with the viewport (20rem → 80rem). The scale bottoms out at 14px (`--font-size-1`, `0.875rem`) and runs up to 64px (`--font-size-7`, `4rem`).

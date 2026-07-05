@@ -50,18 +50,12 @@
     text-rendering: optimizeLegibility;
   }
 
+  /* Headings carry no visual type styling — they mark document structure only.
+   * Apply size, weight, and space to text directly with the --font-size-*, --line-height-*, and --letter-spacing-* tokens. */
   h1, h2, h3, h4, h5, h6 {
-    font-family: var(--font-display);
-    font-weight: 800;
-    line-height: 1.05;
-    letter-spacing: 0.05em;
-    text-wrap: balance;
+    font-size: inherit;
+    font-weight: inherit;
   }
-
-  h1 { font-size: clamp(1.75rem, 1.2rem + 2.5vw, 2.75rem); }
-  h2 { font-size: clamp(1.4rem, 1.1rem + 1.5vw, 2rem); }
-  h3 { font-size: 1.25rem; }
-  h4 { font-size: 1.05rem; }
 
   p, ul, ol, dl, table, figure, blockquote {
     text-wrap: pretty;
