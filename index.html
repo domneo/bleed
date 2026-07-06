@@ -34,6 +34,8 @@
     .demo .token-scale { display: flex; flex-direction: column; gap: var(--space-2); margin-block-start: var(--space-4); }
     .demo .token-scale__row { display: flex; align-items: center; gap: var(--space-3); }
     .demo .token-scale__bar { block-size: 1.25rem; background-color: var(--ink); }
+    .demo .app-shell-demo { border: var(--border-w) var(--border-style) var(--ink); border-radius: var(--radius); overflow: hidden; }
+    .demo .app-shell-demo__body { display: grid; grid-template-columns: auto 1fr; }
   </style>
 </head>
 <body class="demo">
@@ -54,6 +56,8 @@
       </section>
 
       <hr>
+
+      <!-- ===================================================== TOKENS -->
 
       <!-- TOKENS: COLOR -->
       <section id="tokens" class="demo-section" aria-labelledby="h-color">
@@ -147,6 +151,8 @@
 
       <hr>
 
+      <!-- ============================================ PRIMITIVE COMPONENTS -->
+
       <!-- ALERTS -->
       <section class="demo-section" aria-labelledby="h-alerts">
         <h2 class="text-heading" id="h-alerts">Alerts</h2>
@@ -168,37 +174,325 @@
 
       <hr>
 
-      <!-- TOOLBAR -->
-      <section class="demo-section" aria-labelledby="h-filters">
-        <h2 class="text-heading" id="h-filters">Filters</h2>
-        <form class="toolbar" onsubmit="return false">
-          <fieldset class="toolbar__group">
-            <legend>Range</legend>
-            <div class="segmented" role="tablist" aria-label="Time range">
-              <button role="tab" aria-selected="true">1D</button>
-              <button role="tab" aria-selected="false" tabindex="-1">1W</button>
-              <button role="tab" aria-selected="false" tabindex="-1">1M</button>
-              <button role="tab" aria-selected="false" tabindex="-1">YTD</button>
-            </div>
-          </fieldset>
-          <span class="toolbar__divider" aria-hidden="true"></span>
-          <label class="control"><input type="checkbox" checked> Live</label>
-          <div class="toolbar__spacer"></div>
-          <button type="button" class="btn btn--icon btn--ghost" popovertarget="tb-menu" style="anchor-name:--tb">⋯</button>
-          <div id="tb-menu" popover class="menu" style="position-anchor:--tb">
-            <button class="menu__item">Refresh</button>
-            <button class="menu__item">Configure columns</button>
+      <!-- BADGES -->
+      <section class="demo-section" aria-labelledby="h-badges">
+        <h2 class="text-heading" id="h-badges">Badges</h2>
+        <div class="row">
+          <span class="badge">Default</span>
+          <span class="badge badge--solid badge--accent">Solid</span>
+          <span class="badge badge--positive"><span class="badge__dot"></span> Filled</span>
+          <span class="badge badge--negative">At risk</span>
+          <span class="badge badge--warning">Pending</span>
+          <span class="badge badge--neutral">Draft</span>
+        </div>
+      </section>
+
+      <hr>
+
+      <!-- BUTTONS -->
+      <section id="components" class="demo-section" aria-labelledby="h-buttons">
+        <h2 class="text-heading" id="h-buttons">Buttons</h2>
+        <div class="btn-group">
+          <button class="btn">Default</button>
+          <button class="btn btn--accent">Accent</button>
+          <button class="btn btn--ghost">Ghost</button>
+          <button class="btn btn--sm">Small</button>
+          <button class="btn btn--lg">Large</button>
+          <button class="btn btn--icon" aria-label="Add">＋</button>
+          <button class="btn" disabled>Disabled</button>
+        </div>
+      </section>
+
+      <hr>
+
+      <!-- EMPTY -->
+      <section class="demo-section" aria-labelledby="h-loading-empty">
+        <h2 class="text-heading" id="h-loading-empty">Empty</h2>
+        <div class="empty" data-span="2">
+          <span class="empty__icon" aria-hidden="true">▚</span>
+          <h3 class="empty__title">No open positions</h3>
+          <p class="empty__text">Your portfolio is all cash. Place a trade to get started.</p>
+          <div class="empty__actions"><button class="btn btn--accent" data-open-modal="trade-modal">New trade</button></div>
+        </div>
+      </section>
+
+      <hr>
+
+      <!-- LOADING -->
+      <section class="demo-section" aria-labelledby="h-loading-empty">
+        <h2 class="text-heading" id="h-loading-empty">Loading</h2>
+        <section class="card card--pad" aria-busy="true">
+          <div class="skeleton skeleton--circle"></div>
+          <div class="skeleton skeleton--text" style="inline-size:70%"></div>
+          <div class="skeleton skeleton--text"></div>
+          <div class="skeleton" style="block-size:4rem"></div>
+        </section>
+      </section>
+
+      <hr>
+
+      <!-- MENUS (POPOVER) -->
+      <section class="demo-section" aria-labelledby="h-menus">
+        <h2 class="text-heading" id="h-menus">Menus</h2>
+        <div class="row">
+          <button type="button" class="btn" popovertarget="m-demo" style="anchor-name:--m-demo">Actions ▾</button>
+          <div id="m-demo" popover class="menu" style="position-anchor:--m-demo">
+            <button class="menu__item">Edit</button>
+            <button class="menu__item">Duplicate</button>
+            <button class="menu__item">Move to…</button>
             <hr>
-            <button class="menu__item menu__item--danger">Reset layout</button>
+            <button class="menu__item menu__item--danger">Delete</button>
           </div>
-          <button type="button" class="btn btn--sm btn--accent" data-open-modal="trade-modal">New trade</button>
+          <p class="field__hint" style="margin:0">Popover attribute + CSS anchor positioning — zero JS for open, light-dismiss, and flip-on-clip.</p>
+        </div>
+      </section>
+
+      <hr>
+
+      <!-- PROGRESS -->
+      <section class="demo-section" aria-labelledby="h-progress">
+        <h2 class="text-heading" id="h-progress">Progress</h2>
+        <div class="capacity">
+          <span class="capacity__label">Compute</span>
+          <span class="capacity__value">82%</span>
+          <meter class="meter" value="82" min="0" max="100" low="50" high="80" optimum="30" aria-label="Compute budget">82%</meter>
+        </div>
+        <div class="capacity">
+          <span class="capacity__label">Storage</span>
+          <span class="capacity__value">41%</span>
+          <meter class="meter" value="41" min="0" max="100" low="50" high="80" optimum="30" aria-label="Storage budget">41%</meter>
+        </div>
+        <label class="capacity__label" for="load">Load</label>
+        <progress class="progress progress--accent" id="load" value="0.6" aria-label="Load"></progress>
+      </section>
+
+      <hr>
+
+      <!-- TOAST -->
+      <section class="demo-section" aria-labelledby="h-feedback">
+        <h2 class="text-heading" id="h-feedback">Toasts</h2>
+        <div class="btn-group">
+          <button class="btn" type="button" onclick="bleed.toast('Trade executed: 100 AAPL', {tone:'positive', icon:'✓'})">Toast: success</button>
+          <button class="btn" type="button" onclick="bleed.toast('Connection lost', {tone:'negative', icon:'✕'})">Toast: error</button>
+        </div>
+        <div class="toast-region" id="toasts"></div>
+      </section>
+
+      <hr>
+
+      <!-- TOOLTIP -->
+      <section class="demo-section" aria-labelledby="h-feedback">
+        <h2 class="text-heading" id="h-feedback">Tooltips</h2>
+        <div class="btn-group">
+          <button class="btn btn--icon" popovertarget="tip" popovertargetaction="show" style="anchor-name:--tip" aria-describedby="tip">?</button>
+          <div id="tip" popover="hint" class="tooltip" style="position-anchor:--tip">Annualised, net of fees.</div>
+        </div>
+      </section>
+
+      <hr>
+
+      <!-- ==================================================== FORMS -->
+
+      <!-- TEXT & NUMBER INPUTS -->
+      <section class="demo-section" aria-labelledby="h-text-inputs">
+        <h2 class="text-heading" id="h-text-inputs">Text &amp; number inputs</h2>
+        <form class="row" style="align-items:flex-start" onsubmit="return false">
+          <div class="field" style="flex:1 1 14rem">
+            <label for="amt">Order amount (required)</label>
+            <div class="input-group">
+              <span class="input-group__addon">$</span>
+              <input class="input" id="amt" name="amt" type="number" min="1" required placeholder="0.00">
+            </div>
+            <p class="field__hint">Whole dollars, max $1,000,000.</p>
+            <p class="field__error">Enter an amount of at least $1.</p>
+          </div>
+          <button class="btn btn--accent" type="submit">Submit</button>
         </form>
       </section>
 
       <hr>
 
+      <!-- SELECT -->
+      <section class="demo-section" aria-labelledby="h-select">
+        <h2 class="text-heading" id="h-select">Select</h2>
+        <div class="field" style="max-inline-size:12rem">
+          <label for="side">Side</label>
+          <select class="input" id="side"><option>Buy</option><option>Sell</option><option>Short</option></select>
+        </div>
+      </section>
+
+      <hr>
+
+      <!-- CHECKBOX & RADIO -->
+      <section class="demo-section" aria-labelledby="h-choice">
+        <h2 class="text-heading" id="h-choice">Checkbox &amp; radio</h2>
+        <div class="row" style="align-items:flex-start;gap:var(--space-6)">
+          <div class="field">
+            <span class="field__label">Order type</span>
+            <div class="control-list">
+              <label class="control"><input type="radio" name="ot" checked> Market</label>
+              <label class="control"><input type="radio" name="ot"> Limit</label>
+            </div>
+          </div>
+          <div class="field">
+            <span class="field__label">Options</span>
+            <div class="control-list">
+              <label class="control"><input type="checkbox" checked> Reinvest dividends</label>
+              <label class="control"><input type="checkbox"> Notify on fill</label>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <hr>
+
+      <!-- RANGE -->
+      <section class="demo-section" aria-labelledby="h-range">
+        <h2 class="text-heading" id="h-range">Range</h2>
+        <div class="field" style="max-inline-size:20rem">
+          <label for="risk">Risk tolerance</label>
+          <input class="range" id="risk" type="range" min="0" max="100" value="40">
+        </div>
+      </section>
+
+      <hr>
+
+      <!-- ==================================================== CONTAINERS -->
+
+      <!-- CARDS -->
+      <section class="demo-section" aria-labelledby="h-cards">
+        <h2 class="text-heading" id="h-cards">Cards</h2>
+        <div class="dashboard">
+          <article class="card">
+            <header class="card-header">
+              <h3 class="card-title">Structured</h3>
+              <span class="badge">chrome</span>
+            </header>
+            <div class="card-body">Header, body, and footer slots. Bare-element defaults are donut-scoped to the chrome and stop at the body.</div>
+            <footer class="card-footer">
+              <button class="btn btn--sm btn--ghost">Cancel</button>
+              <button class="btn btn--sm btn--accent">Save</button>
+            </footer>
+          </article>
+          <article class="card card--pad">
+            <h3 class="card-title">Simple</h3>
+            <p>The <code>card--pad</code> variant: content sits directly inside with padding.</p>
+          </article>
+          <article class="card card--pad card--interactive" role="button" tabindex="0">
+            <h3 class="card-title">Interactive</h3>
+            <p>Hover or press me — shares the button motion contract entirely through tokens.</p>
+          </article>
+        </div>
+      </section>
+
+      <hr>
+
+      <!-- MODAL -->
+      <section class="demo-section" aria-labelledby="h-feedback">
+        <h2 class="text-heading" id="h-feedback">Modals</h2>
+        <div class="btn-group">
+          <button class="btn" data-open-modal="trade-modal">Open modal</button>
+        </div>
+        <dialog class="modal" id="trade-modal">
+          <form method="dialog" class="modal__wrap">
+            <header class="modal__header">
+              <h2 class="modal__title">New trade</h2>
+              <button class="btn btn--icon btn--ghost btn--sm" type="button" data-close-modal aria-label="Close">✕</button>
+            </header>
+            <div class="modal__body">
+              <div class="field">
+                <label for="m-sym">Symbol</label>
+                <input class="input" id="m-sym" placeholder="AAPL" required>
+              </div>
+              <p style="margin-block-start:var(--space-4)">Native <code>&lt;dialog&gt;</code>: focus trap, Esc-to-close, inert background, and <code>::backdrop</code> — all free.</p>
+            </div>
+            <footer class="modal__footer">
+              <button class="btn btn--ghost" type="button" data-close-modal>Cancel</button>
+              <button class="btn btn--accent" value="confirm">Place order</button>
+            </footer>
+          </form>
+        </dialog>
+      </section>
+
+      <hr>
+
+      <!-- TABS -->
+      <section class="demo-section" aria-labelledby="h-tabs">
+        <h2 class="text-heading" id="h-tabs">Tabs</h2>
+        <div class="tabs">
+          <div class="tabs__list" role="tablist" aria-label="Report">
+            <button class="tabs__tab" role="tab" id="t-perf" aria-controls="p-perf" aria-selected="true">Performance</button>
+            <button class="tabs__tab" role="tab" id="t-hold" aria-controls="p-hold" aria-selected="false" tabindex="-1">Holdings</button>
+            <button class="tabs__tab" role="tab" id="t-act" aria-controls="p-act" aria-selected="false" tabindex="-1">Activity</button>
+          </div>
+          <section class="tabs__panel" role="tabpanel" id="p-perf" aria-labelledby="t-perf">Trailing return +11.0% YTD, max drawdown −6.4%.</section>
+          <section class="tabs__panel" role="tabpanel" id="p-hold" aria-labelledby="t-hold" hidden>34 positions across 6 sectors.</section>
+          <section class="tabs__panel" role="tabpanel" id="p-act" aria-labelledby="t-act" hidden>12 trades in the last 24h.</section>
+        </div>
+      </section>
+
+      <hr>
+
+      <!-- ==================================================== TABLE -->
+
+      <!-- TABLE -->
+      <section class="demo-section" aria-labelledby="h-positions">
+        <h2 class="text-heading" id="h-positions">Positions</h2>
+        <div class="table-scroll" style="max-block-size:20rem">
+          <table class="table table--zebra table--rows">
+            <thead>
+              <tr>
+                <th><label class="control"><input type="checkbox" aria-label="Select all"></label></th>
+                <th>Symbol</th>
+                <th>Name</th>
+                <th class="num">Last</th>
+                <th class="num">Chg</th>
+                <th class="num">Qty</th>
+                <th aria-label="Actions"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><label class="control"><input type="checkbox" aria-label="Select AAPL"></label></td>
+                <td><strong>AAPL</strong></td><td>Apple Inc.</td>
+                <td class="num"><data value="228.5">228.50</data></td>
+                <td class="num"><data class="delta delta--up" value="0.012">1.2%</data></td>
+                <td class="num">1,200</td>
+                <td><button class="btn btn--icon btn--sm btn--ghost" popovertarget="r1" style="anchor-name:--r1">⋯</button>
+                  <div id="r1" popover class="menu" style="position-anchor:--r1"><button class="menu__item">Buy</button><button class="menu__item">Sell</button><hr><button class="menu__item menu__item--danger">Close</button></div></td>
+              </tr>
+              <tr>
+                <td><label class="control"><input type="checkbox" checked aria-label="Select TSLA"></label></td>
+                <td><strong>TSLA</strong></td><td>Tesla, Inc.</td>
+                <td class="num"><data value="242.1">242.10</data></td>
+                <td class="num"><data class="delta delta--down" value="-0.031">3.1%</data></td>
+                <td class="num">300</td>
+                <td><button class="btn btn--icon btn--sm btn--ghost" popovertarget="r2" style="anchor-name:--r2">⋯</button>
+                  <div id="r2" popover class="menu" style="position-anchor:--r2"><button class="menu__item">Buy</button><button class="menu__item">Sell</button><hr><button class="menu__item menu__item--danger">Close</button></div></td>
+              </tr>
+              <tr>
+                <td><label class="control"><input type="checkbox" aria-label="Select MSFT"></label></td>
+                <td><strong>MSFT</strong></td><td>Microsoft Corp.</td>
+                <td class="num"><data value="441.0">441.00</data></td>
+                <td class="num"><data class="delta delta--up" value="0.004">0.4%</data></td>
+                <td class="num">850</td>
+                <td><button class="btn btn--icon btn--sm btn--ghost" popovertarget="r3" style="anchor-name:--r3">⋯</button>
+                  <div id="r3" popover class="menu" style="position-anchor:--r3"><button class="menu__item">Buy</button><button class="menu__item">Sell</button><hr><button class="menu__item menu__item--danger">Close</button></div></td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr><td></td><th colspan="4" scope="row">Net exposure</th><td class="num">2,350</td><td></td></tr>
+            </tfoot>
+          </table>
+        </div>
+      </section>
+
+      <hr>
+
+      <!-- ==================================================== FINANCE -->
+
       <!-- KPI GRID -->
-      <section id="components" class="demo-section" aria-labelledby="h-kpis">
+      <section class="demo-section" aria-labelledby="h-kpis">
         <h2 class="text-heading" id="h-kpis">KPIs &amp; data</h2>
         <div class="dashboard">
           <article class="stat" data-trend="up">
@@ -263,211 +557,10 @@
             <div><dt>Div yield</dt><dd>0.52%</dd></div>
             <div><dt>Beta</dt><dd>1.21</dd></div>
           </dl>
-
-          <section class="card card--pad">
-            <h3 class="card-title">Budget usage</h3>
-            <div class="capacity">
-              <span class="capacity__label">Compute</span>
-              <span class="capacity__value">82%</span>
-              <meter class="meter" value="82" min="0" max="100" low="50" high="80" optimum="30" aria-label="Compute budget">82%</meter>
-            </div>
-            <div class="capacity">
-              <span class="capacity__label">Storage</span>
-              <span class="capacity__value">41%</span>
-              <meter class="meter" value="41" min="0" max="100" low="50" high="80" optimum="30" aria-label="Storage budget">41%</meter>
-            </div>
-            <label class="capacity__label" for="load">Load</label>
-            <progress class="progress progress--accent" id="load" value="0.6" aria-label="Load"></progress>
-          </section>
-        </div>
-      </section>
-
-      <hr>
-
-      <!-- TABLE -->
-      <section class="demo-section" aria-labelledby="h-positions">
-        <h2 class="text-heading" id="h-positions">Positions</h2>
-        <div class="table-scroll" style="max-block-size:20rem">
-          <table class="table table--zebra table--rows">
-            <thead>
-              <tr>
-                <th><label class="control"><input type="checkbox" aria-label="Select all"></label></th>
-                <th>Symbol</th>
-                <th>Name</th>
-                <th class="num">Last</th>
-                <th class="num">Chg</th>
-                <th class="num">Qty</th>
-                <th aria-label="Actions"></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><label class="control"><input type="checkbox" aria-label="Select AAPL"></label></td>
-                <td><strong>AAPL</strong></td><td>Apple Inc.</td>
-                <td class="num"><data value="228.5">228.50</data></td>
-                <td class="num"><data class="delta delta--up" value="0.012">1.2%</data></td>
-                <td class="num">1,200</td>
-                <td><button class="btn btn--icon btn--sm btn--ghost" popovertarget="r1" style="anchor-name:--r1">⋯</button>
-                  <div id="r1" popover class="menu" style="position-anchor:--r1"><button class="menu__item">Buy</button><button class="menu__item">Sell</button><hr><button class="menu__item menu__item--danger">Close</button></div></td>
-              </tr>
-              <tr>
-                <td><label class="control"><input type="checkbox" checked aria-label="Select TSLA"></label></td>
-                <td><strong>TSLA</strong></td><td>Tesla, Inc.</td>
-                <td class="num"><data value="242.1">242.10</data></td>
-                <td class="num"><data class="delta delta--down" value="-0.031">3.1%</data></td>
-                <td class="num">300</td>
-                <td><button class="btn btn--icon btn--sm btn--ghost" popovertarget="r2" style="anchor-name:--r2">⋯</button>
-                  <div id="r2" popover class="menu" style="position-anchor:--r2"><button class="menu__item">Buy</button><button class="menu__item">Sell</button><hr><button class="menu__item menu__item--danger">Close</button></div></td>
-              </tr>
-              <tr>
-                <td><label class="control"><input type="checkbox" aria-label="Select MSFT"></label></td>
-                <td><strong>MSFT</strong></td><td>Microsoft Corp.</td>
-                <td class="num"><data value="441.0">441.00</data></td>
-                <td class="num"><data class="delta delta--up" value="0.004">0.4%</data></td>
-                <td class="num">850</td>
-                <td><button class="btn btn--icon btn--sm btn--ghost" popovertarget="r3" style="anchor-name:--r3">⋯</button>
-                  <div id="r3" popover class="menu" style="position-anchor:--r3"><button class="menu__item">Buy</button><button class="menu__item">Sell</button><hr><button class="menu__item menu__item--danger">Close</button></div></td>
-              </tr>
-            </tbody>
-            <tfoot>
-              <tr><td></td><th colspan="4" scope="row">Net exposure</th><td class="num">2,350</td><td></td></tr>
-            </tfoot>
-          </table>
-        </div>
-      </section>
-
-      <hr>
-
-      <!-- BUTTONS + BADGES -->
-      <section class="demo-section" aria-labelledby="h-buttons-badges">
-        <h2 class="text-heading" id="h-buttons-badges">Buttons &amp; badges</h2>
-        <div class="btn-group">
-          <button class="btn">Default</button>
-          <button class="btn btn--accent">Accent</button>
-          <button class="btn btn--ghost">Ghost</button>
-          <button class="btn btn--sm">Small</button>
-          <button class="btn btn--lg">Large</button>
-          <button class="btn btn--icon" aria-label="Add">＋</button>
-          <button class="btn" disabled>Disabled</button>
-        </div>
-        <div class="row" style="margin-block-start:var(--space-4)">
-          <span class="badge">Default</span>
-          <span class="badge badge--solid badge--accent">Solid</span>
-          <span class="badge badge--positive"><span class="badge__dot"></span> Filled</span>
-          <span class="badge badge--negative">At risk</span>
-          <span class="badge badge--warning">Pending</span>
-          <span class="badge badge--neutral">Draft</span>
-        </div>
-      </section>
-
-      <hr>
-
-      <!-- FORM -->
-      <section class="demo-section" aria-labelledby="h-inputs">
-        <h2 class="text-heading" id="h-inputs">Inputs</h2>
-        <form class="row" style="align-items:flex-start;gap:var(--space-5)" onsubmit="return false">
-          <div class="field" style="flex:1 1 14rem">
-            <label for="amt">Order amount (required)</label>
-            <div class="input-group">
-              <span class="input-group__addon">$</span>
-              <input class="input" id="amt" name="amt" type="number" min="1" required placeholder="0.00">
-            </div>
-            <p class="field__hint">Whole dollars, max $1,000,000.</p>
-            <p class="field__error">Enter an amount of at least $1.</p>
-          </div>
-          <div class="field" style="flex:1 1 12rem">
-            <label for="side">Side</label>
-            <select class="input" id="side"><option>Buy</option><option>Sell</option><option>Short</option></select>
-          </div>
-          <div class="field" style="flex:1 1 12rem">
-            <span class="field__label">Order type</span>
-            <div class="control-list">
-              <label class="control"><input type="radio" name="ot" checked> Market</label>
-              <label class="control"><input type="radio" name="ot"> Limit</label>
-            </div>
-          </div>
-          <div class="field" style="flex:1 1 14rem">
-            <label for="risk">Risk tolerance</label>
-            <input class="range" id="risk" type="range" min="0" max="100" value="40">
-          </div>
-          <button class="btn btn--accent" type="submit">Submit</button>
-        </form>
-      </section>
-
-      <hr>
-
-      <!-- TABS -->
-      <section class="demo-section" aria-labelledby="h-tabs">
-        <h2 class="text-heading" id="h-tabs">Tabs</h2>
-        <div class="tabs">
-          <div class="tabs__list" role="tablist" aria-label="Report">
-            <button class="tabs__tab" role="tab" id="t-perf" aria-controls="p-perf" aria-selected="true">Performance</button>
-            <button class="tabs__tab" role="tab" id="t-hold" aria-controls="p-hold" aria-selected="false" tabindex="-1">Holdings</button>
-            <button class="tabs__tab" role="tab" id="t-act" aria-controls="p-act" aria-selected="false" tabindex="-1">Activity</button>
-          </div>
-          <section class="tabs__panel" role="tabpanel" id="p-perf" aria-labelledby="t-perf">Trailing return +11.0% YTD, max drawdown −6.4%.</section>
-          <section class="tabs__panel" role="tabpanel" id="p-hold" aria-labelledby="t-hold" hidden>34 positions across 6 sectors.</section>
-          <section class="tabs__panel" role="tabpanel" id="p-act" aria-labelledby="t-act" hidden>12 trades in the last 24h.</section>
-        </div>
-      </section>
-
-      <hr>
-
-      <!-- FEEDBACK -->
-      <section class="demo-section" aria-labelledby="h-feedback">
-        <h2 class="text-heading" id="h-feedback">Overlays &amp; feedback</h2>
-        <div class="btn-group">
-          <button class="btn" data-open-modal="trade-modal">Open modal</button>
-          <button class="btn" type="button" onclick="bleed.toast('Trade executed: 100 AAPL', {tone:'positive', icon:'✓'})">Toast: success</button>
-          <button class="btn" type="button" onclick="bleed.toast('Connection lost', {tone:'negative', icon:'✕'})">Toast: error</button>
-          <button class="btn btn--icon" popovertarget="tip" popovertargetaction="show" style="anchor-name:--tip" aria-describedby="tip">?</button>
-          <div id="tip" popover="hint" class="tooltip" style="position-anchor:--tip">Annualised, net of fees.</div>
-        </div>
-      </section>
-
-      <!-- LOADING / EMPTY -->
-      <section class="demo-section" aria-labelledby="h-loading-empty">
-        <h2 class="text-heading" id="h-loading-empty">Loading &amp; empty</h2>
-        <div class="dashboard">
-          <section class="card card--pad" aria-busy="true">
-            <div class="skeleton skeleton--circle"></div>
-            <div class="skeleton skeleton--text" style="inline-size:70%"></div>
-            <div class="skeleton skeleton--text"></div>
-            <div class="skeleton" style="block-size:4rem"></div>
-          </section>
-          <div class="empty" data-span="2">
-            <span class="empty__icon" aria-hidden="true">▚</span>
-            <h3 class="empty__title">No open positions</h3>
-            <p class="empty__text">Your portfolio is all cash. Place a trade to get started.</p>
-            <div class="empty__actions"><button class="btn btn--accent" data-open-modal="trade-modal">New trade</button></div>
-          </div>
         </div>
       </section>
     </main>
   </div>
-
-  <!-- MODAL -->
-  <dialog class="modal" id="trade-modal">
-    <form method="dialog" class="modal__wrap">
-      <header class="modal__header">
-        <h2 class="modal__title">New trade</h2>
-        <button class="btn btn--icon btn--ghost btn--sm" type="button" data-close-modal aria-label="Close">✕</button>
-      </header>
-      <div class="modal__body">
-        <div class="field">
-          <label for="m-sym">Symbol</label>
-          <input class="input" id="m-sym" placeholder="AAPL" required>
-        </div>
-        <p style="margin-block-start:var(--space-4)">Native <code>&lt;dialog&gt;</code>: focus trap, Esc-to-close, inert background, and <code>::backdrop</code> — all free.</p>
-      </div>
-      <footer class="modal__footer">
-        <button class="btn btn--ghost" type="button" data-close-modal>Cancel</button>
-        <button class="btn btn--accent" value="confirm">Place order</button>
-      </footer>
-    </form>
-  </dialog>
-
-  <div class="toast-region" id="toasts"></div>
 
   <script src="dist/runtime.js"></script>
   <script>
