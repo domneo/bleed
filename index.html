@@ -13,25 +13,23 @@
     .demo header { position: sticky; top: 0; padding: var(--space-6); }
     .demo .app-shell { display: block; }
     .demo main { max-inline-size: 80rem; }
-    .demo h1 { margin-block-end: var(--space-2); }
     .demo .text-display { font-family: var(--font-display); font-size: var(--font-size-7); font-weight: 800; line-height: var(--line-height-tight); letter-spacing: var(--letter-spacing-wide); text-wrap: balance; }
     .demo .text-heading { font-family: var(--font-display); font-size: var(--font-size-5); font-weight: 800; line-height: var(--line-height-snug); letter-spacing: var(--letter-spacing-wide); text-wrap: balance; }
-    .demo .text-lead { font-family: var(--font-body); font-size: var(--font-size-4); line-height: var(--line-height-normal); }
-    .demo .demo-section { margin-block: calc(var(--space-6) * 2); }
-    .demo .demo-section > h2 { margin-block-end: var(--space-2); }
+    .demo .text-lead { font-family: var(--font-body); font-size: var(--font-size-2); line-height: var(--line-height-normal); }
+    .demo .demo-section { display: flex; flex-direction: column; gap: var(--space-5); margin-block: var(--space-9); }
     .demo .swatch { inline-size: 100%; block-size: 3rem; border: var(--border-w) var(--border-style) var(--ink); border-radius: var(--radius); }
     .demo .row { display: flex; flex-wrap: wrap; gap: var(--space-3); align-items: center; }
     .demo [data-set-theme][aria-pressed="true"] { color: var(--paper); background-color: var(--ink); }
-    .demo .token-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(8rem, 1fr)); gap: var(--space-5); margin-block-start: var(--space-4); }
+    .demo .token-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(8rem, 1fr)); gap: var(--space-5); }
     .demo .token-item { display: flex; flex-direction: column; gap: var(--space-2); }
-    .demo .token-item__label { font-size: 0.8rem; color: var(--ink); }
+    .demo .token-item__label { font-size: var(--font-size-1); color: var(--ink); }
     .demo .token-box { inline-size: 100%; block-size: 4rem; background-color: var(--paper); border: var(--border-w) var(--border-style) var(--ink); border-radius: var(--radius); }
-    .demo .token-box--shadow { margin-bottom: var(--space-2); }
-    .demo .token-hover-demo { display: flex; align-items: center; justify-content: center; font-size: 0.8rem; transition: translate var(--transition); }
+    .demo .token-box--shadow { margin-block-end: var(--space-1); }
+    .demo .token-hover-demo { display: flex; align-items: center; justify-content: center; font-size: var(--font-size-1); transition: translate var(--transition); }
     .demo .token-hover-demo:hover { translate: var(--hover-shift-x) var(--hover-shift-y); }
-    .demo .token-type-row { display: flex; align-items: baseline; gap: var(--space-3); }
-    .demo .token-type-row .token-item__label { flex: 0 0 6.5rem; text-align: left; }
-    .demo .token-scale { display: flex; flex-direction: column; gap: var(--space-2); margin-block-start: var(--space-4); }
+    .demo .token-type-row { display: flex; align-items: center; gap: var(--space-3); }
+    .demo .token-type-row .token-item__label { flex: 0 0 8.5rem; text-align: left; }
+    .demo .token-scale { display: flex; flex-direction: column; gap: var(--space-2); }
     .demo .token-scale__row { display: flex; align-items: center; gap: var(--space-3); }
     .demo .token-scale__bar { block-size: 1.25rem; background-color: var(--ink); }
     .demo .app-shell-demo { border: var(--border-w) var(--border-style) var(--ink); border-radius: var(--radius); overflow: hidden; }
@@ -51,8 +49,7 @@
     <main>
       <section class="demo-section">
         <h1 class="text-display">bleed<br />design system</h1>
-        <p class="text-lead">Themable component library implemented with HTML, CSS, and minimal JS.</p>
-        <p>Themes are achieved via design tokens using <a href="https://styledictionary.com/" target="_blank">Style Dictionary</a>.</p>
+        <p class="text-lead">Themable component library implemented with HTML, CSS, and minimal JS.<br />Themes are achieved via design tokens using <a href="https://styledictionary.com/" target="_blank">Style Dictionary</a>.</p>
       </section>
 
       <hr>
@@ -79,7 +76,7 @@
       <section class="demo-section" aria-labelledby="h-border-radius">
         <h2 class="text-heading" id="h-border-radius">Border &amp; radius</h2>
         <div class="token-grid">
-          <div class="token-item"><div class="token-box"></div><p class="token-item__label"><code>--border-w</code> · <code>--border-style</code> · <code>--radius</code></p></div>
+          <div class="token-item"><div class="token-box"></div><p class="token-item__label"><code>--border-w</code><br /><code>--border-style</code><br /><code>--radius</code></p></div>
         </div>
       </section>
 
@@ -125,26 +122,26 @@
       <!-- TOKENS: TYPOGRAPHY -->
       <section class="demo-section" aria-labelledby="h-typography">
         <h2 class="text-heading" id="h-typography">Typography</h2>
-        <div class="token-grid" style="grid-template-columns:1fr 1fr">
+        <div class="typography">
           <div class="token-item">
-            <div class="token-type-row"><p class="token-item__label"></p><p class="token-item__label"><code>--font-display</code></p></div>
-            <div class="token-type-row"><p class="token-item__label"><code>--font-size-1</code></p><p style="font-family:var(--font-display);font-size:var(--font-size-1);font-weight:800">Aa Bb Cc</p></div>
-            <div class="token-type-row"><p class="token-item__label"><code>--font-size-2</code></p><p style="font-family:var(--font-display);font-size:var(--font-size-2);font-weight:800">Aa Bb Cc</p></div>
-            <div class="token-type-row"><p class="token-item__label"><code>--font-size-3</code></p><p style="font-family:var(--font-display);font-size:var(--font-size-3);font-weight:800">Aa Bb Cc</p></div>
-            <div class="token-type-row"><p class="token-item__label"><code>--font-size-4</code></p><p style="font-family:var(--font-display);font-size:var(--font-size-4);font-weight:800">Aa Bb Cc</p></div>
-            <div class="token-type-row"><p class="token-item__label"><code>--font-size-5</code></p><p style="font-family:var(--font-display);font-size:var(--font-size-5);font-weight:800">Aa Bb Cc</p></div>
-            <div class="token-type-row"><p class="token-item__label"><code>--font-size-6</code></p><p style="font-family:var(--font-display);font-size:var(--font-size-6);font-weight:800">Aa Bb Cc</p></div>
-            <div class="token-type-row"><p class="token-item__label"><code>--font-size-7</code></p><p style="font-family:var(--font-display);font-size:var(--font-size-7);font-weight:800">Aa Bb Cc</p></div>
+            <div class="token-type-row"><p class="token-item__label"><code>--font-size-1</code></p><p style="font-family:var(--font-display);font-size:var(--font-size-1);font-weight:800">--font-display</p></div>
+            <div class="token-type-row"><p class="token-item__label"><code>--font-size-2</code></p><p style="font-family:var(--font-display);font-size:var(--font-size-2);font-weight:800">--font-display</p></div>
+            <div class="token-type-row"><p class="token-item__label"><code>--font-size-3</code></p><p style="font-family:var(--font-display);font-size:var(--font-size-3);font-weight:800">--font-display</p></div>
+            <div class="token-type-row"><p class="token-item__label"><code>--font-size-4</code></p><p style="font-family:var(--font-display);font-size:var(--font-size-4);font-weight:800">--font-display</p></div>
+            <div class="token-type-row"><p class="token-item__label"><code>--font-size-5</code></p><p style="font-family:var(--font-display);font-size:var(--font-size-5);font-weight:800">--font-display</p></div>
+            <div class="token-type-row"><p class="token-item__label"><code>--font-size-6</code></p><p style="font-family:var(--font-display);font-size:var(--font-size-6);font-weight:800">--font-display</p></div>
+            <div class="token-type-row"><p class="token-item__label"><code>--font-size-7</code></p><p style="font-family:var(--font-display);font-size:var(--font-size-7);font-weight:800">--font-display</p></div>
           </div>
+        </div>
+        <div class="typography">
           <div class="token-item">
-            <div class="token-type-row"><p class="token-item__label"></p><p class="token-item__label"><code>--font-body</code></p></div>
-            <div class="token-type-row"><p class="token-item__label"><code>--font-size-1</code></p><p style="font-family:var(--font-body);font-size:var(--font-size-1)">Aa Bb Cc 0123</p></div>
-            <div class="token-type-row"><p class="token-item__label"><code>--font-size-2</code></p><p style="font-family:var(--font-body);font-size:var(--font-size-2)">Aa Bb Cc 0123</p></div>
-            <div class="token-type-row"><p class="token-item__label"><code>--font-size-3</code></p><p style="font-family:var(--font-body);font-size:var(--font-size-3)">Aa Bb Cc 0123</p></div>
-            <div class="token-type-row"><p class="token-item__label"><code>--font-size-4</code></p><p style="font-family:var(--font-body);font-size:var(--font-size-4)">Aa Bb Cc 0123</p></div>
-            <div class="token-type-row"><p class="token-item__label"><code>--font-size-5</code></p><p style="font-family:var(--font-body);font-size:var(--font-size-5)">Aa Bb Cc 0123</p></div>
-            <div class="token-type-row"><p class="token-item__label"><code>--font-size-6</code></p><p style="font-family:var(--font-body);font-size:var(--font-size-6)">Aa Bb Cc 0123</p></div>
-            <div class="token-type-row"><p class="token-item__label"><code>--font-size-7</code></p><p style="font-family:var(--font-body);font-size:var(--font-size-7)">Aa Bb Cc 0123</p></div>
+            <div class="token-type-row"><p class="token-item__label"><code>--font-size-1</code></p><p style="font-family:var(--font-body);font-size:var(--font-size-1)">--font-body</p></div>
+            <div class="token-type-row"><p class="token-item__label"><code>--font-size-2</code></p><p style="font-family:var(--font-body);font-size:var(--font-size-2)">--font-body</p></div>
+            <div class="token-type-row"><p class="token-item__label"><code>--font-size-3</code></p><p style="font-family:var(--font-body);font-size:var(--font-size-3)">--font-body</p></div>
+            <div class="token-type-row"><p class="token-item__label"><code>--font-size-4</code></p><p style="font-family:var(--font-body);font-size:var(--font-size-4)">--font-body</p></div>
+            <div class="token-type-row"><p class="token-item__label"><code>--font-size-5</code></p><p style="font-family:var(--font-body);font-size:var(--font-size-5)">--font-body</p></div>
+            <div class="token-type-row"><p class="token-item__label"><code>--font-size-6</code></p><p style="font-family:var(--font-body);font-size:var(--font-size-6)">--font-body</p></div>
+            <div class="token-type-row"><p class="token-item__label"><code>--font-size-7</code></p><p style="font-family:var(--font-body);font-size:var(--font-size-7)">--font-body</p></div>
           </div>
         </div>
       </section>

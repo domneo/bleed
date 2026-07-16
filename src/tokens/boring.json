@@ -50,5 +50,8 @@
   "space-3": { "$type": "dimension", "$value": "0.75rem" },
   "space-4": { "$type": "dimension", "$value": "1rem" },
   "space-5": { "$type": "dimension", "$value": "1.5rem" },
-  "space-6": { "$type": "dimension", "$value": "2rem" }
+  "space-6": { "$type": "dimension", "$value": "2rem" },
+  "space-7": { "$type": "dimension", "$value": "2.5rem" },
+  "space-8": { "$type": "dimension", "$value": "3rem" },
+  "space-9": { "$type": "dimension", "$value": "4rem" }
 }
