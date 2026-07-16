@@ -17,22 +17,22 @@
   }
 
   .empty__icon {
-    font-size: 2.5rem;
-    line-height: 1;
+    font-size: var(--font-size-5);
+    line-height: var(--line-height-tight);
     opacity: 0.7;
   }
 
   .empty__title {
     margin: 0;
     font-family: var(--font-display);
-    font-size: 1.15rem;
+    font-size: var(--font-size-2);
     color: var(--ink);
   }
 
   .empty__text {
     margin: 0;
     max-inline-size: 40ch;
-    font-size: 0.9rem;
+    font-size: var(--font-size-1);
   }
 
   .empty__actions {

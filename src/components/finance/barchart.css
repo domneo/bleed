@@ -19,7 +19,6 @@
     inline-size: 1%;
     white-space: nowrap;
     text-align: start;
-    font-weight: 700;
     padding-block: var(--space-1);
     padding-inline-end: var(--space-3);
   }
@@ -35,12 +34,11 @@
     justify-content: flex-end;
     min-inline-size: fit-content;
     inline-size: clamp(0%, calc(var(--value, 0) * 1%), 100%);
-    block-size: 1.5rem;
+    block-size: var(--space-5);
     padding-inline: var(--space-2);
 
     color: var(--paper);
-    font-size: 0.78rem;
-    font-weight: 700;
+    font-size: var(--font-size-1);
     background-color: var(--bar-color, var(--ink));
     border: var(--border-w) var(--border-style) var(--ink);
     border-radius: var(--radius);

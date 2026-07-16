@@ -12,8 +12,7 @@
     max-inline-size: 22ch;
     padding: var(--space-1) var(--space-2);
 
-    font-size: 0.8rem;
-    font-weight: 600;
+    font-size: var(--font-size-1);
     color: var(--paper);
     background-color: var(--accent);
     border: var(--border-w) var(--border-style) var(--ink);

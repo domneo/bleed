@@ -23,12 +23,11 @@
 
     padding-block: var(--space-2);
     padding-inline: var(--space-4);
-    min-block-size: 2.75rem;
+    min-block-size: calc(var(--space-6) + var(--space-3));
 
     font-family: var(--font-display);
-    font-size: 0.95rem;
-    font-weight: 700;
-    line-height: 1;
+    font-size: var(--font-size-1);
+    line-height: var(--line-height-tight);
     text-decoration: none;
     white-space: nowrap;
     cursor: pointer;
@@ -85,27 +84,27 @@
   .btn--sm {
     padding-block: var(--space-1);
     padding-inline: var(--space-3);
-    min-block-size: 2rem;
-    font-size: 0.8rem;
+    min-block-size: var(--space-6);
+    font-size: var(--font-size-1);
   }
 
   .btn--lg {
     padding-block: var(--space-3);
     padding-inline: var(--space-5);
-    min-block-size: 3.25rem;
-    font-size: 1.1rem;
+    min-block-size: calc(var(--space-8) + var(--space-1));
+    font-size: var(--font-size-2);
   }
 
   /* --- icon-only: square, centres a glyph/SVG ----------------------------- */
   .btn--icon {
     padding: var(--space-2);
-    min-block-size: 2.75rem;
-    inline-size: 2.75rem;
+    min-block-size: calc(var(--space-6) + var(--space-3));
+    inline-size: calc(var(--space-6) + var(--space-3));
     aspect-ratio: 1;
   }
-  .btn--icon.btn--sm { min-block-size: 2rem; inline-size: 2rem; padding: var(--space-1); }
-  .btn--icon.btn--lg { min-block-size: 3.25rem; inline-size: 3.25rem; }
-  .btn--icon > svg { inline-size: 1.25rem; block-size: 1.25rem; }
+  .btn--icon.btn--sm { min-block-size: var(--space-6); inline-size: var(--space-6); padding: var(--space-1); }
+  .btn--icon.btn--lg { min-block-size: calc(var(--space-8) + var(--space-1)); inline-size: calc(var(--space-8) + var(--space-1)); }
+  .btn--icon > svg { inline-size: calc(var(--space-4) + var(--space-1)); block-size: calc(var(--space-4) + var(--space-1)); }
 
   .btn--full {
     display: flex;

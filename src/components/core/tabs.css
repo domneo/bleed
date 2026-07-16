@@ -23,7 +23,6 @@
     appearance: none;
     padding: var(--space-2) var(--space-4);
     font: inherit;
-    font-weight: 700;
     color: var(--ink);
     background-color: var(--paper);
     border: none;
@@ -52,7 +51,6 @@
     appearance: none;
     padding: var(--space-2) var(--space-4);
     font: inherit;
-    font-weight: 700;
     color: color-mix(in oklch, var(--ink) 65%, var(--paper));
     background-color: transparent;
     border: none;

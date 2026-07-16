@@ -29,13 +29,12 @@
     inset-block-start: 0;
     z-index: 1;
     font-family: var(--font-display);
-    font-size: 0.85rem;
+    font-size: var(--font-size-1);
     background-color: var(--paper);
     border-block-end: var(--border-w) var(--border-style) var(--ink);
   }
 
   .table tfoot :is(th, td) {
-    font-weight: 700;
     border-block-start: var(--border-w) var(--border-style) var(--ink);
     border-block-end: none;
   }

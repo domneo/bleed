@@ -9,15 +9,14 @@
     align-items: center;
     gap: var(--space-2);
     cursor: pointer;
-    font-weight: 600;
   }
 
   .control input[type="checkbox"],
   .control input[type="radio"],
   .field input[type="checkbox"],
   .field input[type="radio"] {
-    inline-size: 1.15rem;
-    block-size: 1.15rem;
+    inline-size: var(--space-5);
+    block-size: var(--space-5);
     accent-color: var(--ink);
     cursor: pointer;
   }

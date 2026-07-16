@@ -20,8 +20,7 @@
     align-items: center;
     gap: var(--space-2);
     font-family: var(--font-display);
-    font-size: 1.25rem;
-    font-weight: 800;
+    font-size: var(--font-size-3);
     text-decoration: none;
     color: var(--ink);
   }
@@ -31,6 +30,6 @@
     display: inline-flex;
     align-items: center;
     gap: var(--space-3);
-    font-size: 0.85rem;
+    font-size: var(--font-size-1);
   }
 }

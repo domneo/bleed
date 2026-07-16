@@ -38,7 +38,7 @@
 
   html {
     font-family: var(--font-body);
-    line-height: 1.5;
+    line-height: var(--line-height-normal);
   }
 
   body {
@@ -89,6 +89,7 @@
   ::selection {
     background: var(--ink);
     color: var(--paper);
+    text-shadow: 0 var(--space-1) 0 var(--accent);
   }
 
   :where([hidden]) {

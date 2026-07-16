@@ -15,7 +15,7 @@
     --skeleton-sweep: 120%;
 
     display: block;
-    min-block-size: 1.25rem;
+    min-block-size: calc(var(--space-4) + var(--space-1));
     border-radius: var(--radius);
     background-color: color-mix(in oklch, var(--ink) 14%, var(--paper));
     background-image: linear-gradient(
@@ -40,7 +40,7 @@
   .skeleton--circle {
     border-radius: 50%;
     aspect-ratio: 1;
-    inline-size: 2.75rem;
+    inline-size: calc(var(--space-6) + var(--space-3));
   }
 
   @keyframes skeleton-sweep {

@@ -43,16 +43,16 @@
   .toast--negative { --toast-tone: var(--negative); }
   .toast--warning  { --toast-tone: var(--warning); }
 
-  .toast__icon { font-size: 1.1rem; line-height: 1; color: var(--_tone); }
-  .toast__msg { flex: 1; font-weight: 600; }
+  .toast__icon { font-size: var(--font-size-2); line-height: var(--line-height-tight); color: var(--_tone); }
+  .toast__msg { flex: 1; }
   .toast__close {
     appearance: none;
     border: none;
     background: transparent;
     color: inherit;
     cursor: pointer;
-    font-size: 1.1rem;
-    line-height: 1;
+    font-size: var(--font-size-2);
+    line-height: var(--line-height-tight);
   }
 
   .toast--leaving { animation: toast-out var(--transition) both; }

@@ -136,12 +136,11 @@
 
     padding-block: var(--space-2);
     padding-inline: var(--space-4);
-    min-block-size: 2.75rem;
+    min-block-size: calc(var(--space-6) + var(--space-3));
 
     font-family: var(--font-display);
-    font-size: 0.95rem;
-    font-weight: 700;
-    line-height: 1;
+    font-size: var(--font-size-1);
+    line-height: var(--line-height-tight);
     text-decoration: none;
     white-space: nowrap;
     cursor: pointer;
@@ -198,27 +197,27 @@
   .btn--sm {
     padding-block: var(--space-1);
     padding-inline: var(--space-3);
-    min-block-size: 2rem;
-    font-size: 0.8rem;
+    min-block-size: var(--space-6);
+    font-size: var(--font-size-1);
   }
 
   .btn--lg {
     padding-block: var(--space-3);
     padding-inline: var(--space-5);
-    min-block-size: 3.25rem;
-    font-size: 1.1rem;
+    min-block-size: calc(var(--space-8) + var(--space-1));
+    font-size: var(--font-size-2);
   }
 
   /* --- icon-only: square, centres a glyph/SVG ----------------------------- */
   .btn--icon {
     padding: var(--space-2);
-    min-block-size: 2.75rem;
-    inline-size: 2.75rem;
+    min-block-size: calc(var(--space-6) + var(--space-3));
+    inline-size: calc(var(--space-6) + var(--space-3));
     aspect-ratio: 1;
   }
-  .btn--icon.btn--sm { min-block-size: 2rem; inline-size: 2rem; padding: var(--space-1); }
-  .btn--icon.btn--lg { min-block-size: 3.25rem; inline-size: 3.25rem; }
-  .btn--icon > svg { inline-size: 1.25rem; block-size: 1.25rem; }
+  .btn--icon.btn--sm { min-block-size: var(--space-6); inline-size: var(--space-6); padding: var(--space-1); }
+  .btn--icon.btn--lg { min-block-size: calc(var(--space-8) + var(--space-1)); inline-size: calc(var(--space-8) + var(--space-1)); }
+  .btn--icon > svg { inline-size: calc(var(--space-4) + var(--space-1)); block-size: calc(var(--space-4) + var(--space-1)); }
 
   .btn--full {
     display: flex;
@@ -279,9 +278,8 @@
   .card-title {
     margin: 0;
     font-family: var(--font-display);
-    font-size: 1.15rem;
-    font-weight: 800;
-    line-height: 1.1;
+    font-size: var(--font-size-2);
+    line-height: var(--line-height-tight);
   }
 
   .card-body {
@@ -335,15 +333,14 @@
     align-items: center;
     gap: var(--space-2);
     cursor: pointer;
-    font-weight: 600;
   }
 
   .control input[type="checkbox"],
   .control input[type="radio"],
   .field input[type="checkbox"],
   .field input[type="radio"] {
-    inline-size: 1.15rem;
-    block-size: 1.15rem;
+    inline-size: var(--space-5);
+    block-size: var(--space-5);
     accent-color: var(--ink);
     cursor: pointer;
   }
@@ -389,22 +386,22 @@
   }
 
   .empty__icon {
-    font-size: 2.5rem;
-    line-height: 1;
+    font-size: var(--font-size-5);
+    line-height: var(--line-height-tight);
     opacity: 0.7;
   }
 
   .empty__title {
     margin: 0;
     font-family: var(--font-display);
-    font-size: 1.15rem;
+    font-size: var(--font-size-2);
     color: var(--ink);
   }
 
   .empty__text {
     margin: 0;
     max-inline-size: 40ch;
-    font-size: 0.9rem;
+    font-size: var(--font-size-1);
   }
 
   .empty__actions {
@@ -434,18 +431,16 @@
 
   .field > label,
   .field__label {
-    font-size: 0.85rem;
-    font-weight: 700;
+    font-size: var(--font-size-1);
   }
 
   .field__hint {
-    font-size: 0.8rem;
+    font-size: var(--font-size-1);
     color: color-mix(in oklch, var(--ink) 60%, var(--paper));
   }
 
   .field__error {
-    font-size: 0.8rem;
-    font-weight: 700;
+    font-size: var(--font-size-1);
     color: var(--negative);
   }
   /* error is hidden until the control is actually invalid post-interaction */
@@ -471,7 +466,7 @@
     color: color-mix(in oklch, var(--ink) 45%, var(--paper));
   }
 
-  .field textarea { min-block-size: 5rem; resize: vertical; }
+  .field textarea { min-block-size: calc(var(--space-9) + var(--space-4)); resize: vertical; }
 
   :is(.input, .field input, .field select, .field textarea):user-invalid {
     border-color: var(--negative);
@@ -492,7 +487,6 @@
     display: inline-flex;
     align-items: center;
     padding-inline: var(--space-3);
-    font-weight: 700;
     background-color: color-mix(in oklch, var(--ink) 10%, var(--paper));
     border: var(--border-w) var(--border-style) var(--ink);
     border-inline-end: none;
@@ -568,8 +562,7 @@
     align-items: center;
     gap: var(--space-2);
     font-family: var(--font-display);
-    font-size: 1.25rem;
-    font-weight: 800;
+    font-size: var(--font-size-3);
     text-decoration: none;
     color: var(--ink);
   }
@@ -579,7 +572,7 @@
     display: inline-flex;
     align-items: center;
     gap: var(--space-3);
-    font-size: 0.85rem;
+    font-size: var(--font-size-1);
   }
 }
 /* Modal — native <dialog class="modal">, opened with showModal() (see runtime.js,
@@ -650,7 +643,7 @@
   .modal__title {
     margin: 0;
     font-family: var(--font-display);
-    font-size: 1.25rem;
+    font-size: var(--font-size-3);
   }
 
   .modal__body {
@@ -721,7 +714,6 @@
     padding: var(--space-2) var(--space-3);
 
     font: inherit;
-    font-weight: 600;
     text-align: start;
     text-decoration: none;
     color: var(--ink);
@@ -774,7 +766,6 @@
 
     color: var(--ink);
     text-decoration: none;
-    font-weight: 700;
     border: var(--border-w) var(--border-style) transparent;
     border-radius: var(--radius);
     transition: background-color var(--transition), translate var(--transition);
@@ -800,7 +791,6 @@
     gap: var(--space-2);
     padding: var(--space-2) var(--space-3);
     cursor: pointer;
-    font-weight: 700;
     list-style: none;
   }
   .sidebar summary::-webkit-details-marker { display: none; }
@@ -830,7 +820,7 @@
     --skeleton-sweep: 120%;
 
     display: block;
-    min-block-size: 1.25rem;
+    min-block-size: calc(var(--space-4) + var(--space-1));
     border-radius: var(--radius);
     background-color: color-mix(in oklch, var(--ink) 14%, var(--paper));
     background-image: linear-gradient(
@@ -855,7 +845,7 @@
   .skeleton--circle {
     border-radius: 50%;
     aspect-ratio: 1;
-    inline-size: 2.75rem;
+    inline-size: calc(var(--space-6) + var(--space-3));
   }
 
   @keyframes skeleton-sweep {
@@ -888,7 +878,6 @@
     appearance: none;
     padding: var(--space-2) var(--space-4);
     font: inherit;
-    font-weight: 700;
     color: var(--ink);
     background-color: var(--paper);
     border: none;
@@ -917,7 +906,6 @@
     appearance: none;
     padding: var(--space-2) var(--space-4);
     font: inherit;
-    font-weight: 700;
     color: color-mix(in oklch, var(--ink) 65%, var(--paper));
     background-color: transparent;
     border: none;
@@ -981,16 +969,16 @@
   .toast--negative { --toast-tone: var(--negative); }
   .toast--warning  { --toast-tone: var(--warning); }
 
-  .toast__icon { font-size: 1.1rem; line-height: 1; color: var(--_tone); }
-  .toast__msg { flex: 1; font-weight: 600; }
+  .toast__icon { font-size: var(--font-size-2); line-height: var(--line-height-tight); color: var(--_tone); }
+  .toast__msg { flex: 1; }
   .toast__close {
     appearance: none;
     border: none;
     background: transparent;
     color: inherit;
     cursor: pointer;
-    font-size: 1.1rem;
-    line-height: 1;
+    font-size: var(--font-size-2);
+    line-height: var(--line-height-tight);
   }
 
   .toast--leaving { animation: toast-out var(--transition) both; }
@@ -1041,9 +1029,8 @@
   .toolbar__label {
     float: none;
     padding: 0;
-    font-size: 0.78rem;
-    font-weight: 700;
-    letter-spacing: 0.03em;
+    font-size: var(--font-size-1);
+    letter-spacing: var(--letter-spacing-wide);
     color: color-mix(in oklch, var(--ink) 60%, var(--paper));
   }
 
@@ -1071,8 +1058,7 @@
     max-inline-size: 22ch;
     padding: var(--space-1) var(--space-2);
 
-    font-size: 0.8rem;
-    font-weight: 600;
+    font-size: var(--font-size-1);
     color: var(--paper);
     background-color: var(--accent);
     border: var(--border-w) var(--border-style) var(--ink);
@@ -1116,7 +1102,6 @@
     inline-size: 1%;
     white-space: nowrap;
     text-align: start;
-    font-weight: 700;
     padding-block: var(--space-1);
     padding-inline-end: var(--space-3);
   }
@@ -1132,12 +1117,11 @@
     justify-content: flex-end;
     min-inline-size: fit-content;
     inline-size: clamp(0%, calc(var(--value, 0) * 1%), 100%);
-    block-size: 1.5rem;
+    block-size: var(--space-5);
     padding-inline: var(--space-2);
 
     color: var(--paper);
-    font-size: 0.78rem;
-    font-weight: 700;
+    font-size: var(--font-size-1);
     background-color: var(--bar-color, var(--ink));
     border: var(--border-w) var(--border-style) var(--ink);
     border-radius: var(--radius);
@@ -1162,17 +1146,16 @@
     align-items: baseline;
     gap: var(--space-1);
 
-    font-weight: 700;
     font-variant-numeric: tabular-nums;
     font-style: normal;
-    line-height: 1;
+    line-height: var(--line-height-tight);
     color: var(--_tone);
   }
 
   .delta::before {
     content: "•"; /* flat / neutral */
     font-size: 0.9em;
-    line-height: 1;
+    line-height: var(--line-height-tight);
   }
 
   .delta--up,
@@ -1231,19 +1214,17 @@
   }
 
   .dl-stats dt {
-    font-size: 0.75rem;
-    font-weight: 700;
-    letter-spacing: 0.03em;
+    font-size: var(--font-size-1);
+    letter-spacing: var(--letter-spacing-wide);
     color: color-mix(in oklch, var(--ink) 60%, var(--paper));
   }
 
   .dl-stats dd {
     margin: 0;
     font-family: var(--font-display);
-    font-size: 1.35rem;
-    font-weight: 800;
+    font-size: var(--font-size-3);
     font-variant-numeric: tabular-nums;
-    line-height: 1;
+    line-height: var(--line-height-tight);
   }
 
   /* inline variant: label left, value right, one per row */
@@ -1253,7 +1234,7 @@
     gap: var(--space-2) var(--space-4);
     margin: 0;
   }
-  .dl-inline dt { font-weight: 700; color: color-mix(in oklch, var(--ink) 65%, var(--paper)); }
+  .dl-inline dt { color: color-mix(in oklch, var(--ink) 65%, var(--paper)); }
   .dl-inline dd { margin: 0; text-align: end; font-variant-numeric: tabular-nums; }
 }
 /* Numeric utility + <data> convention.
@@ -1302,7 +1283,7 @@
     -webkit-appearance: none;
     appearance: none;
     inline-size: 100%;
-    block-size: 1rem;
+    block-size: var(--space-4);
     border: var(--border-w) var(--border-style) var(--ink);
     border-radius: var(--radius);
     background-color: color-mix(in oklch, var(--ink) 10%, var(--paper));
@@ -1343,7 +1324,7 @@
     gap: var(--space-1) var(--space-3);
   }
   .capacity > :is(.progress, .meter) { grid-column: 1 / -1; }
-  .capacity__label { font-size: 0.85rem; font-weight: 700; }
+  .capacity__label { font-size: var(--font-size-1); }
   .capacity__value { font-variant-numeric: tabular-nums; text-align: end; }
 }
 /* Sparkline — inline SVG, styled entirely in CSS, zero JS.
@@ -1417,19 +1398,19 @@
 
   .stat__label {
     margin: 0;
-    font-size: 0.8rem;
-    font-weight: 700;
-    letter-spacing: 0.04em;
+    font-size: var(--font-size-1);
+    letter-spacing: var(--letter-spacing-wide);
     color: color-mix(in oklch, var(--ink) 65%, var(--paper));
   }
 
   .stat__value {
     margin: 0;
     font-family: var(--font-display);
-    font-weight: 800;
+    /* container-responsive: scales with the stat card's own inline-size, not the
+     * viewport, so it can't come from the (vw-based) font-size-* scale */
     font-size: clamp(1.75rem, 1.2rem + 4cqi, 3rem);
     font-variant-numeric: tabular-nums;
-    line-height: 1;
+    line-height: var(--line-height-tight);
   }
 
   .stat__foot {
@@ -1441,7 +1422,7 @@
   }
 
   .stat__caption {
-    font-size: 0.78rem;
+    font-size: var(--font-size-1);
     color: color-mix(in oklch, var(--ink) 55%, var(--paper));
   }
 
@@ -1486,13 +1467,12 @@
     inset-block-start: 0;
     z-index: 1;
     font-family: var(--font-display);
-    font-size: 0.85rem;
+    font-size: var(--font-size-1);
     background-color: var(--paper);
     border-block-end: var(--border-w) var(--border-style) var(--ink);
   }
 
   .table tfoot :is(th, td) {
-    font-weight: 700;
     border-block-start: var(--border-w) var(--border-style) var(--ink);
     border-block-end: none;
   }

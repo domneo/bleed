@@ -27,19 +27,17 @@
   }
 
   .dl-stats dt {
-    font-size: 0.75rem;
-    font-weight: 700;
-    letter-spacing: 0.03em;
+    font-size: var(--font-size-1);
+    letter-spacing: var(--letter-spacing-wide);
     color: color-mix(in oklch, var(--ink) 60%, var(--paper));
   }
 
   .dl-stats dd {
     margin: 0;
     font-family: var(--font-display);
-    font-size: 1.35rem;
-    font-weight: 800;
+    font-size: var(--font-size-3);
     font-variant-numeric: tabular-nums;
-    line-height: 1;
+    line-height: var(--line-height-tight);
   }
 
   /* inline variant: label left, value right, one per row */
@@ -49,6 +47,6 @@
     gap: var(--space-2) var(--space-4);
     margin: 0;
   }
-  .dl-inline dt { font-weight: 700; color: color-mix(in oklch, var(--ink) 65%, var(--paper)); }
+  .dl-inline dt { color: color-mix(in oklch, var(--ink) 65%, var(--paper)); }
   .dl-inline dd { margin: 0; text-align: end; font-variant-numeric: tabular-nums; }
 }

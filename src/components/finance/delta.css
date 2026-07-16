@@ -12,17 +12,16 @@
     align-items: baseline;
     gap: var(--space-1);
 
-    font-weight: 700;
     font-variant-numeric: tabular-nums;
     font-style: normal;
-    line-height: 1;
+    line-height: var(--line-height-tight);
     color: var(--_tone);
   }
 
   .delta::before {
     content: "•"; /* flat / neutral */
     font-size: 0.9em;
-    line-height: 1;
+    line-height: var(--line-height-tight);
   }
 
   .delta--up,

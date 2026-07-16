@@ -18,18 +18,16 @@
 
   .field > label,
   .field__label {
-    font-size: 0.85rem;
-    font-weight: 700;
+    font-size: var(--font-size-1);
   }
 
   .field__hint {
-    font-size: 0.8rem;
+    font-size: var(--font-size-1);
     color: color-mix(in oklch, var(--ink) 60%, var(--paper));
   }
 
   .field__error {
-    font-size: 0.8rem;
-    font-weight: 700;
+    font-size: var(--font-size-1);
     color: var(--negative);
   }
   /* error is hidden until the control is actually invalid post-interaction */
@@ -55,7 +53,7 @@
     color: color-mix(in oklch, var(--ink) 45%, var(--paper));
   }
 
-  .field textarea { min-block-size: 5rem; resize: vertical; }
+  .field textarea { min-block-size: calc(var(--space-9) + var(--space-4)); resize: vertical; }
 
   :is(.input, .field input, .field select, .field textarea):user-invalid {
     border-color: var(--negative);
@@ -76,7 +74,6 @@
     display: inline-flex;
     align-items: center;
     padding-inline: var(--space-3);
-    font-weight: 700;
     background-color: color-mix(in oklch, var(--ink) 10%, var(--paper));
     border: var(--border-w) var(--border-style) var(--ink);
     border-inline-end: none;

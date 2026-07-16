@@ -13,17 +13,17 @@
     .demo header { position: sticky; top: 0; padding: var(--space-6); }
     .demo .app-shell { display: block; }
     .demo main { max-inline-size: 80rem; }
-    .demo .text-display { font-family: var(--font-display); font-size: var(--font-size-7); font-weight: 800; line-height: var(--line-height-tight); letter-spacing: var(--letter-spacing-wide); text-wrap: balance; }
-    .demo .text-heading { font-family: var(--font-display); font-size: var(--font-size-5); font-weight: 800; line-height: var(--line-height-snug); letter-spacing: var(--letter-spacing-wide); text-wrap: balance; }
+    .demo .text-display { font-family: var(--font-display); font-size: var(--font-size-7); line-height: var(--line-height-tight); letter-spacing: var(--letter-spacing-wide); text-wrap: balance; }
+    .demo .text-heading { font-family: var(--font-display); font-size: var(--font-size-5); line-height: var(--line-height-snug); letter-spacing: var(--letter-spacing-wide); text-wrap: balance; }
     .demo .text-lead { font-family: var(--font-body); font-size: var(--font-size-2); line-height: var(--line-height-normal); }
     .demo .demo-section { display: flex; flex-direction: column; gap: var(--space-5); margin-block: var(--space-9); }
-    .demo .swatch { inline-size: 100%; block-size: 3rem; border: var(--border-w) var(--border-style) var(--ink); border-radius: var(--radius); }
+    .demo .swatch { inline-size: 100%; block-size: var(--space-8); border: var(--border-w) var(--border-style) var(--ink); border-radius: var(--radius); }
     .demo .row { display: flex; flex-wrap: wrap; gap: var(--space-3); align-items: center; }
     .demo [data-set-theme][aria-pressed="true"] { color: var(--paper); background-color: var(--ink); }
     .demo .token-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(8rem, 1fr)); gap: var(--space-5); }
     .demo .token-item { display: flex; flex-direction: column; gap: var(--space-2); }
     .demo .token-item__label { font-size: var(--font-size-1); color: var(--ink); }
-    .demo .token-box { inline-size: 100%; block-size: 4rem; background-color: var(--paper); border: var(--border-w) var(--border-style) var(--ink); border-radius: var(--radius); }
+    .demo .token-box { inline-size: 100%; block-size: var(--space-9); background-color: var(--paper); border: var(--border-w) var(--border-style) var(--ink); border-radius: var(--radius); }
     .demo .token-box--shadow { margin-block-end: var(--space-1); }
     .demo .token-hover-demo { display: flex; align-items: center; justify-content: center; font-size: var(--font-size-1); transition: translate var(--transition); }
     .demo .token-hover-demo:hover { translate: var(--hover-shift-x) var(--hover-shift-y); }
@@ -31,7 +31,7 @@
     .demo .token-type-row .token-item__label { flex: 0 0 8.5rem; text-align: left; }
     .demo .token-scale { display: flex; flex-direction: column; gap: var(--space-2); }
     .demo .token-scale__row { display: flex; align-items: center; gap: var(--space-3); }
-    .demo .token-scale__bar { block-size: 1.25rem; background-color: var(--ink); }
+    .demo .token-scale__bar { block-size: calc(var(--space-4) + var(--space-1)); background-color: var(--ink); }
     .demo .app-shell-demo { border: var(--border-w) var(--border-style) var(--ink); border-radius: var(--radius); overflow: hidden; }
     .demo .app-shell-demo__body { display: grid; grid-template-columns: auto 1fr; }
   </style>
@@ -39,9 +39,9 @@
 <body class="demo">
   <header>
     <div class="segmented" role="group" aria-label="Theme">
-      <button type="button" class="segmented__theme" data-set-theme="bleed" aria-pressed="true" style="all:unset;padding:var(--space-2) var(--space-3);cursor:pointer;font-weight:700;border-inline-end:var(--border-w) solid var(--ink)">Bleed</button>
-      <button type="button" data-set-theme="blip" aria-pressed="false" style="all:unset;padding:var(--space-2) var(--space-3);cursor:pointer;font-weight:700;border-inline-end:var(--border-w) solid var(--ink)">Blip</button>
-      <button type="button" data-set-theme="boring" aria-pressed="false" style="all:unset;padding:var(--space-2) var(--space-3);cursor:pointer;font-weight:700">Boring</button>
+      <button type="button" class="segmented__theme" data-set-theme="bleed" aria-pressed="true" style="all:unset;padding:var(--space-2) var(--space-3);cursor:pointer;border-inline-end:var(--border-w) solid var(--ink)">Bleed</button>
+      <button type="button" data-set-theme="blip" aria-pressed="false" style="all:unset;padding:var(--space-2) var(--space-3);cursor:pointer;border-inline-end:var(--border-w) solid var(--ink)">Blip</button>
+      <button type="button" data-set-theme="boring" aria-pressed="false" style="all:unset;padding:var(--space-2) var(--space-3);cursor:pointer;">Boring</button>
     </div>
   </header>
 
@@ -124,13 +124,13 @@
         <h2 class="text-heading" id="h-typography">Typography</h2>
         <div class="typography">
           <div class="token-item">
-            <div class="token-type-row"><p class="token-item__label"><code>--font-size-1</code></p><p style="font-family:var(--font-display);font-size:var(--font-size-1);font-weight:800">--font-display</p></div>
-            <div class="token-type-row"><p class="token-item__label"><code>--font-size-2</code></p><p style="font-family:var(--font-display);font-size:var(--font-size-2);font-weight:800">--font-display</p></div>
-            <div class="token-type-row"><p class="token-item__label"><code>--font-size-3</code></p><p style="font-family:var(--font-display);font-size:var(--font-size-3);font-weight:800">--font-display</p></div>
-            <div class="token-type-row"><p class="token-item__label"><code>--font-size-4</code></p><p style="font-family:var(--font-display);font-size:var(--font-size-4);font-weight:800">--font-display</p></div>
-            <div class="token-type-row"><p class="token-item__label"><code>--font-size-5</code></p><p style="font-family:var(--font-display);font-size:var(--font-size-5);font-weight:800">--font-display</p></div>
-            <div class="token-type-row"><p class="token-item__label"><code>--font-size-6</code></p><p style="font-family:var(--font-display);font-size:var(--font-size-6);font-weight:800">--font-display</p></div>
-            <div class="token-type-row"><p class="token-item__label"><code>--font-size-7</code></p><p style="font-family:var(--font-display);font-size:var(--font-size-7);font-weight:800">--font-display</p></div>
+            <div class="token-type-row"><p class="token-item__label"><code>--font-size-1</code></p><p style="font-family:var(--font-display);font-size:var(--font-size-1);">--font-display</p></div>
+            <div class="token-type-row"><p class="token-item__label"><code>--font-size-2</code></p><p style="font-family:var(--font-display);font-size:var(--font-size-2);">--font-display</p></div>
+            <div class="token-type-row"><p class="token-item__label"><code>--font-size-3</code></p><p style="font-family:var(--font-display);font-size:var(--font-size-3);">--font-display</p></div>
+            <div class="token-type-row"><p class="token-item__label"><code>--font-size-4</code></p><p style="font-family:var(--font-display);font-size:var(--font-size-4);">--font-display</p></div>
+            <div class="token-type-row"><p class="token-item__label"><code>--font-size-5</code></p><p style="font-family:var(--font-display);font-size:var(--font-size-5);">--font-display</p></div>
+            <div class="token-type-row"><p class="token-item__label"><code>--font-size-6</code></p><p style="font-family:var(--font-display);font-size:var(--font-size-6);">--font-display</p></div>
+            <div class="token-type-row"><p class="token-item__label"><code>--font-size-7</code></p><p style="font-family:var(--font-display);font-size:var(--font-size-7);">--font-display</p></div>
           </div>
         </div>
         <div class="typography">
@@ -233,7 +233,7 @@
           <div class="skeleton skeleton--circle"></div>
           <div class="skeleton skeleton--text" style="inline-size:70%"></div>
           <div class="skeleton skeleton--text"></div>
-          <div class="skeleton" style="block-size:4rem"></div>
+          <div class="skeleton" style="block-size:var(--space-9)"></div>
         </section>
       </section>
 
@@ -536,7 +536,7 @@
               <data class="delta delta--up" value="0.11">11.0%</data>
             </header>
             <div class="card-body">
-              <svg class="sparkline sparkline--positive" viewBox="0 0 100 30" preserveAspectRatio="none" style="--sparkline-w:100%;--sparkline-h:5rem" role="img" aria-label="Equity trending up">
+              <svg class="sparkline sparkline--positive" viewBox="0 0 100 30" preserveAspectRatio="none" style="--sparkline-w:100%;--sparkline-h:calc(var(--space-9) + var(--space-4))" role="img" aria-label="Equity trending up">
                 <path class="sparkline__area" d="M0,24 L14,20 L28,22 L42,12 L56,15 L70,6 L84,9 L100,3 L100,30 L0,30 Z"/>
                 <polyline points="0,24 14,20 28,22 42,12 56,15 70,6 84,9 100,3"/>
                 <circle class="sparkline__dot" cx="100" cy="3" r="2.5"/>
