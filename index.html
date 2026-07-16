@@ -157,14 +157,26 @@
           <div class="alert alert--warning" role="alert">
             <span class="alert__icon" aria-hidden="true">▲</span>
             <div>
-              <p class="alert__title">Margin call</p>
+              <p class="alert__title">Warning</p>
               <p class="alert__text">Deposit $12,400 by 16:00 EST to avoid liquidation.</p>
             </div>
             <button class="alert__close" type="button" aria-label="Dismiss" onclick="this.parentElement.remove()">✕</button>
           </div>
           <div class="alert alert--positive" role="status">
             <span class="alert__icon" aria-hidden="true">✓</span>
-            <div><p class="alert__title">Settlement complete</p><p class="alert__text">T+1 settlement cleared for 3 trades.</p></div>
+            <div><p class="alert__title">Positive</p><p class="alert__text">T+1 settlement cleared for 3 trades.</p></div>
+          </div>
+          <div class="alert alert--negative" role="alert">
+            <span class="alert__icon" aria-hidden="true">✕</span>
+            <div>
+              <p class="alert__title">Negative</p>
+              <p class="alert__text">Insufficient buying power for 200 shares of TSLA.</p>
+            </div>
+            <button class="alert__close" type="button" aria-label="Dismiss" onclick="this.parentElement.remove()">✕</button>
+          </div>
+          <div class="alert alert--accent" role="status">
+            <span class="alert__icon" aria-hidden="true">ℹ</span>
+            <div><p class="alert__title">Accent</p><p class="alert__text">Options chains now support 0DTE expiries.</p></div>
           </div>
         </div>
       </section>

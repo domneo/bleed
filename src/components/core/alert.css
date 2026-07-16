@@ -6,41 +6,50 @@
  *       <p class="alert__text">Deposit by 16:00 EST.</p></div>
  *     <button class="alert__close" aria-label="Dismiss">✕</button>
  *   </div>
- * Tone = start-edge stripe + tinted wash + icon; text always present. */
+ * Tone = border + fill color; warning/negative are solid, positive/accent are
+ * outlined on paper. Text always present. */
 
 @layer bleed.components {
   .alert {
-    --_tone: var(--alert-tone, var(--ink));
+    --_border: var(--alert-border, var(--ink));
 
+    position: relative;
     display: flex;
     align-items: flex-start;
     gap: var(--space-3);
-    padding: var(--space-3) var(--space-4);
+    padding: var(--space-3) var(--space-3) var(--space-3) var(--space-6);
 
-    color: var(--ink);
-    background-color: color-mix(in oklch, var(--_tone) 12%, var(--paper));
-    border: var(--border-w) var(--border-style) var(--ink);
-    border-inline-start-width: var(--space-2);
-    border-inline-start-color: var(--_tone);
+    color: var(--alert-fg, var(--paper));
+    background-color: var(--alert-bg, var(--ink));
+    border: var(--border-w) var(--border-style) var(--_border);
     border-radius: var(--radius);
   }
 
+  .alert::before {
+    content: "";
+    position: absolute;
+    inset-block: calc(-1 * var(--border-w));
+    inset-inline-start: calc(-1 * var(--border-w));
+    inline-size: var(--space-3);
+    margin: var(--space-2);
+    background-color: var(--alert-fg);
+  }
+
   .alert__icon {
-    font-size: 1.2rem;
-    line-height: 1.2;
-    color: var(--_tone);
+    font-size: var(--font-size-2);
+    line-height: var(--line-height-tight);
+    color: currentColor;
   }
 
   .alert__title {
     margin: 0;
     font-family: var(--font-display);
-    font-size: 1rem;
-    font-weight: 800;
+    font-size: var(--font-size-1);
   }
 
   .alert__text {
     margin: 0;
-    font-size: 0.9rem;
+    font-size: var(--font-size-1);
   }
 
   .alert__close {
@@ -50,12 +59,12 @@
     background: transparent;
     color: inherit;
     cursor: pointer;
-    font-size: 1.1rem;
-    line-height: 1;
+    font-size: var(--font-size-2);
+    line-height: var(--line-height-tight);
   }
 
-  .alert--positive { --alert-tone: var(--positive); }
-  .alert--warning  { --alert-tone: var(--warning); }
-  .alert--negative { --alert-tone: var(--negative); }
-  .alert--accent   { --alert-tone: var(--accent); }
+  .alert--warning  { --alert-border: var(--ink);    --alert-bg: var(--ink);    --alert-fg: var(--paper); }
+  .alert--negative { --alert-border: var(--accent); --alert-bg: var(--accent); --alert-fg: var(--paper); }
+  .alert--positive { --alert-border: var(--ink);    --alert-bg: var(--paper); --alert-fg: var(--ink); }
+  .alert--accent   { --alert-border: var(--accent); --alert-bg: var(--paper); --alert-fg: var(--accent); }
 }
