@@ -201,13 +201,31 @@
       <section id="components" class="demo-section" aria-labelledby="h-buttons">
         <h2 class="text-heading" id="h-buttons">Buttons</h2>
         <div class="btn-group">
+          <button class="btn btn--sm">Default</button>
+          <button class="btn btn--sm btn--warning">Warning</button>
+          <button class="btn btn--sm btn--negative">Negative</button>
+          <button class="btn btn--sm btn--positive">Positive</button>
+          <button class="btn btn--sm btn--accent">Accent</button>
+          <button class="btn btn--sm btn--icon" aria-label="Add">＋</button>
+          <button class="btn btn--sm" disabled>Disabled</button>
+        </div>
+        <div class="btn-group">
           <button class="btn">Default</button>
+          <button class="btn btn--warning">Warning</button>
+          <button class="btn btn--negative">Negative</button>
+          <button class="btn btn--positive">Positive</button>
           <button class="btn btn--accent">Accent</button>
-          <button class="btn btn--ghost">Ghost</button>
-          <button class="btn btn--sm">Small</button>
-          <button class="btn btn--lg">Large</button>
           <button class="btn btn--icon" aria-label="Add">＋</button>
           <button class="btn" disabled>Disabled</button>
+        </div>
+        <div class="btn-group">
+          <button class="btn btn--lg">Default</button>
+          <button class="btn btn--lg btn--warning">Warning</button>
+          <button class="btn btn--lg btn--negative">Negative</button>
+          <button class="btn btn--lg btn--positive">Positive</button>
+          <button class="btn btn--lg btn--accent">Accent</button>
+          <button class="btn btn--lg btn--icon" aria-label="Add">＋</button>
+          <button class="btn btn--lg" disabled>Disabled</button>
         </div>
       </section>
 
@@ -220,7 +238,7 @@
           <span class="empty__icon" aria-hidden="true">▚</span>
           <h3 class="empty__title">No open positions</h3>
           <p class="empty__text">Your portfolio is all cash. Place a trade to get started.</p>
-          <div class="empty__actions"><button class="btn btn--accent" data-open-modal="trade-modal">New trade</button></div>
+          <div class="empty__actions"><button class="btn btn--warning" data-open-modal="trade-modal">New trade</button></div>
         </div>
       </section>
 
@@ -314,7 +332,7 @@
             <p class="field__hint">Whole dollars, max $1,000,000.</p>
             <p class="field__error">Enter an amount of at least $1.</p>
           </div>
-          <button class="btn btn--accent" type="submit">Submit</button>
+          <button class="btn btn--warning" type="submit">Submit</button>
         </form>
       </section>
 
@@ -378,8 +396,8 @@
             </header>
             <div class="card-body">Header, body, and footer slots. Bare-element defaults are donut-scoped to the chrome and stop at the body.</div>
             <footer class="card-footer">
-              <button class="btn btn--sm btn--ghost">Cancel</button>
-              <button class="btn btn--sm btn--accent">Save</button>
+              <button class="btn btn--sm btn--positive">Cancel</button>
+              <button class="btn btn--sm btn--warning">Save</button>
             </footer>
           </article>
           <article class="card card--pad">
@@ -405,7 +423,7 @@
           <form method="dialog" class="modal__wrap">
             <header class="modal__header">
               <h2 class="modal__title">New trade</h2>
-              <button class="btn btn--icon btn--ghost btn--sm" type="button" data-close-modal aria-label="Close">✕</button>
+              <button class="btn btn--icon btn--positive btn--sm" type="button" data-close-modal aria-label="Close">✕</button>
             </header>
             <div class="modal__body">
               <div class="field">
@@ -415,8 +433,8 @@
               <p style="margin-block-start:var(--space-4)">Native <code>&lt;dialog&gt;</code>: focus trap, Esc-to-close, inert background, and <code>::backdrop</code> — all free.</p>
             </div>
             <footer class="modal__footer">
-              <button class="btn btn--ghost" type="button" data-close-modal>Cancel</button>
-              <button class="btn btn--accent" value="confirm">Place order</button>
+              <button class="btn btn--positive" type="button" data-close-modal>Cancel</button>
+              <button class="btn btn--warning" value="confirm">Place order</button>
             </footer>
           </form>
         </dialog>
@@ -466,7 +484,7 @@
                 <td class="num"><data value="228.5">228.50</data></td>
                 <td class="num"><data class="delta delta--up" value="0.012">1.2%</data></td>
                 <td class="num">1,200</td>
-                <td><button class="btn btn--icon btn--sm btn--ghost" popovertarget="r1" style="anchor-name:--r1">⋯</button>
+                <td><button class="btn btn--icon btn--sm btn--positive" popovertarget="r1" style="anchor-name:--r1">⋯</button>
                   <div id="r1" popover class="menu" style="position-anchor:--r1"><button class="menu__item">Buy</button><button class="menu__item">Sell</button><hr><button class="menu__item menu__item--danger">Close</button></div></td>
               </tr>
               <tr>
@@ -475,7 +493,7 @@
                 <td class="num"><data value="242.1">242.10</data></td>
                 <td class="num"><data class="delta delta--down" value="-0.031">3.1%</data></td>
                 <td class="num">300</td>
-                <td><button class="btn btn--icon btn--sm btn--ghost" popovertarget="r2" style="anchor-name:--r2">⋯</button>
+                <td><button class="btn btn--icon btn--sm btn--positive" popovertarget="r2" style="anchor-name:--r2">⋯</button>
                   <div id="r2" popover class="menu" style="position-anchor:--r2"><button class="menu__item">Buy</button><button class="menu__item">Sell</button><hr><button class="menu__item menu__item--danger">Close</button></div></td>
               </tr>
               <tr>
@@ -484,7 +502,7 @@
                 <td class="num"><data value="441.0">441.00</data></td>
                 <td class="num"><data class="delta delta--up" value="0.004">0.4%</data></td>
                 <td class="num">850</td>
-                <td><button class="btn btn--icon btn--sm btn--ghost" popovertarget="r3" style="anchor-name:--r3">⋯</button>
+                <td><button class="btn btn--icon btn--sm btn--positive" popovertarget="r3" style="anchor-name:--r3">⋯</button>
                   <div id="r3" popover class="menu" style="position-anchor:--r3"><button class="menu__item">Buy</button><button class="menu__item">Sell</button><hr><button class="menu__item menu__item--danger">Close</button></div></td>
               </tr>
             </tbody>

@@ -8,13 +8,19 @@
  * Bleed moves the element INTO its offset shadow (press). Soft sets --hover-shift 0
  * and swaps blur via the shadow tokens (lift), proving the motion lives in tokens.
  *
- * Public override tokens: --btn-bg --btn-fg --btn-border. Internals are --_*. */
+ * Public override tokens: --btn-bg --btn-fg --btn-border. Internals are --_*.
+ *
+ * Tone variants (warning/negative/positive/accent) mirror badge and alert's
+ * border/bg/fg triplet exactly — same tones, same solid-vs-outline split. */
 
 @layer bleed.components {
   .btn {
-    --_bg: var(--btn-bg, var(--accent));
-    --_fg: var(--btn-fg, var(--paper));
+    --_bg: var(--btn-bg, transparent);
+    --_fg: var(--btn-fg, var(--ink));
     --_bd: var(--btn-border, var(--ink));
+    --_shadow: var(--btn-shadow, var(--shadow));
+    --_shadow-hover: var(--btn-shadow-hover, var(--shadow-hover));
+    --_shadow-active: var(--btn-shadow-active, var(--shadow-active));
 
     display: inline-flex;
     align-items: center;
@@ -36,7 +42,7 @@
     background-color: var(--_bg);
     border: var(--border-w) var(--border-style) var(--_bd);
     border-radius: var(--radius);
-    box-shadow: var(--shadow);
+    box-shadow: var(--_shadow);
 
     transition:
       translate var(--transition),
@@ -47,37 +53,57 @@
 
   .btn:hover {
     translate: var(--hover-shift-x) var(--hover-shift-y);
-    box-shadow: var(--shadow-hover);
+    box-shadow: var(--_shadow-hover);
     background-color: color-mix(in oklch, var(--_bg), var(--ink) 12%);
   }
 
   .btn:active {
     translate: calc(var(--hover-shift-x) * 2) calc(var(--hover-shift-y) * 2);
-    box-shadow: var(--shadow-active);
+    box-shadow: var(--_shadow-active);
   }
 
   .btn:disabled,
   .btn[aria-disabled="true"] {
     cursor: not-allowed;
     opacity: 0.5;
-    box-shadow: var(--shadow-active);
+    box-shadow: var(--_shadow-active);
     translate: none;
     pointer-events: none;
   }
 
-  /* --- variants: swap only tokens ----------------------------------------- */
-  .btn--accent,
-  .btn[data-variant="accent"] {
+  /* --- variants: swap only tokens; tones mirror badge/alert exactly ------- */
+  .btn--warning,
+  .btn[data-variant="warning"] {
     --btn-bg: var(--ink);
+    --btn-fg: var(--paper);
+    --btn-border: var(--ink);
+    --btn-shadow: var(--space-1) var(--space-1) 0 var(--accent);
+    --btn-shadow-hover: calc(var(--space-1) / 2) calc(var(--space-1) / 2) 0 var(--accent);
+    --btn-shadow-active: 0 0 0 var(--accent);
+  }
+
+  .btn--negative,
+  .btn[data-variant="negative"] {
+    --btn-bg: var(--accent);
     --btn-fg: var(--paper);
     --btn-border: var(--accent);
   }
 
-  .btn--ghost,
-  .btn[data-variant="ghost"] {
+  .btn--positive,
+  .btn[data-variant="positive"] {
     --btn-bg: transparent;
     --btn-fg: var(--ink);
     --btn-border: var(--ink);
+  }
+
+  .btn--accent,
+  .btn[data-variant="accent"] {
+    --btn-bg: transparent;
+    --btn-fg: var(--accent);
+    --btn-border: var(--accent);
+    --btn-shadow: var(--space-1) var(--space-1) 0 var(--accent);
+    --btn-shadow-hover: calc(var(--space-1) / 2) calc(var(--space-1) / 2) 0 var(--accent);
+    --btn-shadow-active: 0 0 0 var(--accent);
   }
 
   /* --- sizes: scale via space + font, geometry stays tokenised ------------- */
@@ -102,9 +128,19 @@
     inline-size: calc(var(--space-6) + var(--space-3));
     aspect-ratio: 1;
   }
-  .btn--icon.btn--sm { min-block-size: var(--space-6); inline-size: var(--space-6); padding: var(--space-1); }
-  .btn--icon.btn--lg { min-block-size: calc(var(--space-8) + var(--space-1)); inline-size: calc(var(--space-8) + var(--space-1)); }
-  .btn--icon > svg { inline-size: calc(var(--space-4) + var(--space-1)); block-size: calc(var(--space-4) + var(--space-1)); }
+  .btn--icon.btn--sm {
+    min-block-size: var(--space-6);
+    inline-size: var(--space-6);
+    padding: var(--space-1);
+  }
+  .btn--icon.btn--lg {
+    min-block-size: calc(var(--space-8) + var(--space-1));
+    inline-size: calc(var(--space-8) + var(--space-1));
+  }
+  .btn--icon > svg {
+    inline-size: calc(var(--space-4) + var(--space-1));
+    block-size: calc(var(--space-4) + var(--space-1));
+  }
 
   .btn--full {
     display: flex;
