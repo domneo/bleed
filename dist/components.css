@@ -190,9 +190,9 @@
     --btn-bg: var(--ink);
     --btn-fg: var(--paper);
     --btn-border: var(--ink);
-    --btn-shadow: 4px 4px 0 black;
-    --btn-shadow-hover: 2px 2px 0 black;
-    --btn-shadow-active: 0 0 0 black;
+    --btn-shadow: var(--space-1) var(--space-1) 0 var(--accent);
+    --btn-shadow-hover: calc(var(--space-1) / 2) calc(var(--space-1) / 2) 0 var(--accent);
+    --btn-shadow-active: 0 0 0 var(--accent);
   }
 
   .btn--negative,
@@ -214,9 +214,9 @@
     --btn-bg: transparent;
     --btn-fg: var(--accent);
     --btn-border: var(--accent);
-    --btn-shadow: 4px 4px 0 black;
-    --btn-shadow-hover: 2px 2px 0 black;
-    --btn-shadow-active: 0 0 0 black;
+    --btn-shadow: var(--space-1) var(--space-1) 0 var(--accent);
+    --btn-shadow-hover: calc(var(--space-1) / 2) calc(var(--space-1) / 2) 0 var(--accent);
+    --btn-shadow-active: 0 0 0 var(--accent);
   }
 
   /* --- sizes: scale via space + font, geometry stays tokenised ------------- */

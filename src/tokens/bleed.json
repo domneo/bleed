@@ -3,13 +3,19 @@
 
   "ink": { "$type": "color", "$value": "oklch(0.45 0.31 264)" },
   "paper": { "$type": "color", "$value": "oklch(0.97 0.005 280)" },
-
-  "accent": { "$type": "color", "$value": "oklch(0.2 0.01 264)" },
-
-  "positive": { "$type": "color", "$value": "{ink}" },
-  "negative": { "$type": "color", "$value": "{accent}" },
-  "warning": { "$type": "color", "$value": "{ink}" },
-  "neutral": { "$type": "color", "$value": "{paper}" },
+  "accent": { "$type": "color", "$value": "oklch(0.77 0.24 325.04)" },
+  "positive-subtle": { "$type": "color", "$value": "oklch(from var(--positive) calc(l + 0.2) c calc(h + 50))" },
+  "positive": { "$type": "color", "$value": "oklch(0.91 0.12 179.2)" },
+  "positive-strong": { "$type": "color", "$value": "oklch(from var(--positive) calc(l - 0.4) c calc(h + 22))" },
+  "negative-subtle": { "$type": "color", "$value": "oklch(from var(--negative) calc(l + 0.2) c h)" },
+  "negative": { "$type": "color", "$value": "oklch(0.8 0.15 30.7)" },
+  "negative-strong": { "$type": "color", "$value": "oklch(from var(--negative) calc(l - 0.25) c h)" },
+  "warning-subtle": { "$type": "color", "$value": "oklch(from var(--warning) calc(l + 0.2) c h)" },
+  "warning": { "$type": "color", "$value": "oklch(0.93 0.12 93.18)" },
+  "warning-strong": { "$type": "color", "$value": "oklch(from var(--warning) calc(l - 0.4) calc(c + 0.05) h)" },
+  "neutral-subtle": { "$type": "color", "$value": "oklch(from var(--neutral) calc(l + 0.2) c h)" },
+  "neutral": { "$type": "color", "$value": "color-mix(in oklch, var(--ink) 35%, var(--paper))" },
+  "neutral-strong": { "$type": "color", "$value": "oklch(from var(--neutral) calc(l - 0.25) c h)" },
 
   "border-w": { "$type": "dimension", "$value": "2px" },
   "border-style": { "$type": "other", "$value": "dashed" },

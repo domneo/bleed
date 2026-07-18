@@ -87,9 +87,8 @@
   }
 
   ::selection {
-    background: var(--ink);
+    background: var(--accent);
     color: var(--paper);
-    text-shadow: 0 var(--space-1) 0 var(--accent);
   }
 
   :where([hidden]) {
