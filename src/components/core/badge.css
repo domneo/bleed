@@ -1,6 +1,7 @@
-/* Badge / Tag — <span class="badge">. Variants mirror alert's border/bg/fg
- * split exactly — including which tones are solid vs outlined — using
- * foundational (:root) tokens so they work in bleed-core.css too.
+/* Badge / Tag — <span class="badge">. Tone sets border + text color and is
+ * outlined on paper by default; add badge--solid to fill with the tone
+ * instead, independent of which tone is used — same split as alert.
+ * Uses foundational (:root) tokens so it works in bleed-core.css too.
  * A badge always carries a text label, so tone is never the sole signal. */
 
 @layer bleed.components {
@@ -27,11 +28,17 @@
     border-radius: var(--radius);
   }
 
-  /* variants — border/bg/fg triplet per tone, solid vs outline baked in */
-  .badge--warning  { --badge-border: var(--ink);    --badge-bg: var(--ink);    --badge-fg: var(--paper); }
-  .badge--negative { --badge-border: var(--accent); --badge-bg: var(--accent); --badge-fg: var(--paper); }
-  .badge--positive { --badge-border: var(--ink);    --badge-bg: transparent;  --badge-fg: var(--ink); }
-  .badge--accent   { --badge-border: var(--accent); --badge-bg: transparent;  --badge-fg: var(--accent); }
+  /* tone — border + text color only; fill stays whatever .badge/--solid set */
+  .badge--warning  { --badge-border: var(--warning-strong);  --badge-fg: var(--warning-strong); }
+  .badge--negative { --badge-border: var(--negative-strong); --badge-fg: var(--negative-strong); }
+  .badge--positive { --badge-border: var(--positive-strong); --badge-fg: var(--positive-strong); }
+  .badge--accent   { --badge-border: var(--accent);   --badge-fg: var(--accent); }
+
+  /* fill — solid is a separate axis from tone, combine e.g. badge--negative badge--solid */
+  .badge--solid {
+    --badge-bg: var(--_border);
+    --badge-fg: var(--paper);
+  }
 
   /* a small leading dot, e.g. status pills */
   .badge__dot {
