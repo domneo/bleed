@@ -1,13 +1,13 @@
 /* Alert banner — persistent inline message. Use role="alert" for urgent/assertive
  * content, role="status" for informational.
- *   <div class="alert alert--warning" role="alert">
+ *   <div class="alert alert--solid" role="alert">
  *     <span class="alert__icon" aria-hidden="true">▲</span>
  *     <div><p class="alert__title">Margin call</p>
  *       <p class="alert__text">Deposit by 16:00 EST.</p></div>
  *     <button class="alert__close" aria-label="Dismiss">✕</button>
  *   </div>
- * Tone = border + fill color; warning/negative are solid, positive/accent are
- * outlined on paper. Text always present. */
+ * Outlined on paper by default; add alert--solid to fill instead. Text
+ * always present. */
 
 @layer bleed.components {
   .alert {
@@ -17,22 +17,12 @@
     display: flex;
     align-items: flex-start;
     gap: var(--space-3);
-    padding: var(--space-3) var(--space-3) var(--space-3) var(--space-6);
+    padding: var(--space-3) var(--space-3) var(--space-3) var(--space-4);
 
-    color: var(--alert-fg, var(--paper));
-    background-color: var(--alert-bg, var(--ink));
+    color: var(--alert-fg, var(--ink));
+    background-color: var(--alert-bg, var(--paper));
     border: var(--border-w) var(--border-style) var(--_border);
     border-radius: var(--radius);
-  }
-
-  .alert::before {
-    content: "";
-    position: absolute;
-    inset-block: calc(-1 * var(--border-w));
-    inset-inline-start: calc(-1 * var(--border-w));
-    inline-size: var(--space-3);
-    margin: var(--space-2);
-    background-color: var(--alert-fg);
   }
 
   .alert__icon {
@@ -63,10 +53,11 @@
     line-height: var(--line-height-tight);
   }
 
-  .alert--warning  { --alert-border: var(--ink);    --alert-bg: var(--ink);    --alert-fg: var(--paper); }
-  .alert--negative { --alert-border: var(--accent); --alert-bg: var(--accent); --alert-fg: var(--paper); }
-  .alert--positive { --alert-border: var(--ink);    --alert-bg: var(--paper); --alert-fg: var(--ink); }
-  .alert--accent   { --alert-border: var(--accent); --alert-bg: var(--paper); --alert-fg: var(--accent); }
+  /* fill — solid replaces the outlined-on-paper default */
+  .alert--solid {
+    --alert-bg: var(--_border);
+    --alert-fg: var(--paper);
+  }
 }
 /* Badge / Tag — <span class="badge">. Variants mirror alert's border/bg/fg
  * split exactly — including which tones are solid vs outlined — using
