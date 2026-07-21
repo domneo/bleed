@@ -121,8 +121,7 @@
  *
  * Public override tokens: --btn-bg --btn-fg --btn-border. Internals are --_*.
  *
- * Tone variants (warning/negative/positive/accent) mirror badge and alert's
- * border/bg/fg triplet exactly — same tones, same solid-vs-outline split. */
+ * Outlined on paper by default; add btn--solid to fill with ink instead. */
 
 @layer bleed.components {
   .btn {
@@ -165,7 +164,6 @@
   .btn:hover {
     translate: var(--hover-shift-x) var(--hover-shift-y);
     box-shadow: var(--_shadow-hover);
-    background-color: color-mix(in oklch, var(--_bg), var(--ink) 12%);
   }
 
   .btn:active {
@@ -182,39 +180,14 @@
     pointer-events: none;
   }
 
-  /* --- variants: swap only tokens; tones mirror badge/alert exactly ------- */
-  .btn--warning,
-  .btn[data-variant="warning"] {
+  /* --- fill: solid is a separate axis from the outlined default ----------- */
+  .btn--solid {
     --btn-bg: var(--ink);
     --btn-fg: var(--paper);
     --btn-border: var(--ink);
-    --btn-shadow: var(--space-1) var(--space-1) 0 var(--accent);
-    --btn-shadow-hover: calc(var(--space-1) / 2) calc(var(--space-1) / 2) 0 var(--accent);
-    --btn-shadow-active: 0 0 0 var(--accent);
-  }
-
-  .btn--negative,
-  .btn[data-variant="negative"] {
-    --btn-bg: var(--accent);
-    --btn-fg: var(--paper);
-    --btn-border: var(--accent);
-  }
-
-  .btn--positive,
-  .btn[data-variant="positive"] {
-    --btn-bg: transparent;
-    --btn-fg: var(--ink);
-    --btn-border: var(--ink);
-  }
-
-  .btn--accent,
-  .btn[data-variant="accent"] {
-    --btn-bg: transparent;
-    --btn-fg: var(--accent);
-    --btn-border: var(--accent);
-    --btn-shadow: var(--space-1) var(--space-1) 0 var(--accent);
-    --btn-shadow-hover: calc(var(--space-1) / 2) calc(var(--space-1) / 2) 0 var(--accent);
-    --btn-shadow-active: 0 0 0 var(--accent);
+    --btn-shadow: var(--space-1) var(--space-1) 0 var(--neutral);
+    --btn-shadow-hover: calc(var(--space-1) / 2) calc(var(--space-1) / 2) 0 var(--neutral);
+    --btn-shadow-active: 0 0 0 var(--neutral);
   }
 
   /* --- sizes: scale via space + font, geometry stays tokenised ------------- */
