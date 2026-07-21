@@ -17,7 +17,7 @@
     --warning-subtle: oklch(from var(--warning) calc(l + 0.2) c h);
     --warning: oklch(0.93 0.12 93.18);
     --warning-strong: oklch(from var(--warning) calc(l - 0.4) calc(c + 0.05) h);
-    --neutral-subtle: oklch(from var(--neutral) calc(l + 0.2) c h);
+    --neutral-subtle: oklch(from var(--neutral) calc(l + 0.175) calc(c + 0.1) calc(h + 4));
     --neutral: color-mix(in oklch, var(--ink) 35%, var(--paper));
     --neutral-strong: oklch(from var(--neutral) calc(l - 0.25) c h);
     --border-w: 2px;

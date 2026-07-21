@@ -13,7 +13,7 @@
   "warning-subtle": { "$type": "color", "$value": "oklch(from var(--warning) calc(l + 0.2) c h)" },
   "warning": { "$type": "color", "$value": "oklch(0.93 0.12 93.18)" },
   "warning-strong": { "$type": "color", "$value": "oklch(from var(--warning) calc(l - 0.4) calc(c + 0.05) h)" },
-  "neutral-subtle": { "$type": "color", "$value": "oklch(from var(--neutral) calc(l + 0.2) c h)" },
+  "neutral-subtle": { "$type": "color", "$value": "oklch(from var(--neutral) calc(l + 0.175) calc(c + 0.1) calc(h + 4))" },
   "neutral": { "$type": "color", "$value": "color-mix(in oklch, var(--ink) 35%, var(--paper))" },
   "neutral-strong": { "$type": "color", "$value": "oklch(from var(--neutral) calc(l - 0.25) c h)" },
 
