@@ -32,8 +32,6 @@
   }
 
   .skeleton--text {
-    block-size: 0.75em;
-    margin-block: 0.25em;
     border-radius: var(--radius);
   }
   .skeleton--text:last-child { inline-size: 70%; }
