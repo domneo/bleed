@@ -673,9 +673,7 @@
  *     <button class="menu__item">Duplicate</button>
  *     <hr>
  *     <button class="menu__item menu__item--danger">Delete</button>
- *   </div>
- * Anchor positioning is bleeding-edge; where unsupported the popover still opens
- * (UA-centered) — degraded, not broken. See README support-cliff note. */
+ *   </div> */
 
 @layer bleed.components {
   .menu {
@@ -691,7 +689,7 @@
     /* anchored below the trigger, aligned to its inline-end, flipping if clipped */
     position: fixed;
     position-area: block-end span-inline-start;
-    margin-block-start: var(--space-1);
+    margin-block-start: var(--space-2);
     position-try-fallbacks: flip-block, flip-inline;
   }
 
@@ -703,11 +701,17 @@
       translate var(--transition),
       overlay var(--transition) allow-discrete,
       display var(--transition) allow-discrete;
-    translate: 0 calc(-1 * var(--space-1));
+    translate: 0 calc(-1 * var(--space-2));
   }
-  .menu:popover-open { opacity: 1; translate: 0 0; }
+  .menu:popover-open {
+    opacity: 1;
+    translate: 0 0;
+  }
   @starting-style {
-    .menu:popover-open { opacity: 0; translate: 0 calc(-1 * var(--space-1)); }
+    .menu:popover-open {
+      opacity: 0;
+      translate: 0 calc(-1 * var(--space-2));
+    }
   }
 
   .menu__item {
@@ -728,15 +732,21 @@
   }
   .menu__item:hover,
   .menu__item:focus-visible {
-    background-color: color-mix(in oklch, var(--ink) 12%, var(--paper));
+    background-color: var(--neutral-subtle);
   }
-  .menu__item--danger { color: var(--negative); }
+  .menu__item--danger {
+    color: var(--negative-strong);
+
+    &:hover,
+    &:focus-visible {
+      background-color: var(--negative-subtle);
+    }
+  }
 
   .menu hr {
     margin-block: var(--space-1);
     border: none;
-    border-block-start: var(--border-w) var(--border-style)
-      color-mix(in oklch, var(--ink) 25%, var(--paper));
+    border-block-start: var(--border-w) var(--border-style) var(--neutral);
   }
 }
 /* Sidebar nav — <nav class="sidebar"> with <details> collapsible groups.

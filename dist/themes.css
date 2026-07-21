@@ -11,8 +11,8 @@
     --positive-subtle: oklch(from var(--positive) calc(l + 0.2) c calc(h + 50));
     --positive: oklch(0.91 0.12 179.2);
     --positive-strong: oklch(from var(--positive) calc(l - 0.4) c calc(h + 22));
-    --negative-subtle: oklch(from var(--negative) calc(l + 0.2) c h);
-    --negative: oklch(0.8 0.15 30.7);
+    --negative-subtle: oklch(from var(--negative) calc(l + 0.2) calc(c - 0.05) h);
+    --negative: oklch(0.8 0.18 -7.3);
     --negative-strong: oklch(from var(--negative) calc(l - 0.25) c h);
     --warning-subtle: oklch(from var(--warning) calc(l + 0.2) c h);
     --warning: oklch(0.93 0.12 93.18);
