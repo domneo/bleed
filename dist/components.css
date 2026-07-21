@@ -374,8 +374,7 @@
     cursor: pointer;
   }
 }
-/* Empty state — <div class="empty"> with an optional icon, title, text, action.
- * Muted text uses a color-mix of tokens (no literal), so it re-themes. */
+/* Empty state — <div class="empty"> with an optional icon, title, text, action. */
 
 @layer bleed.components {
   .empty {
@@ -387,35 +386,33 @@
     padding: var(--space-6);
     text-align: center;
 
-    border: var(--border-w) var(--border-style) color-mix(in oklch, var(--ink) 45%, var(--paper));
+    border: var(--border-w) var(--border-style) var(--neutral);
     border-radius: var(--radius);
-    color: color-mix(in oklch, var(--ink) 70%, var(--paper));
+    color: var(--ink);
   }
 
   .empty__icon {
-    font-size: var(--font-size-5);
+    font-size: var(--font-size-6);
     line-height: var(--line-height-tight);
-    opacity: 0.7;
   }
 
   .empty__title {
     margin: 0;
     font-family: var(--font-display);
-    font-size: var(--font-size-2);
-    color: var(--ink);
+    font-size: var(--font-size-3);
   }
 
   .empty__text {
     margin: 0;
     max-inline-size: 40ch;
-    font-size: var(--font-size-1);
+    font-size: var(--font-size-2);
   }
 
   .empty__actions {
     display: flex;
     flex-wrap: wrap;
     gap: var(--space-3);
-    margin-block-start: var(--space-2);
+    margin-block-start: var(--space-3);
   }
 }
 /* Form fields — wrap label + control + hint/error in .field.
