@@ -605,7 +605,7 @@
     max-block-size: 85svh;
     color: var(--ink);
     background-color: var(--paper);
-    border: var(--border-w) var(--border-style) var(--ink);
+    border: var(--border-w) var(--border-style-alt) var(--ink);
     border-radius: var(--radius);
     box-shadow: var(--shadow);
 
@@ -688,7 +688,7 @@
     min-inline-size: 11rem;
     color: var(--ink);
     background-color: var(--paper);
-    border: var(--border-w) var(--border-style) var(--ink);
+    border: var(--border-w) var(--border-style-alt) var(--ink);
     border-radius: var(--radius);
     box-shadow: var(--shadow);
 
@@ -980,7 +980,7 @@
     padding: var(--space-3) var(--space-3) var(--space-3) var(--space-4);
     color: var(--toast-fg, var(--ink));
     background-color: var(--toast-bg, var(--paper));
-    border: var(--border-w) var(--border-style) var(--ink);
+    border: var(--border-w) var(--border-style-alt) var(--ink);
     border-radius: var(--radius);
     box-shadow: var(--toast-shadow, var(--shadow));
 
@@ -1120,7 +1120,7 @@
     font-size: var(--font-size-1);
     color: var(--tooltip-fg, var(--ink));
     background-color: var(--tooltip-bg, var(--paper));
-    border: var(--border-w) var(--border-style) var(--ink);
+    border: var(--border-w) var(--border-style-alt) var(--ink);
     border-radius: var(--radius);
     box-shadow: var(--tooltip-shadow, var(--shadow));
 

@@ -19,6 +19,7 @@
 
   "border-w": { "$type": "dimension", "$value": "2px" },
   "border-style": { "$type": "other", "$value": "dashed" },
+  "border-style-alt": { "$type": "other", "$value": "solid" },
 
   "shadow": { "$type": "other", "$value": "4px 4px 0 {ink}" },
   "shadow-hover": { "$type": "other", "$value": "2px 2px 0 {ink}" },

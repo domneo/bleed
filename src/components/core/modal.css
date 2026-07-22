@@ -18,7 +18,7 @@
     max-block-size: 85svh;
     color: var(--ink);
     background-color: var(--paper);
-    border: var(--border-w) var(--border-style) var(--ink);
+    border: var(--border-w) var(--border-style-alt) var(--ink);
     border-radius: var(--radius);
     box-shadow: var(--shadow);
 

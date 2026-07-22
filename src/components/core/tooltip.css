@@ -17,7 +17,7 @@
     font-size: var(--font-size-1);
     color: var(--tooltip-fg, var(--ink));
     background-color: var(--tooltip-bg, var(--paper));
-    border: var(--border-w) var(--border-style) var(--ink);
+    border: var(--border-w) var(--border-style-alt) var(--ink);
     border-radius: var(--radius);
     box-shadow: var(--tooltip-shadow, var(--shadow));
 
