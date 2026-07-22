@@ -1,8 +1,9 @@
 /* Toast — transient status. Each toast is an <output role="status"> (polite live
- * region) inside a fixed region; runtime.js appends one and auto-removes it (~10
- * lines). Tone is a start-edge stripe + label, never colour alone.
+ * region) inside a fixed region; runtime.js appends one and auto-removes it.
  *   <div class="toast-region" id="toasts"></div>
- *   bleed.toast('Trade executed', { tone: 'positive' }) */
+ *   bleed.toast('Trade executed', { title: 'Filled', icon: '✓', solid: true })
+ * Outlined on paper by default; add toast--solid to fill instead. Title
+ * optional, message always present — mirrors the alert banner. */
 
 @layer bleed.components {
   .toast-region {
@@ -10,7 +11,6 @@
     inset-block-end: var(--space-5);
     inset-inline-end: var(--space-5);
     z-index: 1000;
-
     display: flex;
     flex-direction: column;
     gap: var(--space-3);
@@ -19,50 +19,79 @@
   }
 
   .toast {
-    --_tone: var(--toast-tone, var(--ink));
     pointer-events: auto;
-
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: var(--space-3);
-    padding: var(--space-3) var(--space-4);
-
-    color: var(--ink);
-    background-color: var(--paper);
+    padding: var(--space-3) var(--space-3) var(--space-3) var(--space-4);
+    color: var(--toast-fg, var(--ink));
+    background-color: var(--toast-bg, var(--paper));
     border: var(--border-w) var(--border-style) var(--ink);
-    border-inline-start-width: var(--space-2);
-    border-inline-start-color: var(--_tone);
     border-radius: var(--radius);
-    box-shadow: var(--shadow);
+    box-shadow: var(--toast-shadow, var(--shadow));
 
     /* entry; JS adds .toast--leaving to reverse before removal */
     animation: toast-in var(--transition) both;
   }
 
-  .toast--positive { --toast-tone: var(--positive); }
-  .toast--negative { --toast-tone: var(--negative); }
-  .toast--warning  { --toast-tone: var(--warning); }
+  /* fill — solid replaces the outlined-on-paper default; shadow shifts to
+     --neutral so it stays visible against the ink fill (like .btn--solid) */
+  .toast--solid {
+    --toast-bg: var(--ink);
+    --toast-fg: var(--paper);
+    --toast-shadow: var(--space-1) var(--space-1) 0 var(--neutral);
+  }
 
-  .toast__icon { font-size: var(--font-size-2); line-height: var(--line-height-tight); color: var(--_tone); }
-  .toast__msg { flex: 1; }
+  .toast__icon {
+    font-size: var(--font-size-3);
+    line-height: var(--line-height-tight);
+    color: currentColor;
+  }
+
+  .toast__title {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--font-size-1);
+  }
+
+  .toast__msg {
+    margin: 0;
+    font-size: var(--font-size-1);
+  }
+
   .toast__close {
+    margin-inline-start: auto;
     appearance: none;
     border: none;
     background: transparent;
     color: inherit;
     cursor: pointer;
-    font-size: var(--font-size-2);
+    font-size: var(--font-size-3);
     line-height: var(--line-height-tight);
   }
 
-  .toast--leaving { animation: toast-out var(--transition) both; }
+  .toast--leaving {
+    animation: toast-out var(--transition) both;
+  }
 
   @keyframes toast-in {
-    from { opacity: 0; translate: var(--space-4) 0; }
-    to   { opacity: 1; translate: 0 0; }
+    from {
+      opacity: 0;
+      translate: var(--space-4) 0;
+    }
+    to {
+      opacity: 1;
+      translate: 0 0;
+    }
   }
   @keyframes toast-out {
-    from { opacity: 1; translate: 0 0; }
-    to   { opacity: 0; translate: var(--space-4) 0; }
+    from {
+      opacity: 1;
+      translate: 0 0;
+    }
+    to {
+      opacity: 0;
+      translate: var(--space-4) 0;
+    }
   }
 }

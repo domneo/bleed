@@ -59,7 +59,7 @@
   });
 
   // --- 3. Toasts -------------------------------------------------------------
-  function toast(message, { tone = '', icon = '', timeout = 4000, region = 'toasts' } = {}) {
+  function toast(message, { title = '', icon = '', solid = false, timeout = 4000, region = 'toasts' } = {}) {
     let host = document.getElementById(region);
     if (!host) {
       host = document.createElement('div');
@@ -68,12 +68,16 @@
       document.body.append(host);
     }
     const el = document.createElement('output');
-    el.className = 'toast' + (tone ? ` toast--${tone}` : '');
+    el.className = 'toast' + (solid ? ' toast--solid' : '');
     el.setAttribute('role', 'status');
     el.innerHTML =
       (icon ? `<span class="toast__icon" aria-hidden="true">${icon}</span>` : '') +
-      '<span class="toast__msg"></span>' +
+      '<div>' +
+        (title ? '<p class="toast__title"></p>' : '') +
+        '<p class="toast__msg"></p>' +
+      '</div>' +
       '<button class="toast__close" type="button" aria-label="Dismiss">✕</button>';
+    if (title) el.querySelector('.toast__title').textContent = title;
     el.querySelector('.toast__msg').textContent = message;
 
     const dismiss = () => {

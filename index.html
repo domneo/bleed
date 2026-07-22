@@ -352,8 +352,10 @@
       <section class="demo-section" aria-labelledby="h-feedback">
         <h2 class="text-heading" id="h-feedback">Toasts</h2>
         <div class="btn-group">
-          <button class="btn" type="button" onclick="bleed.toast('Trade executed: 100 AAPL', {tone:'positive', icon:'✓'})">Toast: success</button>
-          <button class="btn" type="button" onclick="bleed.toast('Connection lost', {tone:'negative', icon:'✕'})">Toast: error</button>
+          <button class="btn" type="button" onclick="bleed.toast('A default outlined toast with a message only.', {icon:'✓'})">default</button>
+          <button class="btn" type="button" onclick="bleed.toast('A toast with no icon.')">no icon</button>
+          <button class="btn" type="button" onclick="bleed.toast('A toast with a title above the message.', {title:'With title', icon:'▲'})">with title</button>
+          <button class="btn" type="button" onclick="bleed.toast('A solid toast with a title and a filled background.', {title:'Solid', icon:'✓', solid:true})">solid</button>
         </div>
         <div class="toast-region" id="toasts"></div>
       </section>
