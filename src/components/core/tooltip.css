@@ -4,24 +4,26 @@
  *   <div id="tt" popover="hint" class="tooltip" style="position-anchor:--tt-btn">
  *     Annualised, net of fees
  *   </div>
+ * Outlined on paper by default; add tooltip--solid to fill instead.
+ * Opens above the anchor by default; set position-area inline to pick a side.
  * Keep tooltip content non-essential — hint popovers are supplementary. */
 
 @layer bleed.components {
   .tooltip {
-    margin: 0;
+    margin: var(--space-2);
     max-inline-size: 22ch;
     padding: var(--space-1) var(--space-2);
 
     font-size: var(--font-size-1);
-    color: var(--paper);
-    background-color: var(--accent);
+    color: var(--tooltip-fg, var(--ink));
+    background-color: var(--tooltip-bg, var(--paper));
     border: var(--border-w) var(--border-style) var(--ink);
     border-radius: var(--radius);
-    box-shadow: var(--shadow);
+    box-shadow: var(--tooltip-shadow, var(--shadow));
 
+    /* opens above the anchor by default; override position-area inline to move it */
     position: fixed;
     position-area: block-start;
-    margin-block-end: var(--space-1);
     position-try-fallbacks: flip-block;
 
     opacity: 0;
@@ -30,8 +32,21 @@
       overlay var(--transition) allow-discrete,
       display var(--transition) allow-discrete;
   }
-  .tooltip:popover-open { opacity: 1; }
+
+  /* fill — solid replaces the outlined-on-paper default; shadow shifts to
+     --neutral so it stays visible against the ink fill (like .toast--solid) */
+  .tooltip--solid {
+    --tooltip-bg: var(--ink);
+    --tooltip-fg: var(--paper);
+    --tooltip-shadow: var(--space-1) var(--space-1) 0 var(--neutral);
+  }
+
+  .tooltip:popover-open {
+    opacity: 1;
+  }
   @starting-style {
-    .tooltip:popover-open { opacity: 0; }
+    .tooltip:popover-open {
+      opacity: 0;
+    }
   }
 }

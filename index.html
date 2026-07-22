@@ -366,8 +366,20 @@
       <section class="demo-section" aria-labelledby="h-feedback">
         <h2 class="text-heading" id="h-feedback">Tooltips</h2>
         <div class="btn-group">
-          <button class="btn btn--icon" popovertarget="tip" popovertargetaction="show" style="anchor-name:--tip" aria-describedby="tip">?</button>
-          <div id="tip" popover="hint" class="tooltip" style="position-anchor:--tip">Annualised, net of fees.</div>
+          <button class="btn" popovertarget="tip-default" popovertargetaction="show" style="anchor-name:--tip-default" aria-describedby="tip-default">Default</button>
+          <div id="tip-default" popover="hint" class="tooltip" style="position-anchor:--tip-default">A default tooltip, outlined on paper.</div>
+          <button class="btn" popovertarget="tip-solid" popovertargetaction="show" style="anchor-name:--tip-solid" aria-describedby="tip-solid">Solid</button>
+          <div id="tip-solid" popover="hint" class="tooltip tooltip--solid" style="position-anchor:--tip-solid">A solid tooltip, filled with ink.</div>
+        </div>
+        <div class="row" style="justify-content:center;gap:var(--space-6);margin-top:var(--space-5)">
+          <button class="btn" popovertarget="tip-top" popovertargetaction="show" style="anchor-name:--tip-top" aria-describedby="tip-top">Top</button>
+          <div id="tip-top" popover="hint" class="tooltip" style="position-anchor:--tip-top;position-area:block-start">Opens above the anchor.</div>
+          <button class="btn" popovertarget="tip-bottom" popovertargetaction="show" style="anchor-name:--tip-bottom" aria-describedby="tip-bottom">Bottom</button>
+          <div id="tip-bottom" popover="hint" class="tooltip" style="position-anchor:--tip-bottom;position-area:block-end">Opens below the anchor.</div>
+          <button class="btn" popovertarget="tip-left" popovertargetaction="show" style="anchor-name:--tip-left" aria-describedby="tip-left">Left</button>
+          <div id="tip-left" popover="hint" class="tooltip" style="position-anchor:--tip-left;position-area:inline-start">Opens to the left of the anchor.</div>
+          <button class="btn" popovertarget="tip-right" popovertargetaction="show" style="anchor-name:--tip-right" aria-describedby="tip-right">Right</button>
+          <div id="tip-right" popover="hint" class="tooltip" style="position-anchor:--tip-right;position-area:inline-end">Opens to the right of the anchor.</div>
         </div>
       </section>
 
