@@ -1,9 +1,10 @@
 /* Progress & capacity — native <progress> and <meter>.
  *   <progress class="progress" value="0.6"></progress>
- *   <meter class="meter" value="82" min="0" max="100" low="50" high="80" optimum="30">
- * <meter>'s low/high/optimum map to budget thresholds: the browser picks
- * optimum / sub-optimum / sub-sub-optimum and we colour those positive/warning/
- * negative. Pseudo-elements are vendor-specific, hence the duplicated blocks. */
+ *   <meter class="meter meter--tone" value="82" min="0" max="100" low="50" high="80" optimum="30">
+ * A plain <meter> fills with --ink. Add .meter--tone to colour by threshold:
+ * the browser picks optimum / sub-optimum / sub-sub-optimum and we map those to
+ * positive/warning/negative. Pseudo-elements are vendor-specific, hence the
+ * duplicated blocks. */
 
 @layer bleed.components {
   .progress,
@@ -11,38 +12,76 @@
     -webkit-appearance: none;
     appearance: none;
     inline-size: 100%;
-    block-size: var(--space-4);
-    border: var(--border-w) var(--border-style) var(--ink);
+    block-size: var(--space-5);
+    border-block-end: var(--border-w) var(--border-style) var(--ink);
+    border-inline-end: calc(var(--border-w) * 4) var(--border-style) var(--ink);
     border-radius: var(--radius);
-    background-color: color-mix(in oklch, var(--ink) 10%, var(--paper));
     overflow: hidden;
   }
 
   /* --- <progress> --------------------------------------------------------- */
-  /* NB: use the `background` shorthand, not background-color — the UA paints these
-     fills with a glossy background-IMAGE (gradient) that a background-color leaves
-     untouched, so the native green/red would show through. The shorthand resets it. */
-  .progress::-webkit-progress-bar { background: transparent; }
+  .progress::-webkit-progress-bar {
+    background: transparent;
+  }
   .progress::-webkit-progress-value {
     background: var(--progress-color, var(--ink));
     transition: inline-size var(--transition);
   }
-  .progress::-moz-progress-bar { background: var(--progress-color, var(--ink)); }
+  .progress::-moz-progress-bar {
+    background: var(--progress-color, var(--ink));
+  }
 
-  .progress--positive { --progress-color: var(--positive); }
-  .progress--negative { --progress-color: var(--negative); }
-  .progress--accent   { --progress-color: var(--accent); }
+  .progress--positive {
+    --progress-color: var(--positive);
+  }
+  .progress--negative {
+    --progress-color: var(--negative);
+  }
+  .progress--warning {
+    --progress-color: var(--warning);
+  }
+  .progress--accent {
+    --progress-color: var(--accent);
+  }
 
   /* --- <meter> ------------------------------------------------------------ */
-  .meter::-webkit-meter-inner-element { block-size: 100%; }
-  .meter::-webkit-meter-bar { background: transparent; border: none; }
-  .meter::-webkit-meter-optimum-value        { background: var(--positive); }
-  .meter::-webkit-meter-suboptimum-value     { background: var(--warning); }
-  .meter::-webkit-meter-even-less-good-value { background: var(--negative); }
+  .meter::-webkit-meter-inner-element {
+    block-size: 100%;
+  }
+  .meter::-webkit-meter-bar {
+    background: transparent;
+    border: none;
+  }
+  /* Default: value bar is ink regardless of threshold. */
+  .meter::-webkit-meter-optimum-value,
+  .meter::-webkit-meter-suboptimum-value,
+  .meter::-webkit-meter-even-less-good-value {
+    background: var(--ink);
+  }
+  .meter::-moz-meter-bar {
+    background: var(--ink);
+  }
 
-  .meter:-moz-meter-optimum::-moz-meter-bar         { background: var(--positive); }
-  .meter:-moz-meter-sub-optimum::-moz-meter-bar     { background: var(--warning); }
-  .meter:-moz-meter-sub-sub-optimum::-moz-meter-bar { background: var(--negative); }
+  /* .meter--tone: colour by optimum / low / high threshold. */
+  .meter--tone::-webkit-meter-optimum-value {
+    background: var(--positive);
+  }
+  .meter--tone::-webkit-meter-suboptimum-value {
+    background: var(--warning);
+  }
+  .meter--tone::-webkit-meter-even-less-good-value {
+    background: var(--negative);
+  }
+
+  .meter--tone:-moz-meter-optimum::-moz-meter-bar {
+    background: var(--positive);
+  }
+  .meter--tone:-moz-meter-sub-optimum::-moz-meter-bar {
+    background: var(--warning);
+  }
+  .meter--tone:-moz-meter-sub-sub-optimum::-moz-meter-bar {
+    background: var(--negative);
+  }
 
   /* labelled capacity row */
   .capacity {
@@ -51,7 +90,14 @@
     align-items: center;
     gap: var(--space-1) var(--space-3);
   }
-  .capacity > :is(.progress, .meter) { grid-column: 1 / -1; }
-  .capacity__label { font-size: var(--font-size-1); }
-  .capacity__value { font-variant-numeric: tabular-nums; text-align: end; }
+  .capacity > :is(.progress, .meter) {
+    grid-column: 1 / -1;
+  }
+  .capacity__label {
+    font-size: var(--font-size-1);
+  }
+  .capacity__value {
+    font-variant-numeric: tabular-nums;
+    text-align: end;
+  }
 }

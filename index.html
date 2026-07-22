@@ -295,19 +295,55 @@
 
       <!-- PROGRESS -->
       <section class="demo-section" aria-labelledby="h-progress">
-        <h2 class="text-heading" id="h-progress">Progress</h2>
-        <div class="capacity">
-          <span class="capacity__label">Compute</span>
-          <span class="capacity__value">82%</span>
-          <meter class="meter" value="82" min="0" max="100" low="50" high="80" optimum="30" aria-label="Compute budget">82%</meter>
+        <h2 class="text-heading" id="h-progress">Meter & Progress</h2>
+        <div class="token-grid" style="grid-template-columns:repeat(auto-fit, minmax(16rem, 1fr))">
+          <div class="demo-section" style="margin-block:0">
+            <h3 class="text-lead">Meter</h3>
+            <div class="capacity">
+              <span class="capacity__label">Default</span>
+              <span class="capacity__value">41%</span>
+              <meter class="meter" value="41" min="0" max="100" low="50" high="80" optimum="30" aria-label="Meter default">41%</meter>
+            </div>
+            <div class="capacity">
+              <span class="capacity__label">Optimum</span>
+              <span class="capacity__value">31%</span>
+              <meter class="meter meter--tone" value="31" min="0" max="100" low="50" high="80" optimum="30" aria-label="Meter optimum">31%</meter>
+            </div>
+            <div class="capacity">
+              <span class="capacity__label">Low</span>
+              <span class="capacity__value">54%</span>
+              <meter class="meter meter--tone" value="54" min="0" max="100" low="50" high="80" optimum="30" aria-label="Meter low">54%</meter>
+            </div>
+            <div class="capacity">
+              <span class="capacity__label">High</span>
+              <span class="capacity__value">90%</span>
+              <meter class="meter meter--tone" value="90" min="0" max="100" low="50" high="80" optimum="30" aria-label="Meter high">90%</meter>
+            </div>
+          </div>
+          <div class="demo-section" style="margin-block:0">
+            <h3 class="text-lead">Progress</h3>
+            <div class="capacity">
+              <label class="capacity__label" for="load-default">Default</label>
+              <progress class="progress" id="load-default" value="0.35" aria-label="Default"></progress>
+            </div>
+            <div class="capacity">
+              <label class="capacity__label" for="load-accent">Accent</label>
+              <progress class="progress progress--accent" id="load-accent" value="0.6" aria-label="Accent"></progress>
+            </div>
+            <div class="capacity">
+              <label class="capacity__label" for="load-positive">Positive</label>
+              <progress class="progress progress--positive" id="load-positive" value="0.92" aria-label="Positive"></progress>
+            </div>
+            <div class="capacity">
+              <label class="capacity__label" for="load-warning">Warning</label>
+              <progress class="progress progress--warning" id="load-warning" value="0.5" aria-label="Warning"></progress>
+            </div>
+            <div class="capacity">
+              <label class="capacity__label" for="load-negative">Negative</label>
+              <progress class="progress progress--negative" id="load-negative" value="0.18" aria-label="Negative"></progress>
+            </div>
+          </div>
         </div>
-        <div class="capacity">
-          <span class="capacity__label">Storage</span>
-          <span class="capacity__value">41%</span>
-          <meter class="meter" value="41" min="0" max="100" low="50" high="80" optimum="30" aria-label="Storage budget">41%</meter>
-        </div>
-        <label class="capacity__label" for="load">Load</label>
-        <progress class="progress progress--accent" id="load" value="0.6" aria-label="Load"></progress>
       </section>
 
       <hr>
