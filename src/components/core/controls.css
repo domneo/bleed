@@ -1,12 +1,13 @@
-/* Checkbox / radio / range — checkbox + radio are fully custom-drawn (appearance:
- * none) so they carry the theme's alt border and ink/paper fill. Range stays native,
- * tinted via accent-color.
+/* Checkbox / radio / range — all three are fully custom-drawn (appearance: none) so
+ * they carry the theme's alt border and ink/paper fill.
  *   <label class="control"><input type="checkbox">Reinvest dividends</label>
  *   <input class="range" type="range" min="0" max="100">
  *
  * checkbox — square (0 radius), border + "check" both ink on paper. The check is an
  * X whose ends touch the four corners; indeterminate draws just one diagonal of it.
- * radio — circular border, check is a centred ink dot inset to clear the border. */
+ * radio — circular border, check is a centred ink dot inset to clear the border.
+ * range — bordered paper track, square ink thumb inset from the border by the same
+ * gap the radio dot uses. */
 
 @layer bleed.components {
   .control {
@@ -89,11 +90,60 @@
     cursor: not-allowed;
   }
 
+  /* range: the thumb is sized to sit inside the track's border with a gap on every
+   * side, so track height = 2 borders + 2 gaps + thumb; inline padding keeps the same
+   * gap at both ends of its travel. WebKit lays the thumb out from the track's
+   * content-box top, hence the matching margin; Firefox centres it. */
   .range,
   .field input[type="range"] {
+    --range-track-h: var(--space-5);
+    --range-thumb-gap: calc(var(--space-1) / 2);
+    --range-thumb-size: calc(var(--range-track-h) - 2 * var(--border-w) - 2 * var(--range-thumb-gap));
+
+    appearance: none;
     inline-size: 100%;
-    accent-color: var(--ink);
+    block-size: var(--range-track-h);
+    margin: 0;
+    background-color: transparent;
     cursor: pointer;
+  }
+
+  .range::-webkit-slider-runnable-track,
+  .field input[type="range"]::-webkit-slider-runnable-track {
+    block-size: var(--range-track-h);
+    padding: 0 var(--range-thumb-gap);
+    background-color: var(--paper);
+    border: var(--border-w) var(--border-style) var(--ink);
+    border-radius: 0;
+  }
+
+  .range::-moz-range-track,
+  .field input[type="range"]::-moz-range-track {
+    block-size: var(--range-track-h);
+    padding: 0 var(--range-thumb-gap);
+    background-color: var(--paper);
+    border: var(--border-w) var(--border-style) var(--ink);
+    border-radius: 0;
+  }
+
+  .range::-webkit-slider-thumb,
+  .field input[type="range"]::-webkit-slider-thumb {
+    appearance: none;
+    inline-size: var(--range-thumb-size);
+    block-size: var(--range-thumb-size);
+    margin-block-start: var(--range-thumb-gap);
+    background-color: var(--ink);
+    border: 0;
+    border-radius: 0;
+  }
+
+  .range::-moz-range-thumb,
+  .field input[type="range"]::-moz-range-thumb {
+    inline-size: var(--range-thumb-size);
+    block-size: var(--range-thumb-size);
+    background-color: var(--ink);
+    border: 0;
+    border-radius: 0;
   }
 
   /* vertical stack of options */

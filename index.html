@@ -594,10 +594,20 @@
       <!-- RANGE -->
       <section class="demo-section" aria-labelledby="h-range">
         <h2 class="text-heading" id="h-range">Range</h2>
-        <div class="field" style="max-inline-size:20rem">
-          <label for="risk">Risk tolerance</label>
-          <input class="range" id="risk" type="range" min="0" max="100" value="40">
-        </div>
+        <form class="row" style="align-items:flex-start;gap:var(--space-6)" onsubmit="return false">
+
+          <!-- default -->
+          <div class="field" style="max-inline-size:24rem">
+            <label for="range-input">Range input</label>
+            <input class="range" id="range-input" type="range" min="0" max="100" value="40">
+          </div>
+
+          <!-- disabled -->
+          <div class="field" style="max-inline-size:24rem">
+            <label for="range-input-disabled">Disabled</label>
+            <input class="range" id="range-input-disabled" type="range" min="0" max="100" value="80" disabled>
+          </div>
+        </form>
       </section>
 
       <hr>
