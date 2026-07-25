@@ -1,12 +1,12 @@
 /* Card / Panel — <article class="card">. Optional structure:
  *   <article class="card">
  *     <header class="card-header"><h3 class="card-title">…</h3></header>
- *     <div class="card-body"> …arbitrary content / a BYO chart lib… </div>
+ *     <div class="card-body"> …arbitrary content… </div>
  *     <footer class="card-footer">…</footer>
  *   </article>
  * Or the simple form: <article class="card card--pad">…</article>.
  *
- * DONUT SCOPE: bare-element defaults (headings, hr) apply to the card CHROME but
+ * DONUT SCOPE: bare-element defaults (headings, hr) apply to the card FRAME but
  * stop at .card-body — so a charting library dropped into the body keeps its own
  * DOM untouched. Styling bare elements inside a card is intentional & documented. */
 
@@ -54,7 +54,9 @@
     min-inline-size: 0;
   }
   /* let an embedded viz go edge-to-edge */
-  .card-body--flush { padding: 0; }
+  .card-body--flush {
+    padding: 0;
+  }
 
   .card-footer {
     display: flex;
@@ -67,7 +69,9 @@
   /* interactive card (wrap in <a>/<button> or add role) — same press contract */
   .card--interactive {
     cursor: pointer;
-    transition: translate var(--transition), box-shadow var(--transition);
+    transition:
+      translate var(--transition),
+      box-shadow var(--transition);
   }
   .card--interactive:hover {
     translate: var(--hover-shift-x) var(--hover-shift-y);
@@ -78,7 +82,7 @@
     box-shadow: var(--shadow-active);
   }
 
-  /* bare-element defaults, donut-scoped to the chrome (never into .card-body) */
+  /* bare-element defaults, donut-scoped to the frame (never into .card-body) */
   @scope (.card) to (.card-body) {
     :scope > :is(h1, h2, h3, h4) {
       font-family: var(--font-display);

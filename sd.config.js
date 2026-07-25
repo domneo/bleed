@@ -38,7 +38,7 @@ StyleDictionary.registerFormat({
 // --- theme catalogue -----------------------------------------------------------
 export const THEMES = ["bleed", "blip", "boring"];
 
-// color-scheme is a UA behavior (native form control chrome), not a themeable custom
+// color-scheme is a UA behavior (native form control), not a themeable custom
 // property — it's appended to each theme block directly rather than flowing through
 // the token/format pipeline above.
 const COLOR_SCHEME = { bleed: "light", blip: "dark", boring: "light" };
