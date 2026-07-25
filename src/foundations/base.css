@@ -97,7 +97,7 @@
 
   /* --- focus: always visible, never themeable away ------------------------- */
   :where(a, button, input, select, textarea, summary, [tabindex], [popovertarget], dialog):focus-visible {
-    outline: max(var(--space-1), var(--border-w)) solid var(--accent);
+    outline: max(var(--space-1), var(--border-w)) dashed var(--accent);
     outline-offset: var(--space-2); /* px-ok: fixed focus gap */
   }
   /* kill the default ring only where we replace it */

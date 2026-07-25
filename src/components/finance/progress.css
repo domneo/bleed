@@ -14,7 +14,7 @@
     inline-size: 100%;
     block-size: var(--space-5);
     border-block-end: var(--border-w) var(--border-style) var(--ink);
-    border-inline-end: calc(var(--border-w) * 4) var(--border-style-alt) var(--ink);
+    border-inline-end: calc(var(--border-w) * 4) var(--border-style) var(--ink);
     border-radius: var(--radius);
     overflow: hidden;
   }

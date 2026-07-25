@@ -27,7 +27,7 @@
     margin: 0;
     background-color: var(--paper);
     background-repeat: no-repeat;
-    border: var(--border-w) solid var(--ink);
+    border: var(--border-w) var(--border-style) var(--ink);
     cursor: pointer;
   }
 
