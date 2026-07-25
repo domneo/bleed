@@ -367,19 +367,19 @@
         <h2 class="text-heading" id="h-feedback">Tooltips</h2>
         <div class="btn-group">
           <button class="btn" popovertarget="tip-default" popovertargetaction="show" style="anchor-name:--tip-default" aria-describedby="tip-default">Default</button>
-          <div id="tip-default" popover="hint" class="tooltip" style="position-anchor:--tip-default">A default tooltip, outlined on paper.</div>
+          <div id="tip-default" popover="auto" class="tooltip" style="position-anchor:--tip-default">A default tooltip, outlined on paper.</div>
           <button class="btn" popovertarget="tip-solid" popovertargetaction="show" style="anchor-name:--tip-solid" aria-describedby="tip-solid">Solid</button>
-          <div id="tip-solid" popover="hint" class="tooltip tooltip--solid" style="position-anchor:--tip-solid">A solid tooltip, filled with ink.</div>
+          <div id="tip-solid" popover="auto" class="tooltip tooltip--solid" style="position-anchor:--tip-solid">A solid tooltip, filled with ink.</div>
         </div>
         <div class="row" style="justify-content:center;gap:var(--space-6);margin-top:var(--space-5)">
           <button class="btn" popovertarget="tip-top" popovertargetaction="show" style="anchor-name:--tip-top" aria-describedby="tip-top">Top</button>
-          <div id="tip-top" popover="hint" class="tooltip" style="position-anchor:--tip-top;position-area:block-start">Opens above the anchor.</div>
+          <div id="tip-top" popover="auto" class="tooltip" style="position-anchor:--tip-top;position-area:block-start">Opens above the anchor.</div>
           <button class="btn" popovertarget="tip-bottom" popovertargetaction="show" style="anchor-name:--tip-bottom" aria-describedby="tip-bottom">Bottom</button>
-          <div id="tip-bottom" popover="hint" class="tooltip" style="position-anchor:--tip-bottom;position-area:block-end">Opens below the anchor.</div>
+          <div id="tip-bottom" popover="auto" class="tooltip" style="position-anchor:--tip-bottom;position-area:block-end">Opens below the anchor.</div>
           <button class="btn" popovertarget="tip-left" popovertargetaction="show" style="anchor-name:--tip-left" aria-describedby="tip-left">Left</button>
-          <div id="tip-left" popover="hint" class="tooltip" style="position-anchor:--tip-left;position-area:inline-start">Opens to the left of the anchor.</div>
+          <div id="tip-left" popover="auto" class="tooltip" style="position-anchor:--tip-left;position-area:inline-start">Opens to the left of the anchor.</div>
           <button class="btn" popovertarget="tip-right" popovertargetaction="show" style="anchor-name:--tip-right" aria-describedby="tip-right">Right</button>
-          <div id="tip-right" popover="hint" class="tooltip" style="position-anchor:--tip-right;position-area:inline-end">Opens to the right of the anchor.</div>
+          <div id="tip-right" popover="auto" class="tooltip" style="position-anchor:--tip-right;position-area:inline-end">Opens to the right of the anchor.</div>
         </div>
       </section>
 
@@ -387,20 +387,97 @@
 
       <!-- ==================================================== FORMS -->
 
-      <!-- TEXT & NUMBER INPUTS -->
+      <!-- INPUTS -->
       <section class="demo-section" aria-labelledby="h-text-inputs">
-        <h2 class="text-heading" id="h-text-inputs">Text &amp; number inputs</h2>
-        <form class="row" style="align-items:flex-start" onsubmit="return false">
-          <div class="field" style="flex:1 1 14rem">
-            <label for="amt">Order amount (required)</label>
+        <h2 class="text-heading" id="h-text-inputs">Inputs</h2>
+        <form class="row" style="align-items:flex-start;gap:var(--space-6)" onsubmit="return false">
+
+          <!-- resting state -->
+          <div class="field" style="max-inline-size:24rem">
+            <label for="text-input">Text input</label>
+            <input class="input" id="text-input" name="text-input" placeholder="Placeholder" autocomplete="off">
+          </div>
+
+          <!-- disabled -->
+          <div class="field" style="max-inline-size:24rem">
+            <label for="text-input-disabled">Disabled input</label>
+            <input class="input" id="text-input-disabled" name="text-input-disabled" value="Not editable" disabled>
+          </div>
+
+          <!-- single leading addon -->
+          <div class="field" style="max-inline-size:24rem">
+            <label for="text-input-addon-leading">Input with leading addon</label>
             <div class="input-group">
               <span class="input-group__addon">$</span>
-              <input class="input" id="amt" name="amt" type="number" min="1" required placeholder="0.00">
+              <input class="input" id="text-input-addon-leading" name="text-input-addon-leading" type="number" step="0.01" placeholder="0.00">
             </div>
-            <p class="field__hint">Whole dollars, max $1,000,000.</p>
-            <p class="field__error">Enter an amount of at least $1.</p>
           </div>
-          <button class="btn btn--warning" type="submit">Submit</button>
+
+          <!-- leading + trailing addon -->
+          <div class="field" style="max-inline-size:24rem">
+            <label for="text-input-addons">Input with addons</label>
+            <div class="input-group">
+              <span class="input-group__addon">$</span>
+              <input class="input" id="text-input-addons" name="text-input-addons" type="number" step="0.01" placeholder="0.00">
+              <span class="input-group__addon input-group__addon--trailing">USD</span>
+            </div>
+          </div>
+
+          <!-- native validation: :user-invalid fires only after interaction -->
+          <div class="field" style="max-inline-size:24rem">
+            <label for="text-input-required">Text input, required</label>
+            <input class="input" id="text-input-required" name="text-input-required" placeholder="Placeholder" required autocomplete="off">
+            <p class="field__hint">Hint: leave blank and click away.</p>
+            <p class="field__error">Error: field is required.</p>
+          </div>
+
+          <!-- error shown upfront via aria-invalid (server-side validation) -->
+          <div class="field" style="max-inline-size:24rem">
+            <label for="number-input-invalid">Number input, invalid</label>
+            <div class="input-group">
+              <span class="input-group__addon">$</span>
+              <input class="input" id="number-input-invalid" name="number-input-invalid" type="number" min="1" required value="0" aria-invalid="true">
+            </div>
+            <p class="field__hint">Hint: guidance shown before interaction.</p>
+            <p class="field__error">Error: what's wrong and how to fix it.</p>
+          </div>
+        </form>
+      </section>
+
+      <hr>
+
+      <!-- TEXTAREA -->
+      <section class="demo-section" aria-labelledby="h-textarea">
+        <h2 class="text-heading" id="h-textarea">Textarea</h2>
+        <form class="row" style="align-items:flex-start;gap:var(--space-6)" onsubmit="return false">
+
+          <!-- resting state -->
+          <div class="field" style="max-inline-size:24rem">
+            <label for="textarea">Textarea</label>
+            <textarea class="input" id="textarea" name="textarea" placeholder="Placeholder"></textarea>
+          </div>
+
+          <!-- disabled -->
+          <div class="field" style="max-inline-size:24rem">
+            <label for="textarea-disabled">Disabled textarea</label>
+            <textarea class="input" id="textarea-disabled" name="textarea-disabled" disabled>Not editable</textarea>
+          </div>
+
+          <!-- native validation: :user-invalid fires only after interaction -->
+          <div class="field" style="max-inline-size:24rem">
+            <label for="textarea-required">Textarea, required</label>
+            <textarea class="input" id="textarea-required" name="textarea-required" placeholder="Placeholder" required></textarea>
+            <p class="field__hint">Hint: leave blank and click away.</p>
+            <p class="field__error">Error: field is required.</p>
+          </div>
+
+          <!-- error shown upfront via aria-invalid (server-side validation) -->
+          <div class="field" style="max-inline-size:24rem">
+            <label for="textarea-invalid">Textarea, invalid</label>
+            <textarea class="input" id="textarea-invalid" name="textarea-invalid" required aria-invalid="true"></textarea>
+            <p class="field__hint">Hint: guidance shown before interaction.</p>
+            <p class="field__error">Error: field cannot be empty.</p>
+          </div>
         </form>
       </section>
 
@@ -409,10 +486,79 @@
       <!-- SELECT -->
       <section class="demo-section" aria-labelledby="h-select">
         <h2 class="text-heading" id="h-select">Select</h2>
-        <div class="field" style="max-inline-size:12rem">
-          <label for="side">Side</label>
-          <select class="input" id="side"><option>Buy</option><option>Sell</option><option>Short</option></select>
-        </div>
+        <form class="row" style="align-items:flex-start;gap:var(--space-6)" onsubmit="return false">
+
+          <!-- resting state -->
+          <div class="field" style="max-inline-size:24rem">
+            <label for="select">Select</label>
+            <select class="input" id="select" name="select">
+              <option>Option 1</option>
+              <option>Option 2</option>
+              <option>Option 3</option>
+            </select>
+          </div>
+
+          <!-- disabled -->
+          <div class="field" style="max-inline-size:24rem">
+            <label for="select-disabled">Disabled select</label>
+            <select class="input" id="select-disabled" name="select-disabled" disabled>
+              <option>Not editable</option>
+            </select>
+          </div>
+
+          <!-- single leading addon -->
+          <div class="field" style="max-inline-size:24rem">
+            <label for="select-addon-leading">Select with leading addon</label>
+            <div class="input-group">
+              <span class="input-group__addon">Qty</span>
+              <select class="input" id="select-addon-leading" name="select-addon-leading">
+                <option>Shares</option>
+                <option>Contracts</option>
+                <option>Lots</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- leading + trailing addon -->
+          <div class="field" style="max-inline-size:24rem">
+            <label for="select-addons">Select with addons</label>
+            <div class="input-group">
+              <span class="input-group__addon">Every</span>
+              <select class="input" id="select-addons" name="select-addons">
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+              </select>
+              <span class="input-group__addon input-group__addon--trailing">days</span>
+            </div>
+          </div>
+
+          <!-- native validation: :user-invalid fires only after interaction -->
+          <div class="field" style="max-inline-size:24rem">
+            <label for="select-required">Select, required</label>
+            <select class="input" id="select-required" name="select-required" required>
+              <option value="">Choose one</option>
+              <option>Option 1</option>
+              <option>Option 2</option>
+              <option>Option 3</option>
+            </select>
+            <p class="field__hint">Hint: leave blank and click away.</p>
+            <p class="field__error">Error: field is required.</p>
+          </div>
+
+          <!-- error shown upfront via aria-invalid (server-side validation) -->
+          <div class="field" style="max-inline-size:24rem">
+            <label for="select-invalid">Select, invalid</label>
+            <select class="input" id="select-invalid" name="select-invalid" required aria-invalid="true">
+              <option value="">Choose one</option>
+              <option>Option 1</option>
+              <option>Option 2</option>
+              <option>Option 3</option>
+            </select>
+            <p class="field__hint">Hint: guidance shown before interaction.</p>
+            <p class="field__error">Error: what's wrong and how to fix it.</p>
+          </div>
+        </form>
       </section>
 
       <hr>

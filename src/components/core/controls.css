@@ -21,7 +21,7 @@
     cursor: pointer;
   }
 
-  .control:has(:disabled) { opacity: 0.55; cursor: not-allowed; }
+  .control:has(:disabled) { opacity: 0.5; cursor: not-allowed; }
 
   .range,
   .field input[type="range"] {
@@ -35,11 +35,5 @@
     display: flex;
     flex-direction: column;
     gap: var(--space-2);
-  }
-
-  /* native <select> keeps its arrow; we supply the box + a little end padding */
-  .field select {
-    padding-inline-end: var(--space-5);
-    cursor: pointer;
   }
 }

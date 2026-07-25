@@ -12,32 +12,52 @@
   .field {
     display: flex;
     flex-direction: column;
-    gap: var(--space-1);
+    gap: var(--space-2);
     min-inline-size: 0;
+    width: 100%;
   }
 
   .field > label,
   .field__label {
     font-size: var(--font-size-1);
+    line-height: var(--line-height-snug);
   }
 
   .field__hint {
     font-size: var(--font-size-1);
-    color: color-mix(in oklch, var(--ink) 60%, var(--paper));
+    line-height: var(--line-height-snug);
+    color: var(--neutral-strong);
   }
 
   .field__error {
     font-size: var(--font-size-1);
-    color: var(--negative);
+    line-height: var(--line-height-snug);
+    color: var(--negative-strong);
   }
-  /* error is hidden until the control is actually invalid post-interaction */
-  .field:not(:has(:user-invalid)) .field__error { display: none; }
+  /* Error is hidden until the control is invalid post-interaction (:user-invalid),
+   * OR forced open via [aria-invalid="true"] — the latter is how server-side
+   * validation surfaces an error immediately, without waiting for interaction. */
+  .field:not(:has(:user-invalid)):not(:has([aria-invalid="true"])) .field__error {
+    display: none;
+  }
   .field:has(:user-invalid) > label,
-  .field:has(:user-invalid) .field__label { color: var(--negative); }
+  .field:has(:user-invalid) .field__label,
+  .field:has([aria-invalid="true"]) > label,
+  .field:has([aria-invalid="true"]) .field__label {
+    color: var(--negative-strong);
+  }
+  /* Error remaps the field's neutrals onto the negative ramp, so the control
+   * text, border, and addons all shift together without per-element overrides. */
+  .field:has(:user-invalid),
+  .field:has([aria-invalid="true"]) {
+    --ink: var(--negative-strong);
+    --paper: var(--negative-subtle);
+    --neutral-subtle: var(--negative-subtle);
+  }
 
   /* --- text-like controls ------------------------------------------------- */
   .input,
-  .field :is(input, select, textarea):not([type="checkbox"]):not([type="radio"]):not([type="range"]) {
+  .field :is(input, textarea):not([type="checkbox"], [type="radio"], [type="range"]) {
     inline-size: 100%;
     padding: var(--space-2) var(--space-3);
     font: inherit;
@@ -45,38 +65,109 @@
     background-color: var(--paper);
     border: var(--border-w) var(--border-style) var(--ink);
     border-radius: var(--radius);
-    transition: border-color var(--transition), box-shadow var(--transition);
+    transition: border-color var(--transition);
   }
 
   .input::placeholder,
   .field :is(input, textarea)::placeholder {
-    color: color-mix(in oklch, var(--ink) 45%, var(--paper));
+    color: var(--neutral);
   }
 
-  .field textarea { min-block-size: calc(var(--space-9) + var(--space-4)); resize: vertical; }
-
-  :is(.input, .field input, .field select, .field textarea):user-invalid {
-    border-color: var(--negative);
+  .field textarea {
+    min-block-size: calc(var(--space-9) + var(--space-4));
+    resize: vertical;
   }
 
-  :is(.input, .field input, .field select, .field textarea):disabled {
-    opacity: 0.55;
+  :is(.input, .field input, .field textarea):user-invalid,
+  :is(.input, .field input, .field textarea)[aria-invalid="true"] {
+    border-color: var(--negative-strong);
+    background-color: var(--negative-subtle);
+  }
+
+  :is(.input, .field input, .field textarea):disabled {
+    opacity: 0.5;
     cursor: not-allowed;
-    background-color: color-mix(in oklch, var(--ink) 6%, var(--paper));
+    background-color: var(--neutral-subtle);
   }
 
-  /* input adornments: <div class="input-group"><span>$</span><input></div> */
+  /* Custom select — no wrapper. appearance:none + a two-tone linear-gradient
+   * chevron drawn straight on the select's own background is the universal
+   * baseline (works in Safari, which has no base-select support yet); unlike
+   * a background-image url(), a gradient is native CSS so var(--ink) still
+   * follows the theme. Where appearance:base-select IS supported (Chromium
+   * 135+), it takes over: the native ::picker-icon gets the same text-glyph
+   * treatment, and the gradient is switched off.
+   *   <select class="input">…</select> */
+  select.input {
+    appearance: none;
+    cursor: pointer;
+    padding-inline-end: var(--space-4);
+    background-image: linear-gradient(45deg, transparent 50%, var(--ink) 50%), linear-gradient(135deg, var(--ink) 50%, transparent 50%);
+    background-position:
+      calc(100% - var(--space-4) - 5px) center,
+      calc(100% - var(--space-4)) center;
+    background-size: 5px 5px;
+    background-repeat: no-repeat;
+  }
+
+  @supports (appearance: base-select) {
+    select.input {
+      appearance: base-select;
+      background-image: none;
+    }
+    select.input::picker-icon {
+      content: "⏷";
+      color: var(--ink);
+      font-size: var(--font-size-1);
+    }
+  }
+
+  select.input:user-invalid,
+  select.input[aria-invalid="true"] {
+    border-color: var(--negative-strong);
+    background-color: var(--negative-subtle);
+  }
+
+  select.input:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background-color: var(--neutral-subtle);
+  }
+
+  /* Input adornments. Leading and/or trailing addons flank the control:
+   *   <div class="input-group"><span class="input-group__addon">$</span><input class="input"></div>
+   *   <div class="input-group"><input class="input"><span class="input-group__addon input-group__addon--trailing">USD</span></div> */
   .input-group {
     display: flex;
     align-items: stretch;
+    min-inline-size: 0;
   }
-  .input-group > :is(.input-group__addon, span:first-child) {
+  .input-group > .input {
+    inline-size: 100%;
+    min-inline-size: 0;
+  }
+  .input-group > :is(.input-group__addon, span:first-child, span:last-child) {
     display: inline-flex;
     align-items: center;
     padding-inline: var(--space-3);
-    background-color: color-mix(in oklch, var(--ink) 10%, var(--paper));
+    color: var(--ink);
+    background-color: var(--neutral-subtle);
     border: var(--border-w) var(--border-style) var(--ink);
+  }
+  /* leading addon: joins the input's start edge */
+  .input-group > :is(.input-group__addon:first-child, span:first-child) {
     border-inline-end: none;
   }
-  .input-group > .input { border-start-start-radius: 0; border-end-start-radius: 0; }
+  .input-group > :is(.input-group__addon:first-child, span:first-child) ~ .input {
+    border-start-start-radius: 0;
+    border-end-start-radius: 0;
+  }
+  /* trailing addon: joins the input's end edge */
+  .input-group > :is(.input-group__addon--trailing, span:last-child:not(:first-child)) {
+    border-inline-start: none;
+  }
+  .input-group > .input:has(~ :is(.input-group__addon--trailing, span:last-child:not(:first-child))) {
+    border-start-end-radius: 0;
+    border-end-end-radius: 0;
+  }
 }
