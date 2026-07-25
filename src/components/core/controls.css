@@ -1,7 +1,12 @@
-/* Checkbox / radio / range — native controls tinted via accent-color (set on :root
- * in base.css, so they follow the theme). We only size + lay them out.
- *   <label class="control"><input type="checkbox"> Reinvest dividends</label>
- *   <input class="range" type="range" min="0" max="100"> */
+/* Checkbox / radio / range — checkbox + radio are fully custom-drawn (appearance:
+ * none) so they carry the theme's alt border and ink/paper fill. Range stays native,
+ * tinted via accent-color.
+ *   <label class="control"><input type="checkbox">Reinvest dividends</label>
+ *   <input class="range" type="range" min="0" max="100">
+ *
+ * checkbox — square (0 radius), border + "check" both ink on paper. The check is an
+ * X whose ends touch the four corners; indeterminate draws just one diagonal of it.
+ * radio — circular border, check is a centred ink dot inset to clear the border. */
 
 @layer bleed.components {
   .control {
@@ -15,13 +20,74 @@
   .control input[type="radio"],
   .field input[type="checkbox"],
   .field input[type="radio"] {
+    appearance: none;
     inline-size: var(--space-5);
     block-size: var(--space-5);
-    accent-color: var(--ink);
+    margin: 0;
+    background-color: var(--paper);
+    background-repeat: no-repeat;
+    border: var(--border-w) solid var(--ink);
     cursor: pointer;
   }
 
-  .control:has(:disabled) { opacity: 0.5; cursor: not-allowed; }
+  /* checkbox: square box, X drawn corner-to-corner. Each diagonal is a stripe
+   * (thickness = border width) laid perpendicular to the gradient axis, so the two
+   * gradients meet the four corners. */
+  .control input[type="checkbox"],
+  .field input[type="checkbox"] {
+    border-radius: 0;
+  }
+
+  .control input[type="checkbox"]:checked,
+  .field input[type="checkbox"]:checked {
+    background-image:
+      linear-gradient(
+        to top right,
+        transparent calc(50% - var(--border-w) / 2),
+        var(--ink) calc(50% - var(--border-w) / 2),
+        var(--ink) calc(50% + var(--border-w) / 2),
+        transparent calc(50% + var(--border-w) / 2)
+      ),
+      linear-gradient(
+        to bottom right,
+        transparent calc(50% - var(--border-w) / 2),
+        var(--ink) calc(50% - var(--border-w) / 2),
+        var(--ink) calc(50% + var(--border-w) / 2),
+        transparent calc(50% + var(--border-w) / 2)
+      );
+  }
+
+  /* indeterminate: a single diagonal stroke of the X (overrides :checked) */
+  .control input[type="checkbox"]:indeterminate,
+  .field input[type="checkbox"]:indeterminate {
+    background-image: linear-gradient(
+      to top right,
+      transparent calc(50% - var(--border-w) / 2),
+      var(--ink) calc(50% - var(--border-w) / 2),
+      var(--ink) calc(50% + var(--border-w) / 2),
+      transparent calc(50% + var(--border-w) / 2)
+    );
+  }
+
+  /* radio: circular box, filled ink dot inset to clear the border */
+  .control input[type="radio"],
+  .field input[type="radio"] {
+    border-radius: 50%;
+  }
+
+  .control input[type="radio"]:checked,
+  .field input[type="radio"]:checked {
+    background-image: radial-gradient(
+      circle calc(var(--space-5) / 2 - var(--border-w) - var(--space-1) / 2) at center,
+      var(--ink) 98%,
+      transparent 100%
+    );
+  }
+
+  .control:has(:disabled) {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
 
   .range,
   .field input[type="range"] {
@@ -34,6 +100,6 @@
   .control-list {
     display: flex;
     flex-direction: column;
-    gap: var(--space-2);
+    gap: var(--space-3);
   }
 }

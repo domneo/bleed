@@ -566,22 +566,27 @@
       <!-- CHECKBOX & RADIO -->
       <section class="demo-section" aria-labelledby="h-choice">
         <h2 class="text-heading" id="h-choice">Checkbox &amp; radio</h2>
-        <div class="row" style="align-items:flex-start;gap:var(--space-6)">
-          <div class="field">
-            <span class="field__label">Order type</span>
+        <form class="row" style="align-items:flex-start;gap:var(--space-6)" onsubmit="return false">
+          <fieldset class="field" style="max-inline-size:24rem">
+            <legend class="field__label">Checkbox</legend>
             <div class="control-list">
-              <label class="control"><input type="radio" name="ot" checked> Market</label>
-              <label class="control"><input type="radio" name="ot"> Limit</label>
+              <label class="control"><input type="checkbox" name="input_checkbox_group" id="checkbox_default">Default</label>
+              <label class="control"><input type="checkbox" name="input_checkbox_group" id="checkbox_checked" checked>Checked</label>
+              <label class="control"><input type="checkbox" name="input_checkbox_group" id="checkbox_indeterminate">Indeterminate</label>
+              <label class="control"><input type="checkbox" name="input_checkbox_group" id="checkbox_disabled" disabled>Disabled</label>
+              <label class="control"><input type="checkbox" name="input_checkbox_group" id="checkbox_disabled_checked" disabled checked>Disabled checked</label>
             </div>
-          </div>
-          <div class="field">
-            <span class="field__label">Options</span>
+          </fieldset>
+          <fieldset class="field" style="max-inline-size:24rem">
+            <legend class="field__label">Radio</legend>
             <div class="control-list">
-              <label class="control"><input type="checkbox" checked> Reinvest dividends</label>
-              <label class="control"><input type="checkbox"> Notify on fill</label>
+              <label class="control"><input type="radio" name="input_radio_group" id="radio_default">Default</label>
+              <label class="control"><input type="radio" name="input_radio_group" id="radio_checked" checked>Checked</label>
+              <label class="control"><input type="radio" name="input_radio_group_disabled" id="radio_disabled" disabled>Disabled</label>
+              <label class="control"><input type="radio" name="input_radio_group_disabled" id="radio_disabled_checked" disabled checked>Disabled checked</label>
             </div>
-          </div>
-        </div>
+          </fieldset>
+        </form>
       </section>
 
       <hr>
@@ -811,6 +816,9 @@
       root.dataset.theme = b.dataset.setTheme;
       themeButtons.forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
     }));
+
+    // Demo-only: indeterminate is a JS-only checkbox state, no HTML attribute for it
+    document.getElementById('checkbox_indeterminate').indeterminate = true;
   </script>
 </body>
 </html>
