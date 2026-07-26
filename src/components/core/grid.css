@@ -11,7 +11,7 @@
   .dashboard {
     container-type: inline-size;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(var(--dashboard-min, 16rem), 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(var(--dashboard-min, 24rem), 1fr));
     gap: var(--space-4);
     align-items: start;
   }

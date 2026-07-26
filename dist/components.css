@@ -250,11 +250,7 @@
  *     <div class="card-body"> …arbitrary content… </div>
  *     <footer class="card-footer">…</footer>
  *   </article>
- * Or the simple form: <article class="card card--pad">…</article>.
- *
- * DONUT SCOPE: bare-element defaults (headings, hr) apply to the card FRAME but
- * stop at .card-body — so a charting library dropped into the body keeps its own
- * DOM untouched. Styling bare elements inside a card is intentional & documented. */
+ * Or the simple form: <article class="card card--pad">…</article>. */
 
 @layer bleed.components {
   .card {
@@ -307,6 +303,7 @@
   .card-footer {
     display: flex;
     align-items: center;
+    justify-content: flex-end;
     gap: var(--space-3);
     padding: var(--space-4) var(--space-5);
     border-block-start: var(--border-w) var(--border-style) var(--_bd);
@@ -326,17 +323,6 @@
   .card--interactive:active {
     translate: calc(var(--hover-shift-x) * 2) calc(var(--hover-shift-y) * 2);
     box-shadow: var(--shadow-active);
-  }
-
-  /* bare-element defaults, donut-scoped to the frame (never into .card-body) */
-  @scope (.card) to (.card-body) {
-    :scope > :is(h1, h2, h3, h4) {
-      font-family: var(--font-display);
-    }
-    hr {
-      inline-size: 100%;
-      border-block-start: var(--border-w) var(--border-style) var(--_bd, var(--ink));
-    }
   }
 }
 /* Checkbox / radio / range — all three are fully custom-drawn (appearance: none) so
@@ -741,7 +727,7 @@
   .dashboard {
     container-type: inline-size;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(var(--dashboard-min, 16rem), 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(var(--dashboard-min, 24rem), 1fr));
     gap: var(--space-4);
     align-items: start;
   }

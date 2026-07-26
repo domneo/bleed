@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="dist/components.css">
   <style>
     /* Demo styles */
-    .demo header { position: sticky; top: 0; padding: var(--space-6); z-index: 1; }
+    .demo > header { position: sticky; top: 0; padding: var(--space-6); z-index: 1; }
     .demo .app-shell { display: block; }
     .demo main { max-inline-size: 80rem; }
     .demo .text-display { font-family: var(--font-display); font-size: var(--font-size-7); line-height: var(--line-height-tight); letter-spacing: var(--letter-spacing-wide); text-wrap: balance; }
@@ -618,17 +618,6 @@
       <section class="demo-section" aria-labelledby="h-cards">
         <h2 class="text-heading" id="h-cards">Cards</h2>
         <div class="dashboard">
-          <article class="card">
-            <header class="card-header">
-              <h3 class="card-title">Structured</h3>
-              <span class="badge">frame</span>
-            </header>
-            <div class="card-body">Header, body, and footer slots. Bare-element defaults are donut-scoped to the frame and stop at the body.</div>
-            <footer class="card-footer">
-              <button class="btn btn--sm btn--positive">Cancel</button>
-              <button class="btn btn--sm btn--warning">Save</button>
-            </footer>
-          </article>
           <article class="card card--pad">
             <h3 class="card-title">Simple</h3>
             <p>The <code>card--pad</code> variant: content sits directly inside with padding.</p>
@@ -636,6 +625,17 @@
           <article class="card card--pad card--interactive" role="button" tabindex="0">
             <h3 class="card-title">Interactive</h3>
             <p>Hover or press me — shares the button motion contract entirely through tokens.</p>
+          </article>
+          <article class="card">
+            <header class="card-header">
+              <h3 class="card-title">Structured sections</h3>
+              <span class="badge">badge</span>
+            </header>
+            <div class="card-body">Header, body, and footer slots.</div>
+            <footer class="card-footer">
+              <button class="btn btn--md">Cancel</button>
+              <button class="btn btn--md btn--solid">Save</button>
+            </footer>
           </article>
         </div>
       </section>
