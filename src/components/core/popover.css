@@ -5,6 +5,7 @@
  *   <div id="row-menu" popover class="menu" style="position-anchor:--row1">
  *     <button class="menu__item">Edit</button>
  *     <button class="menu__item">Duplicate</button>
+ *     <button class="menu__item" aria-current="true">Pin</button>
  *     <hr>
  *     <button class="menu__item menu__item--danger">Delete</button>
  *   </div> */
@@ -12,7 +13,7 @@
 @layer bleed.components {
   .menu {
     margin: 0;
-    padding: var(--space-1);
+    padding: var(--space-1) 0;
     min-inline-size: 11rem;
     color: var(--ink);
     background-color: var(--paper);
@@ -67,6 +68,12 @@
   .menu__item:hover,
   .menu__item:focus-visible {
     background-color: var(--neutral-subtle);
+  }
+  /* selected/current item — inverted so it reads at a glance, and stays inverted
+   * on hover rather than falling back to the neutral hover fill */
+  .menu__item[aria-current] {
+    color: var(--paper);
+    background-color: var(--ink);
   }
   .menu__item--danger {
     color: var(--negative-strong);
