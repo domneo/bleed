@@ -51,12 +51,23 @@
   }
 
   // --- 2. Modal open/close hooks (native <dialog>) ---------------------------
+  // closedby="any" is the native light-dismiss switch; polyfill it where the
+  // attribute isn't supported yet — a backdrop click targets the dialog itself.
+  const nativeLightDismiss = 'closedBy' in HTMLDialogElement.prototype;
+
   document.addEventListener('click', (e) => {
     const opener = e.target.closest('[data-open-modal]');
     if (opener) document.getElementById(opener.getAttribute('data-open-modal'))?.showModal();
     const closer = e.target.closest('[data-close-modal]');
     if (closer) closer.closest('dialog')?.close();
+    if (!nativeLightDismiss && e.target.matches('dialog[closedby="any"]')) e.target.close();
   });
+
+  // ...and closedby="none" opts out of Esc. `cancel` doesn't bubble, so listen
+  // on the capture phase.
+  if (!nativeLightDismiss) document.addEventListener('cancel', (e) => {
+    if (e.target.matches?.('dialog[closedby="none"]')) e.preventDefault();
+  }, true);
 
   // --- 3. Toasts -------------------------------------------------------------
   function toast(message, { title = '', icon = '', solid = false, timeout = 4000, region = 'toasts' } = {}) {

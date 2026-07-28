@@ -647,24 +647,68 @@
       <section class="demo-section" aria-labelledby="h-feedback">
         <h2 class="text-heading" id="h-feedback">Modals</h2>
         <div class="btn-group">
-          <button class="btn" data-open-modal="trade-modal">Open modal</button>
+          <button class="btn" data-open-modal="modal-brief">Brief</button>
+          <button class="btn" data-open-modal="trade-modal">With Footer</button>
+          <button class="btn" data-open-modal="modal-scrolling">Scrolling</button>
         </div>
-        <dialog class="modal" id="trade-modal">
+
+        <!-- short body, no footer -->
+        <dialog class="modal" id="modal-brief" closedby="any">
           <form method="dialog" class="modal__wrap">
             <header class="modal__header">
-              <h2 class="modal__title">New trade</h2>
-              <button class="btn btn--icon btn--positive btn--sm" type="button" data-close-modal aria-label="Close">✕</button>
+              <h2 class="modal__title">Short body, no footer</h2>
+              <button class="btn btn--icon btn--sm" type="button" data-close-modal aria-label="Close">✕</button>
+            </header>
+            <div class="modal__body">
+              <p>Nothing to confirm, so the footer is dropped entirely. Esc or the ✕ closes it.</p>
+            </div>
+          </form>
+        </dialog>
+
+        <!-- form body with footer actions -->
+        <dialog class="modal" id="trade-modal" closedby="any">
+          <form method="dialog" class="modal__wrap">
+            <header class="modal__header">
+              <h2 class="modal__title">Form with footer actions</h2>
+              <button class="btn btn--icon btn--sm" type="button" data-close-modal aria-label="Close">✕</button>
             </header>
             <div class="modal__body">
               <div class="field">
                 <label for="m-sym">Symbol</label>
                 <input class="input" id="m-sym" placeholder="AAPL" required>
               </div>
-              <p style="margin-block-start:var(--space-4)">Native <code>&lt;dialog&gt;</code>: focus trap, Esc-to-close, inert background, and <code>::backdrop</code> — all free.</p>
+              <p>Native <code>&lt;dialog&gt;</code>: focus trap, Esc-to-close, inert background, and <code>::backdrop</code> — all free.</p>
             </div>
             <footer class="modal__footer">
-              <button class="btn btn--positive" type="button" data-close-modal>Cancel</button>
-              <button class="btn btn--warning" value="confirm">Place order</button>
+              <button class="btn" type="button" data-close-modal>Cancel</button>
+              <button class="btn btn--solid" value="confirm">Place order</button>
+            </footer>
+          </form>
+        </dialog>
+
+        <!-- long body: unfurl stops at the 85svh cap, then the body scrolls -->
+        <dialog class="modal" id="modal-scrolling" closedby="none">
+          <form method="dialog" class="modal__wrap">
+            <header class="modal__header">
+              <h2 class="modal__title">Long body that scrolls</h2>
+            </header>
+            <div class="modal__body">
+              <div class="alert" role="status" style="margin-block-end: var(--space-5)">
+                <span class="alert__icon" aria-hidden="true">ℹ</span>
+                <div><p class="alert__text">You must hit Accept or Decline.</p></div>
+              </div>
+              <p>The body is the only scroll container — the header and footer stay put while this text moves under them.</p>
+              <p>Margin is required. Positions are marked to market continuously, and a shortfall may be called at any time during the session without prior notice.</p>
+              <p>Orders routed outside regular hours execute against thinner books. Quoted spreads widen, partial fills are common, and a limit price is strongly advised.</p>
+              <p>Settlement occurs one business day after the trade date. Proceeds from an unsettled sale are not available for withdrawal, though they may be reinvested immediately.</p>
+              <p>Dividend reinvestment applies to whole and fractional shares alike. Fractions are aggregated across the account and liquidated on closure.</p>
+              <p>Corporate actions — splits, mergers, spin-offs — are applied on the ex-date. Open orders against the affected symbol are cancelled rather than adjusted.</p>
+              <p>Tax lots default to first-in, first-out. Changing the disposal method affects future sales only; realised lots are not restated.</p>
+              <p>Past performance says nothing about future returns. Every position carries the risk of total loss, including positions held for the long term.</p>
+            </div>
+            <footer class="modal__footer">
+              <button class="btn" type="button" data-close-modal>Decline</button>
+              <button class="btn btn--solid" value="accept">Accept</button>
             </footer>
           </form>
         </dialog>

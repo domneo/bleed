@@ -28,7 +28,9 @@
     --hover-shift-x: 2px;
     --hover-shift-y: 2px;
     --radius: 0px;
-    --transition: 120ms cubic-bezier(0.2, 0, 0, 1);
+    --transition-duration: 120ms;
+    --transition-ease: cubic-bezier(0.2, 0, 0, 1);
+    --transition: var(--transition-duration) var(--transition-ease);
     --font-display: "BBH Bartle", "Arial Black", system-ui, sans-serif;
     --font-body: "DM Mono", ui-monospace, "SF Mono", Menlo, monospace;
     --font-size-1: clamp(0.875rem, 0.833rem + 0.208vw, 1rem);
@@ -88,7 +90,9 @@
     --hover-shift-x: 2px;
     --hover-shift-y: 2px;
     --radius: 0px;
-    --transition: 120ms cubic-bezier(0.2, 0, 0, 1);
+    --transition-duration: 120ms;
+    --transition-ease: cubic-bezier(0.2, 0, 0, 1);
+    --transition: var(--transition-duration) var(--transition-ease);
     --font-display: "BBH Bartle", "Arial Black", system-ui, sans-serif;
     --font-body: "DM Mono", ui-monospace, "SF Mono", Menlo, monospace;
     --font-size-1: clamp(0.875rem, 0.833rem + 0.208vw, 1rem);
@@ -148,7 +152,9 @@
     --hover-shift-x: 0px;
     --hover-shift-y: 0px;
     --radius: 0.75rem;
-    --transition: 220ms cubic-bezier(0.2, 0, 0, 1);
+    --transition-duration: 220ms;
+    --transition-ease: cubic-bezier(0.2, 0, 0, 1);
+    --transition: var(--transition-duration) var(--transition-ease);
     --font-display: "Inter", system-ui, -apple-system, sans-serif;
     --font-body: "Inter", system-ui, -apple-system, sans-serif;
     --font-size-1: clamp(0.875rem, 0.833rem + 0.208vw, 1rem);

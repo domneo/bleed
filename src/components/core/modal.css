@@ -9,13 +9,17 @@
  *       <footer class="modal__footer"><button class="btn">Confirm</button></footer>
  *     </form>
  *   </dialog>
- * Entry/exit animate via @starting-style + transition-behavior:allow-discrete. */
+ * Add closedby="any" for light dismiss (click the backdrop to close).
+ * Entry/exit animate via @starting-style + transition-behavior:allow-discrete.
+ * Entry is two-beat: the shell fades/rises, then __body unfurls 0 → auto (one
+ * --transition-duration later). Exit is a single fade — no reverse unfurl. */
 
 @layer bleed.components {
   .modal {
+    margin: auto auto calc(-1 * var(--border-w));
     padding: 0;
     inline-size: min(92vw, 34rem);
-    max-block-size: 85svh;
+    overflow: hidden;
     color: var(--ink);
     background-color: var(--paper);
     border: var(--border-w) var(--border-style) var(--ink);
@@ -44,7 +48,7 @@
   }
 
   .modal::backdrop {
-    background-color: color-mix(in oklch, var(--ink) 45%, transparent);
+    background-color: color-mix(in oklch, var(--ink) 50%, transparent);
     backdrop-filter: blur(2px); /* px-ok: optical blur radius, not a layout size */
   }
 
@@ -70,8 +74,42 @@
   }
 
   .modal__body {
+    block-size: auto;
+    max-block-size: 85svh;
     padding: var(--space-5);
     overflow: auto;
+    /* the gutter is reserved up front, so the text doesn't jolt sideways the
+     * moment the content outgrows the unfurling body and a scrollbar lands.
+     * No-op where scrollbars overlay (macOS, touch) — nothing to reserve. */
+    scrollbar-gutter: stable;
+  }
+
+  /* Animating to the `auto` keyword needs interpolate-size; where it's missing
+   * block-size would snap to full while the padding still crawled, so those
+   * browsers get the plain fade and no unfurl at all. */
+  @supports (interpolate-size: allow-keywords) {
+    .modal__body {
+      --unfurl-delay: var(--transition-duration);
+      --unfurl-duration: calc(var(--transition-duration) * 6);
+
+      interpolate-size: allow-keywords;
+      /* delayed one duration so the unfurl starts as the shell finishes fading;
+       * padding rides along, else a collapsed body still shows 2×--space-5 */
+      transition:
+        block-size var(--unfurl-duration) var(--unfurl-delay) var(--transition-ease),
+        max-block-size var(--unfurl-duration) var(--unfurl-delay) var(--transition-ease),
+        padding-block calc(var(--unfurl-duration) / 2) var(--unfurl-delay) var(--transition-ease);
+    }
+
+    /* the dialog's subtree first renders when it opens, so descendants get their
+     * own @starting-style pass — this is the collapsed beat */
+    @starting-style {
+      .modal[open] .modal__body {
+        block-size: 0;
+        max-block-size: 0;
+        padding-block: 0;
+      }
+    }
   }
 
   .modal__footer {
