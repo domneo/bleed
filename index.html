@@ -10,10 +10,6 @@
   <link rel="stylesheet" href="dist/components.css">
   <style>
     /* Demo styles */
-    /* .segmented styles only its [role=tab] children; these are toggle buttons */
-    [data-set-theme] { appearance: none; padding: var(--space-2) var(--space-3); font: inherit; color: var(--ink); background-color: var(--paper); border: none; border-inline-end: var(--border-w) var(--border-style) var(--ink); cursor: pointer; transition: background-color var(--transition), color var(--transition); }
-    [data-set-theme]:last-child { border-inline-end: none; }
-    [data-set-theme][aria-pressed="true"] { color: var(--paper); background-color: var(--ink); }
     body > header { position: sticky; top: 0; padding: var(--space-6); z-index: 1; }
     main { max-inline-size: 80rem; padding: 0 var(--space-6) var(--space-6); overflow: hidden; }
     .text-display { font-family: var(--font-display); font-size: var(--font-size-7); line-height: var(--line-height-tight); letter-spacing: var(--letter-spacing-wide); text-wrap: balance; }
@@ -33,9 +29,9 @@
 <body>
   <header>
     <div class="segmented" role="group" aria-label="Theme">
-      <button type="button" data-set-theme="bleed" aria-pressed="true">Bleed</button>
-      <button type="button" data-set-theme="blip" aria-pressed="false">Blip</button>
-      <button type="button" data-set-theme="boring" aria-pressed="false">Boring</button>
+      <button role="tab" type="button" data-set-theme="bleed" aria-selected="true">Bleed</button>
+      <button role="tab" type="button" data-set-theme="blip" aria-selected="false">Blip</button>
+      <button role="tab" type="button" data-set-theme="boring" aria-selected="false">Boring</button>
     </div>
   </header>
 
@@ -761,15 +757,34 @@
     <!-- TABS -->
     <section class="section" aria-labelledby="h-tabs">
       <h2 class="text-heading" id="h-tabs">Tabs</h2>
-      <div class="tabs">
-        <div class="tabs__list" role="tablist" aria-label="Report">
-          <button class="tabs__tab" role="tab" id="t-perf" aria-controls="p-perf" aria-selected="true">Performance</button>
-          <button class="tabs__tab" role="tab" id="t-hold" aria-controls="p-hold" aria-selected="false" tabindex="-1">Holdings</button>
-          <button class="tabs__tab" role="tab" id="t-act" aria-controls="p-act" aria-selected="false" tabindex="-1">Activity</button>
+      <div class="grid" style="--grid-min:100%; --grid-gap:var(--space-7)">
+        <div class="tabs">
+          <div class="tabs__list" role="tablist" aria-label="Standard tabs">
+            <button class="tabs__tab" role="tab" id="t-std" aria-controls="p-std" aria-selected="true">Standard</button>
+            <button class="tabs__tab" role="tab" id="t-icon" aria-controls="p-icon" aria-selected="false" tabindex="-1"><span class="tabs__icon" aria-hidden="true">▲</span>With icon</button>
+            <button class="tabs__tab" role="tab" id="t-keys" aria-controls="p-keys" aria-selected="false" tabindex="-1">Keyboard</button>
+          </div>
+          <section class="tabs__panel" role="tabpanel" id="p-std" aria-labelledby="t-std">Standard tab — a folder tab. <code>.tabs__list</code> holds the <code>.tabs__tab</code> buttons; the selected one is a bordered box whose lower edge is blended into this <code>.tabs__panel</code>.</section>
+          <section class="tabs__panel" role="tabpanel" id="p-icon" aria-labelledby="t-icon" hidden>Standard tab with a leading <code>.tabs__icon</code> — a glyph or inline SVG, marked <code>aria-hidden</code> so the label carries the accessible name.</section>
+          <section class="tabs__panel" role="tabpanel" id="p-keys" aria-labelledby="t-keys" hidden>Same tabs, reached with ← and → (Home and End jump to the ends). Roving tabindex keeps only the selected tab in the page tab order.</section>
         </div>
-        <section class="tabs__panel" role="tabpanel" id="p-perf" aria-labelledby="t-perf">Trailing return +11.0% YTD, max drawdown −6.4%.</section>
-        <section class="tabs__panel" role="tabpanel" id="p-hold" aria-labelledby="t-hold" hidden>34 positions across 6 sectors.</section>
-        <section class="tabs__panel" role="tabpanel" id="p-act" aria-labelledby="t-act" hidden>12 trades in the last 24h.</section>
+
+        <div class="col">
+          <div class="segmented" role="tablist" aria-label="Segmented tabs">
+            <button role="tab" id="s-seg" aria-controls="sp-seg" aria-selected="true">Segmented</button>
+            <button role="tab" id="s-panels" aria-controls="sp-panels" aria-selected="false" tabindex="-1">Panels</button>
+            <button role="tab" id="s-use" aria-controls="sp-use" aria-selected="false" tabindex="-1">Typical use</button>
+          </div>
+          <article class="card card--pad" role="tabpanel" id="sp-seg" aria-labelledby="s-seg">
+            <p>Segmented tab — the boxed variant. One bordered strip with dividers between segments; the selected segment inverts to solid <code>--ink</code>.</p>
+          </article>
+          <article class="card card--pad" role="tabpanel" id="sp-panels" aria-labelledby="s-panels" hidden>
+            <p>These segments drive panels through <code>aria-controls</code>, exactly like the standard tabs above. Drop the attribute and the strip becomes a standalone switcher with nothing to show or hide.</p>
+          </article>
+          <article class="card card--pad" role="tabpanel" id="sp-use" aria-labelledby="s-use" hidden>
+            <p>Typically a compact switcher for a short, fixed set of choices — a period range (1D / 1W / 1M) or a two-segment toggle — rather than page-level navigation.</p>
+          </article>
+        </div>
       </div>
     </section>
 
@@ -910,7 +925,7 @@
     const themeButtons = document.querySelectorAll('[data-set-theme]');
     themeButtons.forEach((b) => b.addEventListener('click', () => {
       root.dataset.theme = b.dataset.setTheme;
-      themeButtons.forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+      themeButtons.forEach((x) => x.setAttribute('aria-selected', String(x === b)));
     }));
 
     // Demo-only: indeterminate is a JS-only checkbox state, no HTML attribute for it

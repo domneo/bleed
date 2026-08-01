@@ -1037,13 +1037,15 @@
  *     <button role="tab" aria-selected="false" tabindex="-1">1W</button> …
  *   </div>
  *
- * Tabs (underlined) — .tabs__list[role=tablist] + .tabs__tab, with
- *   <section role="tabpanel">…</section> panels (add hidden to inactive ones). */
+ * Tabs (standard) — .tabs__list[role=tablist] + .tabs__tab, with
+ *   <section role="tabpanel">…</section> panels (add hidden to inactive ones).
+ *   A tab may lead with .tabs__icon (glyph or SVG, aria-hidden). */
 
 @layer bleed.components {
   /* --- segmented ---------------------------------------------------------- */
   .segmented {
-    display: inline-flex;
+    width: fit-content;
+    display: flex;
     border: var(--border-w) var(--border-style) var(--ink);
     border-radius: var(--radius);
     overflow: hidden;
@@ -1058,9 +1060,13 @@
     border: none;
     border-inline-end: var(--border-w) var(--border-style) var(--ink);
     cursor: pointer;
-    transition: background-color var(--transition), color var(--transition);
+    transition:
+      background-color var(--transition),
+      color var(--transition);
   }
-  .segmented > [role="tab"]:last-child { border-inline-end: none; }
+  .segmented > [role="tab"]:last-child {
+    border-inline-end: none;
+  }
   .segmented > [role="tab"]:hover {
     background-color: color-mix(in oklch, var(--ink) 10%, var(--paper));
   }
@@ -1069,34 +1075,69 @@
     background-color: var(--ink);
   }
 
-  /* --- underlined tabs ---------------------------------------------------- */
+  /* --- standard ----------------------------------------------------------- */
   .tabs__list {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--space-1);
+    gap: var(--space-2);
+    padding-inline-start: var(--space-2);
     border-block-end: var(--border-w) var(--border-style) var(--ink);
   }
 
   .tabs__tab {
     appearance: none;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
     padding: var(--space-2) var(--space-4);
     font: inherit;
-    color: color-mix(in oklch, var(--ink) 65%, var(--paper));
+    color: var(--ink);
     background-color: transparent;
-    border: none;
-    /* reserve space so selection doesn't shift layout */
-    border-block-end: var(--border-w) var(--border-style) transparent;
+    border: var(--border-w) var(--border-style) transparent;
     margin-block-end: calc(-1 * var(--border-w));
     cursor: pointer;
+    transition:
+      margin-block-start var(--transition),
+      padding-block-end var(--transition);
   }
-  .tabs__tab:hover { color: var(--ink); }
-  .tabs__tab[aria-selected="true"] {
+  .tabs__icon {
+    font-size: var(--font-size-3);
+    line-height: var(--line-height-tight);
+  }
+
+  .tabs__tab:not([aria-selected="true"]):hover {
     color: var(--ink);
-    border-block-end-color: var(--accent);
+    border: var(--border-w) var(--border-style) var(--ink);
+    margin-block-start: calc(-1 * var(--space-2));
+  }
+  .tabs__tab[aria-selected="true"] {
+    position: relative;
+    color: var(--ink);
+    background: var(--paper);
+    border-color: var(--ink);
+    box-shadow: var(--shadow);
+
+    /* blend tab button with panel with a colored block instead of changing button border color for cleaner look */
+    &::after {
+      content: "";
+      position: absolute;
+      inset-block-end: calc(-1 * var(--border-w));
+      inset-inline-start: 0px;
+      inset-inline-end: 0px;
+      display: block;
+      width: 100%;
+      height: var(--border-w);
+      background-color: var(--paper);
+    }
   }
 
   .tabs__panel {
-    padding-block: var(--space-4);
+    position: relative;
+    background: var(--paper);
+    padding: var(--space-5);
+    border: var(--border-w) var(--border-style) var(--ink);
+    border-block-start: none;
+    box-shadow: var(--shadow);
   }
 }
 /* Toast — transient status. Each toast is an <output role="status"> (polite live
