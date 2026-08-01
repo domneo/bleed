@@ -714,86 +714,45 @@
     border-end-end-radius: 0;
   }
 }
-/* Dashboard grid — auto-fit tiles that span via data-span.
- *   <div class="dashboard">
+/* Grid — the layout primitive: auto-fit tiles with opt-in spans.
+ *   <div class="grid">
  *     <article class="stat">…</article>
  *     <section class="card" data-span="2">…</section>
  *     <section class="card" data-span="full">…</section>
  *   </div>
- * The grid is its own container, so spans collapse to single column on narrow
- * viewports without a media query tied to the page. */
+ * The grid sizes itself from its own width, never the viewport, so one nested
+ * inside a narrow panel collapses the same way the page does. */
 
 @layer bleed.components {
-  .dashboard {
+  .grid {
+    --_min: var(--grid-min, 24rem);
+
     container-type: inline-size;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(var(--dashboard-min, 24rem), 1fr));
-    gap: var(--space-4);
+    /* min() keeps a track from overflowing a container narrower than --_min */
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--_min), 100%), 1fr));
+    gap: var(--grid-gap, var(--space-4));
     align-items: start;
   }
 
-  .dashboard > [data-span="2"] { grid-column: span 2; }
-  .dashboard > [data-span="3"] { grid-column: span 3; }
-  .dashboard > [data-span="full"] { grid-column: 1 / -1; }
-
-  /* when the grid itself is narrow, everything goes full-width */
-  @container (max-width: 34rem) {
-    .dashboard > [data-span] { grid-column: 1 / -1; }
+  /* A span is a ceiling, not a promise. Spanning more tracks than the grid has
+   * generates implicit columns and overflows, so a tile starts full-width and
+   * only narrows to its span once that many tracks actually fit. Thresholds are
+   * n × 24rem + gaps — override them alongside --grid-min. */
+  .grid > [data-span] {
+    grid-column: 1 / -1;
   }
 
-  /* generic responsive cluster (KPI row) */
-  .cluster {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-4);
-  }
-  .cluster > * { flex: 1 1 var(--cluster-min, 12rem); }
-
-  /* app shell: sidebar + main */
-  .app-shell {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    min-block-size: 100svh;
-  }
-  .app-shell > main { min-inline-size: 0; padding: 0 var(--space-6) var(--space-6); }
-
-  @container (max-width: 48rem) {
-    .app-shell { grid-template-columns: 1fr; }
-  }
-}
-/* Header bar — <header class="app-header">. Brand on the start edge, meta (a
- * <time> last-updated, actions) on the end. Add .app-header--sticky to pin it. */
-
-@layer bleed.components {
-  .app-header {
-    display: flex;
-    align-items: center;
-    gap: var(--space-4);
-    padding: var(--space-5);
+  @container (min-width: 49rem) {
+    .grid > [data-span="2"] {
+      grid-column: span 2;
+    }
   }
 
-  .app-header--sticky {
-    position: sticky;
-    inset-block-start: 0;
-    z-index: 10;
-  }
-
-  .app-header__brand {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--space-2);
-    font-family: var(--font-display);
-    font-size: var(--font-size-3);
-    text-decoration: none;
-    color: var(--ink);
-  }
-
-  /* pushes everything after it to the end edge */
-  .app-header__meta {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--space-3);
-    font-size: var(--font-size-1);
+  @container (min-width: 74rem) {
+    .grid > [data-span="3"] {
+      grid-column: span 3;
+    }
   }
 }
 /* Modal — native <dialog class="modal">, opened with showModal() (see runtime.js,
@@ -1010,74 +969,6 @@
     border: none;
     border-block-start: var(--border-w) var(--border-style) var(--neutral);
   }
-}
-/* Sidebar nav — <nav class="sidebar"> with <details> collapsible groups.
- *   <nav class="sidebar">
- *     <a href="#" aria-current="page">Overview</a>
- *     <details open>
- *       <summary>Markets</summary>
- *       <a href="#">Equities</a><a href="#">FX</a>
- *     </details>
- *   </nav>
- * aria-current marks the active link; the <details> marker is replaced with a
- * rotating chevron. No JS. */
-
-@layer bleed.components {
-  .sidebar {
-    inline-size: var(--sidebar-w, 15rem);
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-1);
-    padding: var(--space-3);
-
-    background-color: var(--paper);
-    border-inline-end: var(--border-w) var(--border-style) var(--ink);
-  }
-
-  .sidebar a {
-    display: flex;
-    align-items: center;
-    gap: var(--space-2);
-    padding: var(--space-2) var(--space-3);
-
-    color: var(--ink);
-    text-decoration: none;
-    border: var(--border-w) var(--border-style) transparent;
-    border-radius: var(--radius);
-    transition: background-color var(--transition), translate var(--transition);
-  }
-
-  .sidebar a:hover {
-    background-color: color-mix(in oklch, var(--ink) 10%, var(--paper));
-    translate: var(--hover-shift-x) 0;
-  }
-
-  .sidebar a[aria-current] {
-    color: var(--paper);
-    background-color: var(--ink);
-    border-color: var(--ink);
-  }
-
-  .sidebar details { display: flex; flex-direction: column; }
-
-  .sidebar summary {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--space-2);
-    padding: var(--space-2) var(--space-3);
-    cursor: pointer;
-    list-style: none;
-  }
-  .sidebar summary::-webkit-details-marker { display: none; }
-  .sidebar summary::after {
-    content: "▸";
-    transition: rotate var(--transition);
-  }
-  .sidebar details[open] > summary::after { rotate: 90deg; }
-
-  /* nested links indent under a group */
-  .sidebar details a { margin-inline-start: var(--space-3); }
 }
 /* Skeleton loader — <div class="skeleton"> for a block, or add .skeleton--text on a
  * line, .skeleton--circle for an avatar. The loading cue is jittering film-noise
@@ -1303,58 +1194,6 @@
       opacity: 0;
       translate: var(--space-4) 0;
     }
-  }
-}
-/* Toolbar / filter bar — <form class="toolbar"> grouping controls in <fieldset>s.
- *   <form class="toolbar">
- *     <fieldset class="toolbar__group">
- *       <legend>Range</legend>
- *       <div class="segmented" role="tablist">…</div>
- *     </fieldset>
- *     <div class="toolbar__spacer"></div>
- *     <button class="btn btn--sm">Export</button>
- *   </form>
- * fieldset is set to flex so its legend + controls sit inline. */
-
-@layer bleed.components {
-  .toolbar {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: var(--space-3);
-    padding: var(--space-3);
-
-    background-color: var(--paper);
-    border: var(--border-w) var(--border-style) var(--ink);
-    border-radius: var(--radius);
-  }
-
-  .toolbar__group {
-    display: flex;
-    align-items: center;
-    gap: var(--space-2);
-    margin: 0;
-    padding: 0;
-    border: none;
-  }
-
-  .toolbar__group > legend,
-  .toolbar__label {
-    float: none;
-    padding: 0;
-    font-size: var(--font-size-1);
-    letter-spacing: var(--letter-spacing-wide);
-    color: color-mix(in oklch, var(--ink) 60%, var(--paper));
-  }
-
-  /* eats the free space, pushing trailing controls to the end edge */
-  .toolbar__spacer { margin-inline-start: auto; }
-
-  /* thin vertical rule between groups */
-  .toolbar__divider {
-    align-self: stretch;
-    inline-size: var(--border-w);
-    background-color: color-mix(in oklch, var(--ink) 30%, var(--paper));
   }
 }
 /* Tooltip — popover="hint" (non-modal, non-light-dismissing) + anchor positioning.
@@ -1698,6 +1537,8 @@
     line-height: var(--line-height-snug);
   }
   .capacity__value {
+    font-size: var(--font-size-1);
+    line-height: var(--line-height-snug);
     font-variant-numeric: tabular-nums;
     text-align: end;
   }

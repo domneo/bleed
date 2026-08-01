@@ -10,198 +10,234 @@
   <link rel="stylesheet" href="dist/components.css">
   <style>
     /* Demo styles */
-    .demo > header { position: sticky; top: 0; padding: var(--space-6); z-index: 1; }
-    .demo .app-shell { display: block; }
-    .demo main { max-inline-size: 80rem; }
-    .demo .text-display { font-family: var(--font-display); font-size: var(--font-size-7); line-height: var(--line-height-tight); letter-spacing: var(--letter-spacing-wide); text-wrap: balance; }
-    .demo .text-heading { font-family: var(--font-display); font-size: var(--font-size-5); line-height: var(--line-height-snug); letter-spacing: var(--letter-spacing-wide); text-wrap: balance; }
-    .demo .text-lead { font-family: var(--font-body); font-size: var(--font-size-2); line-height: var(--line-height-normal); }
-    .demo .demo-section { display: flex; flex-direction: column; gap: var(--space-5); margin-block: var(--space-9); }
-    .demo .swatch { inline-size: 100%; block-size: var(--space-8); border: var(--border-w) var(--border-style) var(--ink); border-radius: var(--radius); }
-    .demo .row { display: flex; flex-wrap: wrap; gap: var(--space-3); align-items: center; }
-    .demo [data-set-theme][aria-pressed="true"] { color: var(--paper); background-color: var(--ink); }
-    .demo .token-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(8rem, 1fr)); gap: var(--space-5); }
-    .demo .token-item { display: flex; flex-direction: column; gap: var(--space-2); }
-    .demo .token-item__label { font-size: var(--font-size-1); color: var(--ink); }
-    .demo .token-box { inline-size: 100%; block-size: var(--space-9); background-color: var(--paper); border: var(--border-w) var(--border-style) var(--ink); border-radius: var(--radius); }
-    .demo .token-box--shadow { margin-block-end: var(--space-1); }
-    .demo .token-hover-demo { display: flex; align-items: center; justify-content: center; font-size: var(--font-size-1); transition: translate var(--transition); }
-    .demo .token-hover-demo:hover { translate: var(--hover-shift-x) var(--hover-shift-y); }
-    .demo .token-type-row { display: flex; align-items: center; gap: var(--space-3); }
-    .demo .token-type-row .token-item__label { flex: 0 0 8.5rem; text-align: left; }
-    .demo .token-scale { display: flex; flex-direction: column; gap: var(--space-2); }
-    .demo .token-scale__row { display: flex; align-items: center; gap: var(--space-3); }
-    .demo .token-scale__bar { block-size: calc(var(--space-4) + var(--space-1)); background-color: var(--ink); }
-    .demo .app-shell-demo { border: var(--border-w) var(--border-style) var(--ink); border-radius: var(--radius); overflow: hidden; }
-    .demo .app-shell-demo__body { display: grid; grid-template-columns: auto 1fr; }
+    /* .segmented styles only its [role=tab] children; these are toggle buttons */
+    [data-set-theme] { appearance: none; padding: var(--space-2) var(--space-3); font: inherit; color: var(--ink); background-color: var(--paper); border: none; border-inline-end: var(--border-w) var(--border-style) var(--ink); cursor: pointer; transition: background-color var(--transition), color var(--transition); }
+    [data-set-theme]:last-child { border-inline-end: none; }
+    [data-set-theme][aria-pressed="true"] { color: var(--paper); background-color: var(--ink); }
+    body > header { position: sticky; top: 0; padding: var(--space-6); z-index: 1; }
+    main { max-inline-size: 80rem; padding: 0 var(--space-6) var(--space-6); overflow: hidden; }
+    .text-display { font-family: var(--font-display); font-size: var(--font-size-7); line-height: var(--line-height-tight); letter-spacing: var(--letter-spacing-wide); text-wrap: balance; }
+    .text-heading { font-family: var(--font-display); font-size: var(--font-size-5); line-height: var(--line-height-snug); letter-spacing: var(--letter-spacing-wide); text-wrap: balance; }
+    .text-lead { font-family: var(--font-body); font-size: var(--font-size-2); line-height: var(--line-height-normal); }
+    .section { display: flex; flex-direction: column; gap: var(--space-5); margin-block: var(--space-9); }
+    .row { display: flex; flex-wrap: wrap; gap: var(--space-3); align-items: center; }
+    .col { display: flex; flex-direction: column; gap: var(--space-2); }
+    .box { display: grid; place-items: center; inline-size: 100%; block-size: var(--space-9); background-color: var(--paper); border: var(--border-w) var(--border-style) var(--ink); border-radius: var(--radius); }
+    .box--shadow { margin-block-end: var(--space-1); }
+    .box--hover { transition: translate var(--transition); }
+    .box--hover:hover { translate: var(--hover-shift-x) var(--hover-shift-y); }
+    .scale-bar { block-size: calc(var(--space-4) + var(--space-1)); background-color: var(--ink); }
+    .resizable { overflow: hidden; resize: horizontal; min-inline-size: 18rem; max-inline-size: 100%; }
   </style>
 </head>
-<body class="demo">
+<body>
   <header>
     <div class="segmented" role="group" aria-label="Theme">
-      <button type="button" class="segmented__theme" data-set-theme="bleed" aria-pressed="true" style="all:unset;padding:var(--space-2) var(--space-3);cursor:pointer;border-inline-end:var(--border-w) solid var(--ink)">Bleed</button>
-      <button type="button" data-set-theme="blip" aria-pressed="false" style="all:unset;padding:var(--space-2) var(--space-3);cursor:pointer;border-inline-end:var(--border-w) solid var(--ink)">Blip</button>
-      <button type="button" data-set-theme="boring" aria-pressed="false" style="all:unset;padding:var(--space-2) var(--space-3);cursor:pointer;">Boring</button>
+      <button type="button" data-set-theme="bleed" aria-pressed="true">Bleed</button>
+      <button type="button" data-set-theme="blip" aria-pressed="false">Blip</button>
+      <button type="button" data-set-theme="boring" aria-pressed="false">Boring</button>
     </div>
   </header>
 
-  <div class="app-shell">
-    <main>
-      <section class="demo-section">
-        <h1 class="text-display">bleed<br />design system</h1>
-        <p class="text-lead">Themable component library implemented with HTML, CSS, and minimal JS.<br />Themes are achieved via design tokens using <a href="https://styledictionary.com/" target="_blank">Style Dictionary</a>.</p>
-      </section>
+  <main>
+    <section class="section">
+      <h1 class="text-display">bleed<br />design system</h1>
+      <p class="text-lead">Themable component library implemented with HTML, CSS, and minimal JS.<br />Themes are achieved via design tokens using <a href="https://styledictionary.com/" target="_blank">Style Dictionary</a>.</p>
+    </section>
 
-      <hr>
+    <hr>
 
-      <!-- ===================================================== TOKENS -->
+    <!-- ===================================================== TOKENS -->
 
-      <!-- TOKENS: COLOR -->
-      <section id="tokens" class="demo-section" aria-labelledby="h-color">
-        <h2 class="text-heading" id="h-color">Color</h2>
-        <div class="token-grid">
-          <div class="token-item"><div class="swatch" style="background-color:var(--ink)"></div><p class="token-item__label"><code>--ink</code></p></div>
-          <div class="token-item"><div class="swatch" style="background-color:var(--paper)"></div><p class="token-item__label"><code>--paper</code></p></div>
-          <div class="token-item"><div class="swatch" style="background-color:var(--accent)"></div><p class="token-item__label"><code>--accent</code></p></div>
+    <!-- TOKENS: COLOR -->
+    <section id="tokens" class="section" aria-labelledby="h-color" style="--grid-min:12rem;--grid-gap:var(--space-5)">
+      <h2 class="text-heading" id="h-color">Color</h2>
+      <div class="grid">
+        <div class="col"><div class="box" style="background-color:var(--ink)"></div><p><code>--ink</code></p></div>
+        <div class="col"><div class="box" style="background-color:var(--paper)"></div><p><code>--paper</code></p></div>
+        <div class="col"><div class="box" style="background-color:var(--accent)"></div><p><code>--accent</code></p></div>
+      </div>
+      <div class="grid">
+        <div class="col"><div class="box" style="background-color:var(--positive-subtle)"></div><p><code>--positive-subtle</code></p></div>
+        <div class="col"><div class="box" style="background-color:var(--positive)"></div><p><code>--positive</code></p></div>
+        <div class="col"><div class="box" style="background-color:var(--positive-strong)"></div><p><code>--positive-strong</code></p></div>
+      </div>
+      <div class="grid">
+        <div class="col"><div class="box" style="background-color:var(--negative-subtle)"></div><p><code>--negative-subtle</code></p></div>
+        <div class="col"><div class="box" style="background-color:var(--negative)"></div><p><code>--negative</code></p></div>
+        <div class="col"><div class="box" style="background-color:var(--negative-strong)"></div><p><code>--negative-strong</code></p></div>
+      </div>
+      <div class="grid">
+        <div class="col"><div class="box" style="background-color:var(--warning-subtle)"></div><p><code>--warning-subtle</code></p></div>
+        <div class="col"><div class="box" style="background-color:var(--warning)"></div><p><code>--warning</code></p></div>
+        <div class="col"><div class="box" style="background-color:var(--warning-strong)"></div><p><code>--warning-strong</code></p></div>
+      </div>
+      <div class="grid">
+        <div class="col"><div class="box" style="background-color:var(--neutral-subtle)"></div><p><code>--neutral-subtle</code></p></div>
+        <div class="col"><div class="box" style="background-color:var(--neutral)"></div><p><code>--neutral</code></p></div>
+        <div class="col"><div class="box" style="background-color:var(--neutral-strong)"></div><p><code>--neutral-strong</code></p></div>
+      </div>
+    </section>
+
+    <hr>
+
+    <!-- TOKENS: BORDER & RADIUS -->
+    <section class="section" aria-labelledby="h-border-radius" style="--grid-min:8rem;--grid-gap:var(--space-5)">
+      <h2 class="text-heading" id="h-border-radius">Border &amp; radius</h2>
+      <div class="grid">
+        <div class="col"><div class="box"></div><p><code>--border-w</code> | <code>--border-style</code> | <code>--radius</code></p></div>
+      </div>
+    </section>
+
+    <hr>
+
+    <!-- TOKENS: SHADOW -->
+    <section class="section" aria-labelledby="h-shadow" style="--grid-min:9rem;--grid-gap:var(--space-5)">
+      <h2 class="text-heading" id="h-shadow">Shadow</h2>
+      <div class="grid">
+        <div class="col"><div class="box box--shadow" style="box-shadow:var(--shadow)"></div><p><code>--shadow</code></p></div>
+        <div class="col"><div class="box box--shadow" style="box-shadow:var(--shadow-hover)"></div><p><code>--shadow-hover</code></p></div>
+        <div class="col"><div class="box box--shadow" style="box-shadow:var(--shadow-active)"></div><p><code>--shadow-active</code></p></div>
+      </div>
+    </section>
+
+    <hr>
+
+    <!-- TOKENS: HOVER SHIFT & TRANSITION -->
+    <section class="section" aria-labelledby="h-hover-transition" style="--grid-min:8rem;--grid-gap:var(--space-5)">
+      <h2 class="text-heading" id="h-hover-transition">Hover shift &amp; transition</h2>
+      <div class="grid">
+        <div class="col"><div class="box box--hover">Hover me</div><p><code>--hover-shift-x/y</code> | <code>--transition</code> | <code>--transition-duration/ease</code></p></div>
+      </div>
+    </section>
+
+    <hr>
+
+    <!-- TOKENS: SPACING SCALE -->
+    <section class="section" aria-labelledby="h-spacing-scale">
+      <h2 class="text-heading" id="h-spacing-scale">Spacing scale</h2>
+      <!-- --grid-min:100% pins the grid to one track: bars stay comparable -->
+      <div class="grid" style="--grid-min:100%;--grid-gap:var(--space-2)">
+        <div class="row"><span class="scale-bar" style="inline-size:var(--space-1)"></span><code>--space-1</code></div>
+        <div class="row"><span class="scale-bar" style="inline-size:var(--space-2)"></span><code>--space-2</code></div>
+        <div class="row"><span class="scale-bar" style="inline-size:var(--space-3)"></span><code>--space-3</code></div>
+        <div class="row"><span class="scale-bar" style="inline-size:var(--space-4)"></span><code>--space-4</code></div>
+        <div class="row"><span class="scale-bar" style="inline-size:var(--space-5)"></span><code>--space-5</code></div>
+        <div class="row"><span class="scale-bar" style="inline-size:var(--space-6)"></span><code>--space-6</code></div>
+        <div class="row"><span class="scale-bar" style="inline-size:var(--space-7)"></span><code>--space-7</code></div>
+        <div class="row"><span class="scale-bar" style="inline-size:var(--space-8)"></span><code>--space-8</code></div>
+        <div class="row"><span class="scale-bar" style="inline-size:var(--space-9)"></span><code>--space-9</code></div>
+      </div>
+    </section>
+
+    <hr>
+
+    <!-- TOKENS: TYPOGRAPHY -->
+    <section class="section" aria-labelledby="h-typography">
+      <h2 class="text-heading" id="h-typography">Typography</h2>
+      <div class="grid" style="--grid-min:22rem;--grid-gap:var(--space-6)">
+        <div class="col">
+          <div class="row"><p><code>--font-size-1</code></p><p style="font-family:var(--font-display);font-size:var(--font-size-1);">--font-display</p></div>
+          <div class="row"><p><code>--font-size-2</code></p><p style="font-family:var(--font-display);font-size:var(--font-size-2);">--font-display</p></div>
+          <div class="row"><p><code>--font-size-3</code></p><p style="font-family:var(--font-display);font-size:var(--font-size-3);">--font-display</p></div>
+          <div class="row"><p><code>--font-size-4</code></p><p style="font-family:var(--font-display);font-size:var(--font-size-4);">--font-display</p></div>
+          <div class="row"><p><code>--font-size-5</code></p><p style="font-family:var(--font-display);font-size:var(--font-size-5);">--font-display</p></div>
+          <div class="row"><p><code>--font-size-6</code></p><p style="font-family:var(--font-display);font-size:var(--font-size-6);">--font-display</p></div>
+          <div class="row"><p><code>--font-size-7</code></p><p style="font-family:var(--font-display);font-size:var(--font-size-7);">--font-display</p></div>
         </div>
-        <div class="token-grid">
-          <div class="token-item"><div class="swatch" style="background-color:var(--positive-subtle)"></div><p class="token-item__label"><code>--positive-subtle</code></p></div>
-          <div class="token-item"><div class="swatch" style="background-color:var(--positive)"></div><p class="token-item__label"><code>--positive</code></p></div>
-          <div class="token-item"><div class="swatch" style="background-color:var(--positive-strong)"></div><p class="token-item__label"><code>--positive-strong</code></p></div>
+        <div class="col">
+          <div class="row"><p><code>--font-size-1</code></p><p style="font-family:var(--font-body);font-size:var(--font-size-1)">--font-body</p></div>
+          <div class="row"><p><code>--font-size-2</code></p><p style="font-family:var(--font-body);font-size:var(--font-size-2)">--font-body</p></div>
+          <div class="row"><p><code>--font-size-3</code></p><p style="font-family:var(--font-body);font-size:var(--font-size-3)">--font-body</p></div>
+          <div class="row"><p><code>--font-size-4</code></p><p style="font-family:var(--font-body);font-size:var(--font-size-4)">--font-body</p></div>
+          <div class="row"><p><code>--font-size-5</code></p><p style="font-family:var(--font-body);font-size:var(--font-size-5)">--font-body</p></div>
+          <div class="row"><p><code>--font-size-6</code></p><p style="font-family:var(--font-body);font-size:var(--font-size-6)">--font-body</p></div>
+          <div class="row"><p><code>--font-size-7</code></p><p style="font-family:var(--font-body);font-size:var(--font-size-7)">--font-body</p></div>
         </div>
-        <div class="token-grid">
-          <div class="token-item"><div class="swatch" style="background-color:var(--negative-subtle)"></div><p class="token-item__label"><code>--negative-subtle</code></p></div>
-          <div class="token-item"><div class="swatch" style="background-color:var(--negative)"></div><p class="token-item__label"><code>--negative</code></p></div>
-          <div class="token-item"><div class="swatch" style="background-color:var(--negative-strong)"></div><p class="token-item__label"><code>--negative-strong</code></p></div>
+      </div>
+    </section>
+
+    <hr>
+
+    <!-- ===================================================== LAYOUT: GRID -->
+
+    <section id="layout" class="section" aria-labelledby="h-grid">
+      <h2 class="text-heading" id="h-grid">Grid</h2>
+      <div class="col">
+        <div>
+          <h3 class="text-lead">Default</h3>
+          <p><code>--grid-min: 24rem | --grid-gap: var(--space-4)</code></p>
         </div>
-        <div class="token-grid">
-          <div class="token-item"><div class="swatch" style="background-color:var(--warning-subtle)"></div><p class="token-item__label"><code>--warning-subtle</code></p></div>
-          <div class="token-item"><div class="swatch" style="background-color:var(--warning)"></div><p class="token-item__label"><code>--warning</code></p></div>
-          <div class="token-item"><div class="swatch" style="background-color:var(--warning-strong)"></div><p class="token-item__label"><code>--warning-strong</code></p></div>
-        </div>
-        <div class="token-grid">
-          <div class="token-item"><div class="swatch" style="background-color:var(--neutral-subtle)"></div><p class="token-item__label"><code>--neutral-subtle</code></p></div>
-          <div class="token-item"><div class="swatch" style="background-color:var(--neutral)"></div><p class="token-item__label"><code>--neutral</code></p></div>
-          <div class="token-item"><div class="swatch" style="background-color:var(--neutral-strong)"></div><p class="token-item__label"><code>--neutral-strong</code></p></div>
-        </div>
-      </section>
-
-      <hr>
-
-      <!-- TOKENS: BORDER & RADIUS -->
-      <section class="demo-section" aria-labelledby="h-border-radius">
-        <h2 class="text-heading" id="h-border-radius">Border &amp; radius</h2>
-        <div class="token-grid">
-          <div class="token-item"><div class="token-box"></div><p class="token-item__label"><code>--border-w</code><br /><code>--border-style</code><br /><code>--radius</code></p></div>
-        </div>
-      </section>
-
-      <hr>
-
-      <!-- TOKENS: SHADOW -->
-      <section class="demo-section" aria-labelledby="h-shadow">
-        <h2 class="text-heading" id="h-shadow">Shadow</h2>
-        <div class="token-grid">
-          <div class="token-item"><div class="token-box token-box--shadow" style="box-shadow:var(--shadow)"></div><p class="token-item__label"><code>--shadow</code></p></div>
-          <div class="token-item"><div class="token-box token-box--shadow" style="box-shadow:var(--shadow-hover)"></div><p class="token-item__label"><code>--shadow-hover</code></p></div>
-          <div class="token-item"><div class="token-box token-box--shadow" style="box-shadow:var(--shadow-active)"></div><p class="token-item__label"><code>--shadow-active</code></p></div>
-        </div>
-      </section>
-
-      <hr>
-
-      <!-- TOKENS: HOVER SHIFT & TRANSITION -->
-      <section class="demo-section" aria-labelledby="h-hover-transition">
-        <h2 class="text-heading" id="h-hover-transition">Hover shift &amp; transition</h2>
-        <div class="token-grid">
-          <div class="token-item"><div class="token-box token-hover-demo">Hover me</div><p class="token-item__label"><code>--hover-shift-x/y</code> · <code>--transition</code></p></div>
-        </div>
-      </section>
-
-      <hr>
-
-      <!-- TOKENS: SPACING SCALE -->
-      <section class="demo-section" aria-labelledby="h-spacing-scale">
-        <h2 class="text-heading" id="h-spacing-scale">Spacing scale</h2>
-        <div class="token-scale">
-          <div class="token-scale__row"><span class="token-scale__bar" style="inline-size:var(--space-1)"></span><code>--space-1</code></div>
-          <div class="token-scale__row"><span class="token-scale__bar" style="inline-size:var(--space-2)"></span><code>--space-2</code></div>
-          <div class="token-scale__row"><span class="token-scale__bar" style="inline-size:var(--space-3)"></span><code>--space-3</code></div>
-          <div class="token-scale__row"><span class="token-scale__bar" style="inline-size:var(--space-4)"></span><code>--space-4</code></div>
-          <div class="token-scale__row"><span class="token-scale__bar" style="inline-size:var(--space-5)"></span><code>--space-5</code></div>
-          <div class="token-scale__row"><span class="token-scale__bar" style="inline-size:var(--space-6)"></span><code>--space-6</code></div>
-        </div>
-      </section>
-
-      <hr>
-
-      <!-- TOKENS: TYPOGRAPHY -->
-      <section class="demo-section" aria-labelledby="h-typography">
-        <h2 class="text-heading" id="h-typography">Typography</h2>
-        <div class="typography">
-          <div class="token-item">
-            <div class="token-type-row"><p class="token-item__label"><code>--font-size-1</code></p><p style="font-family:var(--font-display);font-size:var(--font-size-1);">--font-display</p></div>
-            <div class="token-type-row"><p class="token-item__label"><code>--font-size-2</code></p><p style="font-family:var(--font-display);font-size:var(--font-size-2);">--font-display</p></div>
-            <div class="token-type-row"><p class="token-item__label"><code>--font-size-3</code></p><p style="font-family:var(--font-display);font-size:var(--font-size-3);">--font-display</p></div>
-            <div class="token-type-row"><p class="token-item__label"><code>--font-size-4</code></p><p style="font-family:var(--font-display);font-size:var(--font-size-4);">--font-display</p></div>
-            <div class="token-type-row"><p class="token-item__label"><code>--font-size-5</code></p><p style="font-family:var(--font-display);font-size:var(--font-size-5);">--font-display</p></div>
-            <div class="token-type-row"><p class="token-item__label"><code>--font-size-6</code></p><p style="font-family:var(--font-display);font-size:var(--font-size-6);">--font-display</p></div>
-            <div class="token-type-row"><p class="token-item__label"><code>--font-size-7</code></p><p style="font-family:var(--font-display);font-size:var(--font-size-7);">--font-display</p></div>
+        <div class="resizable">
+          <div class="grid">
+            <div class="box"><code>&lt;div&gt;</code></div>
+            <div class="box"><code>&lt;div&gt;</code></div>
+            <div class="box"><code>&lt;div&gt;</code></div>
+            <div class="box" data-span="2"><code>data-span="2"</code></div>
+            <div class="box" data-span="3"><code>data-span="3"</code></div>
+            <div class="box" data-span="full"><code>data-span="full"</code></div>
           </div>
         </div>
-        <div class="typography">
-          <div class="token-item">
-            <div class="token-type-row"><p class="token-item__label"><code>--font-size-1</code></p><p style="font-family:var(--font-body);font-size:var(--font-size-1)">--font-body</p></div>
-            <div class="token-type-row"><p class="token-item__label"><code>--font-size-2</code></p><p style="font-family:var(--font-body);font-size:var(--font-size-2)">--font-body</p></div>
-            <div class="token-type-row"><p class="token-item__label"><code>--font-size-3</code></p><p style="font-family:var(--font-body);font-size:var(--font-size-3)">--font-body</p></div>
-            <div class="token-type-row"><p class="token-item__label"><code>--font-size-4</code></p><p style="font-family:var(--font-body);font-size:var(--font-size-4)">--font-body</p></div>
-            <div class="token-type-row"><p class="token-item__label"><code>--font-size-5</code></p><p style="font-family:var(--font-body);font-size:var(--font-size-5)">--font-body</p></div>
-            <div class="token-type-row"><p class="token-item__label"><code>--font-size-6</code></p><p style="font-family:var(--font-body);font-size:var(--font-size-6)">--font-body</p></div>
-            <div class="token-type-row"><p class="token-item__label"><code>--font-size-7</code></p><p style="font-family:var(--font-body);font-size:var(--font-size-7)">--font-body</p></div>
+      </div>
+      <div class="col">
+        <div>
+          <h3 class="text-lead">Tight</h3>
+          <p><code>--grid-min: 10rem | --grid-gap: var(--space-2)</code></p>
+        </div>
+        <div class="resizable">
+          <div class="grid" style="--grid-min:10rem;--grid-gap:var(--space-2)">
+            <div class="box"><code>&lt;div&gt;</code></div>
+            <div class="box"><code>&lt;div&gt;</code></div>
+            <div class="box"><code>&lt;div&gt;</code></div>
+            <div class="box"><code>&lt;div&gt;</code></div>
+            <div class="box"><code>&lt;div&gt;</code></div>
+            <div class="box" data-span="full"><code>data-span="full"</code></div>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <hr>
+    <hr>
 
-      <!-- ============================================ PRIMITIVE COMPONENTS -->
+    <!-- ============================================ PRIMITIVE COMPONENTS -->
 
-      <!-- ALERTS -->
-      <section class="demo-section" aria-labelledby="h-alerts">
-        <h2 class="text-heading" id="h-alerts">Alerts</h2>
-        <div class="row" style="flex-direction:column;align-items:stretch">
-          <div class="alert" role="status">
-            <span class="alert__icon" aria-hidden="true">ℹ</span>
-            <div><p class="alert__title">Default</p><p class="alert__text">Deposit $12,400 by 16:00 EST to avoid liquidation.</p></div>
-          </div>
-          <div class="alert" role="status">
-            <span class="alert__icon" aria-hidden="true">ℹ</span>
-            <div><p class="alert__title">Title only</p></div>
-          </div>
-          <div class="alert" role="status">
-            <span class="alert__icon" aria-hidden="true">ℹ</span>
-            <div><p class="alert__text">Description only.</p></div>
-          </div>
-          <div class="alert alert--solid" role="status">
-            <span class="alert__icon" aria-hidden="true">ℹ</span>
-            <div><p class="alert__title">Solid</p><p class="alert__text">T+1 settlement cleared for 3 trades.</p></div>
-          </div>
-          <div class="alert" role="alert">
-            <span class="alert__icon" aria-hidden="true">ℹ</span>
-            <div>
-              <p class="alert__title">With close button</p>
-              <p class="alert__text">Insufficient buying power for 200 shares of TSLA.</p>
-            </div>
-            <button class="alert__close" type="button" aria-label="Dismiss" onclick="this.parentElement.remove()">✕</button>
-          </div>
+    <!-- ALERTS -->
+    <section class="section" aria-labelledby="h-alerts">
+      <h2 class="text-heading" id="h-alerts">Alerts</h2>
+      <div class="grid" style="--grid-min:100%;">
+        <div class="alert" role="status">
+          <span class="alert__icon" aria-hidden="true">ℹ</span>
+          <div><p class="alert__title">Default</p><p class="alert__text">Deposit $12,400 by 16:00 EST to avoid liquidation.</p></div>
         </div>
-      </section>
+        <div class="alert" role="status">
+          <span class="alert__icon" aria-hidden="true">ℹ</span>
+          <div><p class="alert__title">Title only</p></div>
+        </div>
+        <div class="alert" role="status">
+          <span class="alert__icon" aria-hidden="true">ℹ</span>
+          <div><p class="alert__text">Description only.</p></div>
+        </div>
+        <div class="alert alert--solid" role="status">
+          <span class="alert__icon" aria-hidden="true">ℹ</span>
+          <div><p class="alert__title">Solid</p><p class="alert__text">T+1 settlement cleared for 3 trades.</p></div>
+        </div>
+        <div class="alert" role="alert">
+          <span class="alert__icon" aria-hidden="true">ℹ</span>
+          <div>
+            <p class="alert__title">With close button</p>
+            <p class="alert__text">Insufficient buying power for 200 shares of TSLA.</p>
+          </div>
+          <button class="alert__close" type="button" aria-label="Dismiss" onclick="this.parentElement.remove()">✕</button>
+        </div>
+      </div>
+    </section>
 
-      <hr>
+    <hr>
 
-      <!-- BADGES -->
-      <section class="demo-section" aria-labelledby="h-badges">
-        <h2 class="text-heading" id="h-badges">Badges</h2>
+    <!-- BADGES -->
+    <section class="section" aria-labelledby="h-badges">
+      <h2 class="text-heading" id="h-badges">Badges</h2>
+      <div class="grid" style="--grid-min:100%;">
         <div class="row">
           <span class="badge">Default</span>
           <span class="badge"><span class="badge__dot"></span> With dot</span>
@@ -210,7 +246,7 @@
           <span class="badge badge--negative">Negative</span>
           <span class="badge badge--warning">Warning</span>
         </div>
-        <div class="row">
+        <div class="row" >
           <span class="badge badge--solid">Default solid</span>
           <span class="badge badge--solid"><span class="badge__dot"></span> With dot solid</span>
           <span class="badge badge--accent badge--solid">Accent solid</span>
@@ -218,161 +254,166 @@
           <span class="badge badge--negative badge--solid">Negative solid</span>
           <span class="badge badge--warning badge--solid">Warning solid</span>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <hr>
+    <hr>
 
-      <!-- BUTTONS -->
-      <section id="components" class="demo-section" aria-labelledby="h-buttons">
-        <h2 class="text-heading" id="h-buttons">Buttons</h2>
-        <div class="btn-group">
+    <!-- BUTTONS -->
+    <section id="components" class="section" aria-labelledby="h-buttons">
+      <h2 class="text-heading" id="h-buttons">Buttons</h2>
+      <!-- one track per size, so the three scales line up for comparison -->
+      <div class="grid" style="--grid-min:100%;">
+        <div class="row">
           <button class="btn btn--sm">Default</button>
           <button class="btn btn--sm btn--solid">Solid</button>
           <button class="btn btn--sm" disabled>Disabled</button>
           <button class="btn btn--sm btn--solid" disabled>Disabled</button>
           <button class="btn btn--sm btn--icon" aria-label="Add">＋</button>
         </div>
-        <div class="btn-group">
+        <div class="row">
           <button class="btn">Default</button>
           <button class="btn btn--solid">Solid</button>
           <button class="btn" disabled>Disabled</button>
           <button class="btn btn--solid" disabled>Disabled</button>
           <button class="btn btn--icon" aria-label="Add">＋</button>
         </div>
-        <div class="btn-group">
+        <div class="row">
           <button class="btn btn--lg">Default</button>
           <button class="btn btn--lg btn--solid">Solid</button>
           <button class="btn btn--lg" disabled>Disabled</button>
           <button class="btn btn--lg btn--solid" disabled>Disabled</button>
           <button class="btn btn--lg btn--icon" aria-label="Add">＋</button>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <hr>
+    <hr>
 
-      <!-- EMPTY -->
-      <section class="demo-section" aria-labelledby="h-loading-empty">
-        <h2 class="text-heading" id="h-loading-empty">Empty state</h2>
-        <div class="empty" data-span="2">
-          <span class="empty__icon" aria-hidden="true">▚</span>
-          <h3 class="empty__title">No open positions</h3>
-          <p class="empty__text">Your portfolio is all cash. Place a trade to get started.</p>
-          <div class="empty__actions"><button class="btn btn--warning" data-open-modal="trade-modal">New trade</button></div>
+    <!-- EMPTY -->
+    <section class="section" aria-labelledby="h-empty">
+      <h2 class="text-heading" id="h-empty">Empty state</h2>
+      <div class="empty">
+        <span class="empty__icon" aria-hidden="true">▚</span>
+        <h3 class="empty__title">No open positions</h3>
+        <p class="empty__text">Your portfolio is all cash. Place a trade to get started.</p>
+        <div class="empty__actions"><button class="btn" data-open-modal="trade-modal">New trade</button></div>
+      </div>
+    </section>
+
+    <hr>
+
+    <!-- LOADING -->
+    <section class="section" aria-labelledby="h-loading">
+      <h2 class="text-heading" id="h-loading">Loading</h2>
+      <div class="card card--pad" aria-busy="true">
+        <div class="skeleton skeleton--circle"></div>
+        <div class="skeleton skeleton--text" style="inline-size:70%"></div>
+        <div class="skeleton skeleton--text"></div>
+        <div class="skeleton" style="block-size:var(--space-9)"></div>
+      </div>
+    </section>
+
+    <hr>
+
+    <!-- MENUS (POPOVER) -->
+    <section class="section" aria-labelledby="h-menus">
+      <h2 class="text-heading" id="h-menus">Menus</h2>
+      <div>
+        <button type="button" class="btn" popovertarget="m-demo" style="anchor-name:--m-demo">Actions <span class="btn__icon" aria-hidden="true">⏷</span></button>
+        <div id="m-demo" popover class="menu" style="position-anchor:--m-demo">
+          <button class="menu__item">Edit</button>
+          <button class="menu__item">Duplicate</button>
+          <button class="menu__item">Move to…</button>
+          <button class="menu__item" aria-current="true">Pin</button>
+          <hr>
+          <button class="menu__item menu__item--danger">Delete</button>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <hr>
+    <hr>
 
-      <!-- LOADING -->
-      <section class="demo-section" aria-labelledby="h-loading-empty">
-        <h2 class="text-heading" id="h-loading-empty">Loading</h2>
-        <section class="card card--pad" aria-busy="true">
-          <div class="skeleton skeleton--circle"></div>
-          <div class="skeleton skeleton--text" style="inline-size:70%"></div>
-          <div class="skeleton skeleton--text"></div>
-          <div class="skeleton" style="block-size:var(--space-9)"></div>
-        </section>
-      </section>
+    <!-- PROGRESS -->
+    <section class="section" aria-labelledby="h-progress">
+      <h2 class="text-heading" id="h-progress">Meter & Progress</h2>
+      <div class="grid" style="--grid-min:20rem; --grid-gap:var(--space-5)">
+        <div class="col" style="gap: var(--space-5)">
+          <h3 class="text-lead">Meter</h3>
+          <div class="capacity">
+            <span class="capacity__label">Default</span>
+            <span class="capacity__value">41%</span>
+            <meter class="meter" value="41" min="0" max="100" low="50" high="80" optimum="30" aria-label="Meter default">41%</meter>
+          </div>
+          <div class="capacity">
+            <span class="capacity__label">Optimum</span>
+            <span class="capacity__value">31%</span>
+            <meter class="meter meter--tone" value="31" min="0" max="100" low="50" high="80" optimum="30" aria-label="Meter optimum">31%</meter>
+          </div>
+          <div class="capacity">
+            <span class="capacity__label">Low</span>
+            <span class="capacity__value">54%</span>
+            <meter class="meter meter--tone" value="54" min="0" max="100" low="50" high="80" optimum="30" aria-label="Meter low">54%</meter>
+          </div>
+          <div class="capacity">
+            <span class="capacity__label">High</span>
+            <span class="capacity__value">90%</span>
+            <meter class="meter meter--tone" value="90" min="0" max="100" low="50" high="80" optimum="30" aria-label="Meter high">90%</meter>
+          </div>
+        </div>
+        <div class="col" style="gap: var(--space-5)">
+          <h3 class="text-lead">Progress</h3>
+          <div class="capacity">
+            <label class="capacity__label" for="load-default">Default</label>
+            <progress class="progress" id="load-default" value="0.35" aria-label="Default"></progress>
+          </div>
+          <div class="capacity">
+            <label class="capacity__label" for="load-accent">Accent</label>
+            <progress class="progress progress--accent" id="load-accent" value="0.6" aria-label="Accent"></progress>
+          </div>
+          <div class="capacity">
+            <label class="capacity__label" for="load-positive">Positive</label>
+            <progress class="progress progress--positive" id="load-positive" value="0.92" aria-label="Positive"></progress>
+          </div>
+          <div class="capacity">
+            <label class="capacity__label" for="load-warning">Warning</label>
+            <progress class="progress progress--warning" id="load-warning" value="0.5" aria-label="Warning"></progress>
+          </div>
+          <div class="capacity">
+            <label class="capacity__label" for="load-negative">Negative</label>
+            <progress class="progress progress--negative" id="load-negative" value="0.18" aria-label="Negative"></progress>
+          </div>
+        </div>
+      </div>
+    </section>
 
-      <hr>
+    <hr>
 
-      <!-- MENUS (POPOVER) -->
-      <section class="demo-section" aria-labelledby="h-menus">
-        <h2 class="text-heading" id="h-menus">Menus</h2>
+    <!-- TOAST -->
+    <section class="section" aria-labelledby="h-toasts">
+      <h2 class="text-heading" id="h-toasts">Toasts</h2>
+      <div class="row">
+        <button class="btn" type="button" onclick="bleed.toast('A default outlined toast with a message only.', {icon:'✓'})">default</button>
+        <button class="btn" type="button" onclick="bleed.toast('A toast with no icon.')">no icon</button>
+        <button class="btn" type="button" onclick="bleed.toast('A toast with a title above the message.', {title:'With title', icon:'▲'})">with title</button>
+        <button class="btn" type="button" onclick="bleed.toast('A solid toast with a title and a filled background.', {title:'Solid', icon:'✓', solid:true})">solid</button>
+      </div>
+      <div class="toast-region" id="toasts"></div>
+    </section>
+
+    <hr>
+
+    <!-- TOOLTIP -->
+    <section class="section" aria-labelledby="h-tooltips">
+      <h2 class="text-heading" id="h-tooltips">Tooltips</h2>
+      <div class="grid" style="--grid-min:100%; --grid-gap:var(--space-5)">
         <div class="row">
-          <button type="button" class="btn" popovertarget="m-demo" style="anchor-name:--m-demo">Actions <span class="btn__icon" aria-hidden="true">⏷</span></button>
-          <div id="m-demo" popover class="menu" style="position-anchor:--m-demo">
-            <button class="menu__item">Edit</button>
-            <button class="menu__item">Duplicate</button>
-            <button class="menu__item">Move to…</button>
-            <button class="menu__item" aria-current="true">Pin</button>
-            <hr>
-            <button class="menu__item menu__item--danger">Delete</button>
-          </div>
-        </div>
-      </section>
-
-      <hr>
-
-      <!-- PROGRESS -->
-      <section class="demo-section" aria-labelledby="h-progress">
-        <h2 class="text-heading" id="h-progress">Meter & Progress</h2>
-        <div class="token-grid" style="grid-template-columns:repeat(auto-fit, minmax(16rem, 1fr))">
-          <div class="demo-section" style="margin-block:0">
-            <h3 class="text-lead">Meter</h3>
-            <div class="capacity">
-              <span class="capacity__label">Default</span>
-              <span class="capacity__value">41%</span>
-              <meter class="meter" value="41" min="0" max="100" low="50" high="80" optimum="30" aria-label="Meter default">41%</meter>
-            </div>
-            <div class="capacity">
-              <span class="capacity__label">Optimum</span>
-              <span class="capacity__value">31%</span>
-              <meter class="meter meter--tone" value="31" min="0" max="100" low="50" high="80" optimum="30" aria-label="Meter optimum">31%</meter>
-            </div>
-            <div class="capacity">
-              <span class="capacity__label">Low</span>
-              <span class="capacity__value">54%</span>
-              <meter class="meter meter--tone" value="54" min="0" max="100" low="50" high="80" optimum="30" aria-label="Meter low">54%</meter>
-            </div>
-            <div class="capacity">
-              <span class="capacity__label">High</span>
-              <span class="capacity__value">90%</span>
-              <meter class="meter meter--tone" value="90" min="0" max="100" low="50" high="80" optimum="30" aria-label="Meter high">90%</meter>
-            </div>
-          </div>
-          <div class="demo-section" style="margin-block:0">
-            <h3 class="text-lead">Progress</h3>
-            <div class="capacity">
-              <label class="capacity__label" for="load-default">Default</label>
-              <progress class="progress" id="load-default" value="0.35" aria-label="Default"></progress>
-            </div>
-            <div class="capacity">
-              <label class="capacity__label" for="load-accent">Accent</label>
-              <progress class="progress progress--accent" id="load-accent" value="0.6" aria-label="Accent"></progress>
-            </div>
-            <div class="capacity">
-              <label class="capacity__label" for="load-positive">Positive</label>
-              <progress class="progress progress--positive" id="load-positive" value="0.92" aria-label="Positive"></progress>
-            </div>
-            <div class="capacity">
-              <label class="capacity__label" for="load-warning">Warning</label>
-              <progress class="progress progress--warning" id="load-warning" value="0.5" aria-label="Warning"></progress>
-            </div>
-            <div class="capacity">
-              <label class="capacity__label" for="load-negative">Negative</label>
-              <progress class="progress progress--negative" id="load-negative" value="0.18" aria-label="Negative"></progress>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <hr>
-
-      <!-- TOAST -->
-      <section class="demo-section" aria-labelledby="h-feedback">
-        <h2 class="text-heading" id="h-feedback">Toasts</h2>
-        <div class="btn-group">
-          <button class="btn" type="button" onclick="bleed.toast('A default outlined toast with a message only.', {icon:'✓'})">default</button>
-          <button class="btn" type="button" onclick="bleed.toast('A toast with no icon.')">no icon</button>
-          <button class="btn" type="button" onclick="bleed.toast('A toast with a title above the message.', {title:'With title', icon:'▲'})">with title</button>
-          <button class="btn" type="button" onclick="bleed.toast('A solid toast with a title and a filled background.', {title:'Solid', icon:'✓', solid:true})">solid</button>
-        </div>
-        <div class="toast-region" id="toasts"></div>
-      </section>
-
-      <hr>
-
-      <!-- TOOLTIP -->
-      <section class="demo-section" aria-labelledby="h-feedback">
-        <h2 class="text-heading" id="h-feedback">Tooltips</h2>
-        <div class="btn-group">
           <button class="btn" popovertarget="tip-default" popovertargetaction="show" style="anchor-name:--tip-default" aria-describedby="tip-default">Default</button>
           <div id="tip-default" popover="auto" class="tooltip" style="position-anchor:--tip-default">A default tooltip, outlined on paper.</div>
           <button class="btn" popovertarget="tip-solid" popovertargetaction="show" style="anchor-name:--tip-solid" aria-describedby="tip-solid">Solid</button>
           <div id="tip-solid" popover="auto" class="tooltip tooltip--solid" style="position-anchor:--tip-solid">A solid tooltip, filled with ink.</div>
         </div>
-        <div class="row" style="justify-content:center;gap:var(--space-6);margin-top:var(--space-5)">
+        <div class="row" style="justify-content:center;gap:var(--space-6)">
           <button class="btn" popovertarget="tip-top" popovertargetaction="show" style="anchor-name:--tip-top" aria-describedby="tip-top">Top</button>
           <div id="tip-top" popover="auto" class="tooltip" style="position-anchor:--tip-top;position-area:block-start">Opens above the anchor.</div>
           <button class="btn" popovertarget="tip-bottom" popovertargetaction="show" style="anchor-name:--tip-bottom" aria-describedby="tip-bottom">Bottom</button>
@@ -382,485 +423,485 @@
           <button class="btn" popovertarget="tip-right" popovertargetaction="show" style="anchor-name:--tip-right" aria-describedby="tip-right">Right</button>
           <div id="tip-right" popover="auto" class="tooltip" style="position-anchor:--tip-right;position-area:inline-end">Opens to the right of the anchor.</div>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <hr>
+    <hr>
 
-      <!-- ==================================================== FORMS -->
+    <!-- ==================================================== FORMS -->
 
-      <!-- INPUTS -->
-      <section class="demo-section" aria-labelledby="h-text-inputs">
-        <h2 class="text-heading" id="h-text-inputs">Inputs</h2>
-        <form class="row" style="align-items:flex-start;gap:var(--space-6)" onsubmit="return false">
+    <!-- INPUTS -->
+    <section class="section" aria-labelledby="h-text-inputs">
+      <h2 class="text-heading" id="h-text-inputs">Inputs</h2>
+      <form class="grid" style="--grid-gap:var(--space-6)" onsubmit="return false">
 
-          <!-- resting state -->
-          <div class="field" style="max-inline-size:24rem">
-            <label for="text-input">Text input</label>
-            <input class="input" id="text-input" name="text-input" placeholder="Placeholder" autocomplete="off">
+        <!-- resting state -->
+        <div class="field">
+          <label for="text-input">Text input</label>
+          <input class="input" id="text-input" name="text-input" placeholder="Placeholder" autocomplete="off">
+        </div>
+
+        <!-- disabled -->
+        <div class="field">
+          <label for="text-input-disabled">Disabled input</label>
+          <input class="input" id="text-input-disabled" name="text-input-disabled" value="Not editable" disabled>
+        </div>
+
+        <!-- single leading addon -->
+        <div class="field">
+          <label for="text-input-addon-leading">Input with leading addon</label>
+          <div class="input-group">
+            <span class="input-group__addon">$</span>
+            <input class="input" id="text-input-addon-leading" name="text-input-addon-leading" type="number" step="0.01" placeholder="0.00">
           </div>
+        </div>
 
-          <!-- disabled -->
-          <div class="field" style="max-inline-size:24rem">
-            <label for="text-input-disabled">Disabled input</label>
-            <input class="input" id="text-input-disabled" name="text-input-disabled" value="Not editable" disabled>
+        <!-- leading + trailing addon -->
+        <div class="field">
+          <label for="text-input-addons">Input with addons</label>
+          <div class="input-group">
+            <span class="input-group__addon">$</span>
+            <input class="input" id="text-input-addons" name="text-input-addons" type="number" step="0.01" placeholder="0.00">
+            <span class="input-group__addon input-group__addon--trailing">USD</span>
           </div>
+        </div>
 
-          <!-- single leading addon -->
-          <div class="field" style="max-inline-size:24rem">
-            <label for="text-input-addon-leading">Input with leading addon</label>
-            <div class="input-group">
-              <span class="input-group__addon">$</span>
-              <input class="input" id="text-input-addon-leading" name="text-input-addon-leading" type="number" step="0.01" placeholder="0.00">
-            </div>
+        <!-- native validation: :user-invalid fires only after interaction -->
+        <div class="field">
+          <label for="text-input-required">Text input, required</label>
+          <input class="input" id="text-input-required" name="text-input-required" placeholder="Placeholder" required autocomplete="off">
+          <p class="field__hint">Hint: leave blank and click away.</p>
+          <p class="field__error">Error: field is required.</p>
+        </div>
+
+        <!-- error shown upfront via aria-invalid (server-side validation) -->
+        <div class="field">
+          <label for="number-input-invalid">Number input, invalid</label>
+          <div class="input-group">
+            <span class="input-group__addon">$</span>
+            <input class="input" id="number-input-invalid" name="number-input-invalid" type="number" min="1" required value="0" aria-invalid="true">
           </div>
+          <p class="field__hint">Hint: guidance shown before interaction.</p>
+          <p class="field__error">Error: what's wrong and how to fix it.</p>
+        </div>
+      </form>
+    </section>
 
-          <!-- leading + trailing addon -->
-          <div class="field" style="max-inline-size:24rem">
-            <label for="text-input-addons">Input with addons</label>
-            <div class="input-group">
-              <span class="input-group__addon">$</span>
-              <input class="input" id="text-input-addons" name="text-input-addons" type="number" step="0.01" placeholder="0.00">
-              <span class="input-group__addon input-group__addon--trailing">USD</span>
-            </div>
-          </div>
+    <hr>
 
-          <!-- native validation: :user-invalid fires only after interaction -->
-          <div class="field" style="max-inline-size:24rem">
-            <label for="text-input-required">Text input, required</label>
-            <input class="input" id="text-input-required" name="text-input-required" placeholder="Placeholder" required autocomplete="off">
-            <p class="field__hint">Hint: leave blank and click away.</p>
-            <p class="field__error">Error: field is required.</p>
-          </div>
+    <!-- TEXTAREA -->
+    <section class="section" aria-labelledby="h-textarea">
+      <h2 class="text-heading" id="h-textarea">Textarea</h2>
+      <form class="grid" style="--grid-gap:var(--space-6)" onsubmit="return false">
 
-          <!-- error shown upfront via aria-invalid (server-side validation) -->
-          <div class="field" style="max-inline-size:24rem">
-            <label for="number-input-invalid">Number input, invalid</label>
-            <div class="input-group">
-              <span class="input-group__addon">$</span>
-              <input class="input" id="number-input-invalid" name="number-input-invalid" type="number" min="1" required value="0" aria-invalid="true">
-            </div>
-            <p class="field__hint">Hint: guidance shown before interaction.</p>
-            <p class="field__error">Error: what's wrong and how to fix it.</p>
-          </div>
-        </form>
-      </section>
+        <!-- resting state -->
+        <div class="field">
+          <label for="textarea">Textarea</label>
+          <textarea class="input" id="textarea" name="textarea" placeholder="Placeholder"></textarea>
+        </div>
 
-      <hr>
+        <!-- disabled -->
+        <div class="field">
+          <label for="textarea-disabled">Disabled textarea</label>
+          <textarea class="input" id="textarea-disabled" name="textarea-disabled" disabled>Not editable</textarea>
+        </div>
 
-      <!-- TEXTAREA -->
-      <section class="demo-section" aria-labelledby="h-textarea">
-        <h2 class="text-heading" id="h-textarea">Textarea</h2>
-        <form class="row" style="align-items:flex-start;gap:var(--space-6)" onsubmit="return false">
+        <!-- native validation: :user-invalid fires only after interaction -->
+        <div class="field">
+          <label for="textarea-required">Textarea, required</label>
+          <textarea class="input" id="textarea-required" name="textarea-required" placeholder="Placeholder" required></textarea>
+          <p class="field__hint">Hint: leave blank and click away.</p>
+          <p class="field__error">Error: field is required.</p>
+        </div>
 
-          <!-- resting state -->
-          <div class="field" style="max-inline-size:24rem">
-            <label for="textarea">Textarea</label>
-            <textarea class="input" id="textarea" name="textarea" placeholder="Placeholder"></textarea>
-          </div>
+        <!-- error shown upfront via aria-invalid (server-side validation) -->
+        <div class="field">
+          <label for="textarea-invalid">Textarea, invalid</label>
+          <textarea class="input" id="textarea-invalid" name="textarea-invalid" required aria-invalid="true"></textarea>
+          <p class="field__hint">Hint: guidance shown before interaction.</p>
+          <p class="field__error">Error: field cannot be empty.</p>
+        </div>
+      </form>
+    </section>
 
-          <!-- disabled -->
-          <div class="field" style="max-inline-size:24rem">
-            <label for="textarea-disabled">Disabled textarea</label>
-            <textarea class="input" id="textarea-disabled" name="textarea-disabled" disabled>Not editable</textarea>
-          </div>
+    <hr>
 
-          <!-- native validation: :user-invalid fires only after interaction -->
-          <div class="field" style="max-inline-size:24rem">
-            <label for="textarea-required">Textarea, required</label>
-            <textarea class="input" id="textarea-required" name="textarea-required" placeholder="Placeholder" required></textarea>
-            <p class="field__hint">Hint: leave blank and click away.</p>
-            <p class="field__error">Error: field is required.</p>
-          </div>
+    <!-- SELECT -->
+    <section class="section" aria-labelledby="h-select">
+      <h2 class="text-heading" id="h-select">Select</h2>
+      <form class="grid" style="--grid-gap:var(--space-6)" onsubmit="return false">
 
-          <!-- error shown upfront via aria-invalid (server-side validation) -->
-          <div class="field" style="max-inline-size:24rem">
-            <label for="textarea-invalid">Textarea, invalid</label>
-            <textarea class="input" id="textarea-invalid" name="textarea-invalid" required aria-invalid="true"></textarea>
-            <p class="field__hint">Hint: guidance shown before interaction.</p>
-            <p class="field__error">Error: field cannot be empty.</p>
-          </div>
-        </form>
-      </section>
+        <!-- resting state -->
+        <div class="field">
+          <label for="select">Select</label>
+          <select class="input" id="select" name="select">
+            <option>Option 1</option>
+            <option>Option 2</option>
+            <option>Option 3</option>
+          </select>
+        </div>
 
-      <hr>
+        <!-- disabled -->
+        <div class="field">
+          <label for="select-disabled">Disabled select</label>
+          <select class="input" id="select-disabled" name="select-disabled" disabled>
+            <option>Not editable</option>
+          </select>
+        </div>
 
-      <!-- SELECT -->
-      <section class="demo-section" aria-labelledby="h-select">
-        <h2 class="text-heading" id="h-select">Select</h2>
-        <form class="row" style="align-items:flex-start;gap:var(--space-6)" onsubmit="return false">
-
-          <!-- resting state -->
-          <div class="field" style="max-inline-size:24rem">
-            <label for="select">Select</label>
-            <select class="input" id="select" name="select">
-              <option>Option 1</option>
-              <option>Option 2</option>
-              <option>Option 3</option>
+        <!-- single leading addon -->
+        <div class="field">
+          <label for="select-addon-leading">Select with leading addon</label>
+          <div class="input-group">
+            <span class="input-group__addon">Qty</span>
+            <select class="input" id="select-addon-leading" name="select-addon-leading">
+              <option>Shares</option>
+              <option>Contracts</option>
+              <option>Lots</option>
             </select>
           </div>
+        </div>
 
-          <!-- disabled -->
-          <div class="field" style="max-inline-size:24rem">
-            <label for="select-disabled">Disabled select</label>
-            <select class="input" id="select-disabled" name="select-disabled" disabled>
-              <option>Not editable</option>
+        <!-- leading + trailing addon -->
+        <div class="field">
+          <label for="select-addons">Select with addons</label>
+          <div class="input-group">
+            <span class="input-group__addon">Every</span>
+            <select class="input" id="select-addons" name="select-addons">
+              <option>1</option>
+              <option>2</option>
+              <option>3</option>
             </select>
+            <span class="input-group__addon input-group__addon--trailing">days</span>
           </div>
+        </div>
 
-          <!-- single leading addon -->
-          <div class="field" style="max-inline-size:24rem">
-            <label for="select-addon-leading">Select with leading addon</label>
-            <div class="input-group">
-              <span class="input-group__addon">Qty</span>
-              <select class="input" id="select-addon-leading" name="select-addon-leading">
-                <option>Shares</option>
-                <option>Contracts</option>
-                <option>Lots</option>
-              </select>
-            </div>
+        <!-- native validation: :user-invalid fires only after interaction -->
+        <div class="field">
+          <label for="select-required">Select, required</label>
+          <select class="input" id="select-required" name="select-required" required>
+            <option value="">Choose one</option>
+            <option>Option 1</option>
+            <option>Option 2</option>
+            <option>Option 3</option>
+          </select>
+          <p class="field__hint">Hint: leave blank and click away.</p>
+          <p class="field__error">Error: field is required.</p>
+        </div>
+
+        <!-- error shown upfront via aria-invalid (server-side validation) -->
+        <div class="field">
+          <label for="select-invalid">Select, invalid</label>
+          <select class="input" id="select-invalid" name="select-invalid" required aria-invalid="true">
+            <option value="">Choose one</option>
+            <option>Option 1</option>
+            <option>Option 2</option>
+            <option>Option 3</option>
+          </select>
+          <p class="field__hint">Hint: guidance shown before interaction.</p>
+          <p class="field__error">Error: what's wrong and how to fix it.</p>
+        </div>
+      </form>
+    </section>
+
+    <hr>
+
+    <!-- CHECKBOX & RADIO -->
+    <section class="section" aria-labelledby="h-choice">
+      <h2 class="text-heading" id="h-choice">Checkbox &amp; radio</h2>
+      <form class="grid" style="--grid-min:14rem; --grid-gap:var(--space-6)" onsubmit="return false">
+        <fieldset class="field">
+          <legend class="field__label">Checkbox</legend>
+          <div class="control-list">
+            <label class="control"><input type="checkbox" name="input_checkbox_group" id="checkbox_default">Default</label>
+            <label class="control"><input type="checkbox" name="input_checkbox_group" id="checkbox_checked" checked>Checked</label>
+            <label class="control"><input type="checkbox" name="input_checkbox_group" id="checkbox_indeterminate">Indeterminate</label>
+            <label class="control"><input type="checkbox" name="input_checkbox_group" id="checkbox_disabled" disabled>Disabled</label>
+            <label class="control"><input type="checkbox" name="input_checkbox_group" id="checkbox_disabled_checked" disabled checked>Disabled checked</label>
           </div>
-
-          <!-- leading + trailing addon -->
-          <div class="field" style="max-inline-size:24rem">
-            <label for="select-addons">Select with addons</label>
-            <div class="input-group">
-              <span class="input-group__addon">Every</span>
-              <select class="input" id="select-addons" name="select-addons">
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-              </select>
-              <span class="input-group__addon input-group__addon--trailing">days</span>
-            </div>
+        </fieldset>
+        <fieldset class="field">
+          <legend class="field__label">Radio</legend>
+          <div class="control-list">
+            <label class="control"><input type="radio" name="input_radio_group" id="radio_default">Default</label>
+            <label class="control"><input type="radio" name="input_radio_group" id="radio_checked" checked>Checked</label>
+            <label class="control"><input type="radio" name="input_radio_group_disabled" id="radio_disabled" disabled>Disabled</label>
+            <label class="control"><input type="radio" name="input_radio_group_disabled" id="radio_disabled_checked" disabled checked>Disabled checked</label>
           </div>
+        </fieldset>
+      </form>
+    </section>
 
-          <!-- native validation: :user-invalid fires only after interaction -->
-          <div class="field" style="max-inline-size:24rem">
-            <label for="select-required">Select, required</label>
-            <select class="input" id="select-required" name="select-required" required>
-              <option value="">Choose one</option>
-              <option>Option 1</option>
-              <option>Option 2</option>
-              <option>Option 3</option>
-            </select>
-            <p class="field__hint">Hint: leave blank and click away.</p>
-            <p class="field__error">Error: field is required.</p>
-          </div>
+    <hr>
 
-          <!-- error shown upfront via aria-invalid (server-side validation) -->
-          <div class="field" style="max-inline-size:24rem">
-            <label for="select-invalid">Select, invalid</label>
-            <select class="input" id="select-invalid" name="select-invalid" required aria-invalid="true">
-              <option value="">Choose one</option>
-              <option>Option 1</option>
-              <option>Option 2</option>
-              <option>Option 3</option>
-            </select>
-            <p class="field__hint">Hint: guidance shown before interaction.</p>
-            <p class="field__error">Error: what's wrong and how to fix it.</p>
+    <!-- RANGE -->
+    <section class="section" aria-labelledby="h-range">
+      <h2 class="text-heading" id="h-range">Range</h2>
+      <form class="grid" style="--grid-min:14rem; --grid-gap:var(--space-6)" onsubmit="return false">
+
+        <!-- default -->
+        <div class="field">
+          <label for="range-input">Range input</label>
+          <input class="range" id="range-input" type="range" min="0" max="100" value="40">
+        </div>
+
+        <!-- disabled -->
+        <div class="field">
+          <label for="range-input-disabled">Disabled</label>
+          <input class="range" id="range-input-disabled" type="range" min="0" max="100" value="80" disabled>
+        </div>
+      </form>
+    </section>
+
+    <hr>
+
+    <!-- ==================================================== CONTAINERS -->
+
+    <!-- CARDS -->
+    <section class="section" aria-labelledby="h-cards">
+      <h2 class="text-heading" id="h-cards">Cards</h2>
+      <div class="grid" style="--grid-gap:var(--space-6)">
+        <article class="card card--pad">
+          <h3 class="card-title">Simple</h3>
+          <p>The <code>card--pad</code> variant: content sits directly inside with padding.</p>
+        </article>
+        <article class="card card--pad card--interactive" role="button" tabindex="0">
+          <h3 class="card-title">Interactive</h3>
+          <p>Hover or press me — shares the button motion contract entirely through tokens.</p>
+        </article>
+        <article class="card">
+          <header class="card-header">
+            <h3 class="card-title">Structured sections</h3>
+            <span class="badge">badge</span>
+          </header>
+          <div class="card-body">Header, body, and footer slots.</div>
+          <footer class="card-footer">
+            <button class="btn">Cancel</button>
+            <button class="btn btn--solid">Save</button>
+          </footer>
+        </article>
+      </div>
+    </section>
+
+    <hr>
+
+    <!-- MODAL -->
+    <section class="section" aria-labelledby="h-modals">
+      <h2 class="text-heading" id="h-modals">Modals</h2>
+      <div class="row">
+        <button class="btn" data-open-modal="modal-brief">Brief</button>
+        <button class="btn" data-open-modal="trade-modal">With Footer</button>
+        <button class="btn" data-open-modal="modal-scrolling">Scrolling</button>
+      </div>
+
+      <!-- short body, no footer -->
+      <dialog class="modal" id="modal-brief" closedby="any">
+        <form method="dialog" class="modal__wrap">
+          <header class="modal__header">
+            <h2 class="modal__title">Short body, no footer</h2>
+            <button class="btn btn--icon btn--sm" type="button" data-close-modal aria-label="Close">✕</button>
+          </header>
+          <div class="modal__body">
+            <p>Nothing to confirm, so the footer is dropped entirely. Esc or the ✕ closes it.</p>
           </div>
         </form>
-      </section>
+      </dialog>
 
-      <hr>
-
-      <!-- CHECKBOX & RADIO -->
-      <section class="demo-section" aria-labelledby="h-choice">
-        <h2 class="text-heading" id="h-choice">Checkbox &amp; radio</h2>
-        <form class="row" style="align-items:flex-start;gap:var(--space-6)" onsubmit="return false">
-          <fieldset class="field" style="max-inline-size:24rem">
-            <legend class="field__label">Checkbox</legend>
-            <div class="control-list">
-              <label class="control"><input type="checkbox" name="input_checkbox_group" id="checkbox_default">Default</label>
-              <label class="control"><input type="checkbox" name="input_checkbox_group" id="checkbox_checked" checked>Checked</label>
-              <label class="control"><input type="checkbox" name="input_checkbox_group" id="checkbox_indeterminate">Indeterminate</label>
-              <label class="control"><input type="checkbox" name="input_checkbox_group" id="checkbox_disabled" disabled>Disabled</label>
-              <label class="control"><input type="checkbox" name="input_checkbox_group" id="checkbox_disabled_checked" disabled checked>Disabled checked</label>
+      <!-- form body with footer actions -->
+      <dialog class="modal" id="trade-modal" closedby="any">
+        <form method="dialog" class="modal__wrap">
+          <header class="modal__header">
+            <h2 class="modal__title">Form with footer actions</h2>
+            <button class="btn btn--icon btn--sm" type="button" data-close-modal aria-label="Close">✕</button>
+          </header>
+          <div class="modal__body">
+            <div class="field">
+              <label for="m-sym">Symbol</label>
+              <input class="input" id="m-sym" placeholder="AAPL" required>
             </div>
-          </fieldset>
-          <fieldset class="field" style="max-inline-size:24rem">
-            <legend class="field__label">Radio</legend>
-            <div class="control-list">
-              <label class="control"><input type="radio" name="input_radio_group" id="radio_default">Default</label>
-              <label class="control"><input type="radio" name="input_radio_group" id="radio_checked" checked>Checked</label>
-              <label class="control"><input type="radio" name="input_radio_group_disabled" id="radio_disabled" disabled>Disabled</label>
-              <label class="control"><input type="radio" name="input_radio_group_disabled" id="radio_disabled_checked" disabled checked>Disabled checked</label>
-            </div>
-          </fieldset>
+            <p>Native <code>&lt;dialog&gt;</code>: focus trap, Esc-to-close, inert background, and <code>::backdrop</code> — all free.</p>
+          </div>
+          <footer class="modal__footer">
+            <button class="btn" type="button" data-close-modal>Cancel</button>
+            <button class="btn btn--solid" value="confirm">Place order</button>
+          </footer>
         </form>
-      </section>
+      </dialog>
 
-      <hr>
-
-      <!-- RANGE -->
-      <section class="demo-section" aria-labelledby="h-range">
-        <h2 class="text-heading" id="h-range">Range</h2>
-        <form class="row" style="align-items:flex-start;gap:var(--space-6)" onsubmit="return false">
-
-          <!-- default -->
-          <div class="field" style="max-inline-size:24rem">
-            <label for="range-input">Range input</label>
-            <input class="range" id="range-input" type="range" min="0" max="100" value="40">
+      <!-- long body: unfurl stops at the 85svh cap, then the body scrolls -->
+      <dialog class="modal" id="modal-scrolling" closedby="none">
+        <form method="dialog" class="modal__wrap">
+          <header class="modal__header">
+            <h2 class="modal__title">Long body that scrolls</h2>
+          </header>
+          <div class="modal__body">
+            <div class="alert" role="status" style="margin-block-end: var(--space-5)">
+              <span class="alert__icon" aria-hidden="true">ℹ</span>
+              <div><p class="alert__text">You must hit Accept or Decline.</p></div>
+            </div>
+            <p>The body is the only scroll container — the header and footer stay put while this text moves under them.</p>
+            <p>Margin is required. Positions are marked to market continuously, and a shortfall may be called at any time during the session without prior notice.</p>
+            <p>Orders routed outside regular hours execute against thinner books. Quoted spreads widen, partial fills are common, and a limit price is strongly advised.</p>
+            <p>Settlement occurs one business day after the trade date. Proceeds from an unsettled sale are not available for withdrawal, though they may be reinvested immediately.</p>
+            <p>Dividend reinvestment applies to whole and fractional shares alike. Fractions are aggregated across the account and liquidated on closure.</p>
+            <p>Corporate actions — splits, mergers, spin-offs — are applied on the ex-date. Open orders against the affected symbol are cancelled rather than adjusted.</p>
+            <p>Tax lots default to first-in, first-out. Changing the disposal method affects future sales only; realised lots are not restated.</p>
+            <p>Past performance says nothing about future returns. Every position carries the risk of total loss, including positions held for the long term.</p>
           </div>
-
-          <!-- disabled -->
-          <div class="field" style="max-inline-size:24rem">
-            <label for="range-input-disabled">Disabled</label>
-            <input class="range" id="range-input-disabled" type="range" min="0" max="100" value="80" disabled>
-          </div>
+          <footer class="modal__footer">
+            <button class="btn" type="button" data-close-modal>Decline</button>
+            <button class="btn btn--solid" value="accept">Accept</button>
+          </footer>
         </form>
-      </section>
+      </dialog>
+    </section>
 
-      <hr>
+    <hr>
 
-      <!-- ==================================================== CONTAINERS -->
-
-      <!-- CARDS -->
-      <section class="demo-section" aria-labelledby="h-cards">
-        <h2 class="text-heading" id="h-cards">Cards</h2>
-        <div class="dashboard">
-          <article class="card card--pad">
-            <h3 class="card-title">Simple</h3>
-            <p>The <code>card--pad</code> variant: content sits directly inside with padding.</p>
-          </article>
-          <article class="card card--pad card--interactive" role="button" tabindex="0">
-            <h3 class="card-title">Interactive</h3>
-            <p>Hover or press me — shares the button motion contract entirely through tokens.</p>
-          </article>
-          <article class="card">
-            <header class="card-header">
-              <h3 class="card-title">Structured sections</h3>
-              <span class="badge">badge</span>
-            </header>
-            <div class="card-body">Header, body, and footer slots.</div>
-            <footer class="card-footer">
-              <button class="btn btn--md">Cancel</button>
-              <button class="btn btn--md btn--solid">Save</button>
-            </footer>
-          </article>
+    <!-- TABS -->
+    <section class="section" aria-labelledby="h-tabs">
+      <h2 class="text-heading" id="h-tabs">Tabs</h2>
+      <div class="tabs">
+        <div class="tabs__list" role="tablist" aria-label="Report">
+          <button class="tabs__tab" role="tab" id="t-perf" aria-controls="p-perf" aria-selected="true">Performance</button>
+          <button class="tabs__tab" role="tab" id="t-hold" aria-controls="p-hold" aria-selected="false" tabindex="-1">Holdings</button>
+          <button class="tabs__tab" role="tab" id="t-act" aria-controls="p-act" aria-selected="false" tabindex="-1">Activity</button>
         </div>
-      </section>
+        <section class="tabs__panel" role="tabpanel" id="p-perf" aria-labelledby="t-perf">Trailing return +11.0% YTD, max drawdown −6.4%.</section>
+        <section class="tabs__panel" role="tabpanel" id="p-hold" aria-labelledby="t-hold" hidden>34 positions across 6 sectors.</section>
+        <section class="tabs__panel" role="tabpanel" id="p-act" aria-labelledby="t-act" hidden>12 trades in the last 24h.</section>
+      </div>
+    </section>
 
-      <hr>
+    <hr>
 
-      <!-- MODAL -->
-      <section class="demo-section" aria-labelledby="h-feedback">
-        <h2 class="text-heading" id="h-feedback">Modals</h2>
-        <div class="btn-group">
-          <button class="btn" data-open-modal="modal-brief">Brief</button>
-          <button class="btn" data-open-modal="trade-modal">With Footer</button>
-          <button class="btn" data-open-modal="modal-scrolling">Scrolling</button>
-        </div>
+    <!-- ==================================================== TABLE -->
 
-        <!-- short body, no footer -->
-        <dialog class="modal" id="modal-brief" closedby="any">
-          <form method="dialog" class="modal__wrap">
-            <header class="modal__header">
-              <h2 class="modal__title">Short body, no footer</h2>
-              <button class="btn btn--icon btn--sm" type="button" data-close-modal aria-label="Close">✕</button>
-            </header>
-            <div class="modal__body">
-              <p>Nothing to confirm, so the footer is dropped entirely. Esc or the ✕ closes it.</p>
-            </div>
-          </form>
-        </dialog>
+    <!-- TABLE -->
+    <section class="section" aria-labelledby="h-positions">
+      <h2 class="text-heading" id="h-positions">Positions</h2>
+      <div class="table-scroll" data-span="full" style="max-block-size:20rem">
+        <table class="table table--zebra table--rows">
+          <thead>
+            <tr>
+              <th><label class="control"><input type="checkbox" aria-label="Select all"></label></th>
+              <th>Symbol</th>
+              <th>Name</th>
+              <th class="num">Last</th>
+              <th class="num">Chg</th>
+              <th class="num">Qty</th>
+              <th aria-label="Actions"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><label class="control"><input type="checkbox" aria-label="Select AAPL"></label></td>
+              <td><strong>AAPL</strong></td><td>Apple Inc.</td>
+              <td class="num"><data value="228.5">228.50</data></td>
+              <td class="num"><data class="delta delta--up" value="0.012">1.2%</data></td>
+              <td class="num">1,200</td>
+              <td><button class="btn btn--icon btn--sm" popovertarget="r1" style="anchor-name:--r1">⋯</button>
+                <div id="r1" popover class="menu" style="position-anchor:--r1"><button class="menu__item">Buy</button><button class="menu__item">Sell</button><hr><button class="menu__item menu__item--danger">Close</button></div></td>
+            </tr>
+            <tr>
+              <td><label class="control"><input type="checkbox" checked aria-label="Select TSLA"></label></td>
+              <td><strong>TSLA</strong></td><td>Tesla, Inc.</td>
+              <td class="num"><data value="242.1">242.10</data></td>
+              <td class="num"><data class="delta delta--down" value="-0.031">3.1%</data></td>
+              <td class="num">300</td>
+              <td><button class="btn btn--icon btn--sm" popovertarget="r2" style="anchor-name:--r2">⋯</button>
+                <div id="r2" popover class="menu" style="position-anchor:--r2"><button class="menu__item">Buy</button><button class="menu__item">Sell</button><hr><button class="menu__item menu__item--danger">Close</button></div></td>
+            </tr>
+            <tr>
+              <td><label class="control"><input type="checkbox" aria-label="Select MSFT"></label></td>
+              <td><strong>MSFT</strong></td><td>Microsoft Corp.</td>
+              <td class="num"><data value="441.0">441.00</data></td>
+              <td class="num"><data class="delta delta--up" value="0.004">0.4%</data></td>
+              <td class="num">850</td>
+              <td><button class="btn btn--icon btn--sm" popovertarget="r3" style="anchor-name:--r3">⋯</button>
+                <div id="r3" popover class="menu" style="position-anchor:--r3"><button class="menu__item">Buy</button><button class="menu__item">Sell</button><hr><button class="menu__item menu__item--danger">Close</button></div></td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr><td></td><th colspan="4" scope="row">Net exposure</th><td class="num">2,350</td><td></td></tr>
+          </tfoot>
+        </table>
+      </div>
+    </section>
 
-        <!-- form body with footer actions -->
-        <dialog class="modal" id="trade-modal" closedby="any">
-          <form method="dialog" class="modal__wrap">
-            <header class="modal__header">
-              <h2 class="modal__title">Form with footer actions</h2>
-              <button class="btn btn--icon btn--sm" type="button" data-close-modal aria-label="Close">✕</button>
-            </header>
-            <div class="modal__body">
-              <div class="field">
-                <label for="m-sym">Symbol</label>
-                <input class="input" id="m-sym" placeholder="AAPL" required>
-              </div>
-              <p>Native <code>&lt;dialog&gt;</code>: focus trap, Esc-to-close, inert background, and <code>::backdrop</code> — all free.</p>
-            </div>
-            <footer class="modal__footer">
-              <button class="btn" type="button" data-close-modal>Cancel</button>
-              <button class="btn btn--solid" value="confirm">Place order</button>
-            </footer>
-          </form>
-        </dialog>
+    <hr>
 
-        <!-- long body: unfurl stops at the 85svh cap, then the body scrolls -->
-        <dialog class="modal" id="modal-scrolling" closedby="none">
-          <form method="dialog" class="modal__wrap">
-            <header class="modal__header">
-              <h2 class="modal__title">Long body that scrolls</h2>
-            </header>
-            <div class="modal__body">
-              <div class="alert" role="status" style="margin-block-end: var(--space-5)">
-                <span class="alert__icon" aria-hidden="true">ℹ</span>
-                <div><p class="alert__text">You must hit Accept or Decline.</p></div>
-              </div>
-              <p>The body is the only scroll container — the header and footer stay put while this text moves under them.</p>
-              <p>Margin is required. Positions are marked to market continuously, and a shortfall may be called at any time during the session without prior notice.</p>
-              <p>Orders routed outside regular hours execute against thinner books. Quoted spreads widen, partial fills are common, and a limit price is strongly advised.</p>
-              <p>Settlement occurs one business day after the trade date. Proceeds from an unsettled sale are not available for withdrawal, though they may be reinvested immediately.</p>
-              <p>Dividend reinvestment applies to whole and fractional shares alike. Fractions are aggregated across the account and liquidated on closure.</p>
-              <p>Corporate actions — splits, mergers, spin-offs — are applied on the ex-date. Open orders against the affected symbol are cancelled rather than adjusted.</p>
-              <p>Tax lots default to first-in, first-out. Changing the disposal method affects future sales only; realised lots are not restated.</p>
-              <p>Past performance says nothing about future returns. Every position carries the risk of total loss, including positions held for the long term.</p>
-            </div>
-            <footer class="modal__footer">
-              <button class="btn" type="button" data-close-modal>Decline</button>
-              <button class="btn btn--solid" value="accept">Accept</button>
-            </footer>
-          </form>
-        </dialog>
-      </section>
+    <!-- ==================================================== FINANCE -->
 
-      <hr>
+    <!-- KPI GRID -->
+    <section class="section" aria-labelledby="h-kpis">
+      <h2 class="text-heading" id="h-kpis">KPIs &amp; data</h2>
+      <div class="grid">
+        <article class="stat" data-trend="up">
+          <p class="stat__label">Net asset value</p>
+          <p class="stat__value">$1.24<span class="num__unit">M</span></p>
+          <footer class="stat__foot">
+            <data class="delta delta--up" value="0.042">4.2%</data>
+            <span class="stat__caption">vs last quarter</span>
+          </footer>
+        </article>
 
-      <!-- TABS -->
-      <section class="demo-section" aria-labelledby="h-tabs">
-        <h2 class="text-heading" id="h-tabs">Tabs</h2>
-        <div class="tabs">
-          <div class="tabs__list" role="tablist" aria-label="Report">
-            <button class="tabs__tab" role="tab" id="t-perf" aria-controls="p-perf" aria-selected="true">Performance</button>
-            <button class="tabs__tab" role="tab" id="t-hold" aria-controls="p-hold" aria-selected="false" tabindex="-1">Holdings</button>
-            <button class="tabs__tab" role="tab" id="t-act" aria-controls="p-act" aria-selected="false" tabindex="-1">Activity</button>
+        <article class="stat" data-trend="down">
+          <p class="stat__label">Daily P&amp;L</p>
+          <p class="stat__value">−$8,410</p>
+          <footer class="stat__foot">
+            <data class="delta delta--down" value="-0.018">1.8%</data>
+            <span class="stat__caption">intraday</span>
+          </footer>
+        </article>
+
+        <article class="stat">
+          <p class="stat__label">Sharpe</p>
+          <p class="stat__value">1.93</p>
+          <footer class="stat__foot">
+            <data class="delta" value="0">flat</data>
+            <span class="stat__caption">trailing 12m</span>
+          </footer>
+        </article>
+
+        <section class="card" data-span="2">
+          <header class="card-header">
+            <h3 class="card-title">Equity curve</h3>
+            <data class="delta delta--up" value="0.11">11.0%</data>
+          </header>
+          <div class="card-body">
+            <svg class="sparkline sparkline--positive" viewBox="0 0 100 30" preserveAspectRatio="none" style="--sparkline-w:100%;--sparkline-h:calc(var(--space-9) + var(--space-4))" role="img" aria-label="Equity trending up">
+              <path class="sparkline__area" d="M0,24 L14,20 L28,22 L42,12 L56,15 L70,6 L84,9 L100,3 L100,30 L0,30 Z"/>
+              <polyline points="0,24 14,20 28,22 42,12 56,15 70,6 84,9 100,3"/>
+              <circle class="sparkline__dot" cx="100" cy="3" r="2.5"/>
+            </svg>
           </div>
-          <section class="tabs__panel" role="tabpanel" id="p-perf" aria-labelledby="t-perf">Trailing return +11.0% YTD, max drawdown −6.4%.</section>
-          <section class="tabs__panel" role="tabpanel" id="p-hold" aria-labelledby="t-hold" hidden>34 positions across 6 sectors.</section>
-          <section class="tabs__panel" role="tabpanel" id="p-act" aria-labelledby="t-act" hidden>12 trades in the last 24h.</section>
-        </div>
-      </section>
+        </section>
 
-      <hr>
+        <section class="card">
+          <header class="card-header"><h3 class="card-title">Allocation</h3></header>
+          <div class="card-body">
+            <table class="bar-chart">
+              <caption class="visually-hidden">Portfolio allocation by asset class</caption>
+              <tbody>
+                <tr><th scope="row">Equities</th><td class="bar"><span class="bar__fill" style="--value:62">62%</span></td></tr>
+                <tr><th scope="row">Bonds</th><td class="bar"><span class="bar__fill bar__fill--accent" style="--value:24">24%</span></td></tr>
+                <tr><th scope="row">Cash</th><td class="bar"><span class="bar__fill bar__fill--warning" style="--value:9">9%</span></td></tr>
+                <tr><th scope="row">Alts</th><td class="bar"><span class="bar__fill bar__fill--positive" style="--value:5">5%</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
 
-      <!-- ==================================================== TABLE -->
-
-      <!-- TABLE -->
-      <section class="demo-section" aria-labelledby="h-positions">
-        <h2 class="text-heading" id="h-positions">Positions</h2>
-        <div class="table-scroll" style="max-block-size:20rem">
-          <table class="table table--zebra table--rows">
-            <thead>
-              <tr>
-                <th><label class="control"><input type="checkbox" aria-label="Select all"></label></th>
-                <th>Symbol</th>
-                <th>Name</th>
-                <th class="num">Last</th>
-                <th class="num">Chg</th>
-                <th class="num">Qty</th>
-                <th aria-label="Actions"></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><label class="control"><input type="checkbox" aria-label="Select AAPL"></label></td>
-                <td><strong>AAPL</strong></td><td>Apple Inc.</td>
-                <td class="num"><data value="228.5">228.50</data></td>
-                <td class="num"><data class="delta delta--up" value="0.012">1.2%</data></td>
-                <td class="num">1,200</td>
-                <td><button class="btn btn--icon btn--sm btn--positive" popovertarget="r1" style="anchor-name:--r1">⋯</button>
-                  <div id="r1" popover class="menu" style="position-anchor:--r1"><button class="menu__item">Buy</button><button class="menu__item">Sell</button><hr><button class="menu__item menu__item--danger">Close</button></div></td>
-              </tr>
-              <tr>
-                <td><label class="control"><input type="checkbox" checked aria-label="Select TSLA"></label></td>
-                <td><strong>TSLA</strong></td><td>Tesla, Inc.</td>
-                <td class="num"><data value="242.1">242.10</data></td>
-                <td class="num"><data class="delta delta--down" value="-0.031">3.1%</data></td>
-                <td class="num">300</td>
-                <td><button class="btn btn--icon btn--sm btn--positive" popovertarget="r2" style="anchor-name:--r2">⋯</button>
-                  <div id="r2" popover class="menu" style="position-anchor:--r2"><button class="menu__item">Buy</button><button class="menu__item">Sell</button><hr><button class="menu__item menu__item--danger">Close</button></div></td>
-              </tr>
-              <tr>
-                <td><label class="control"><input type="checkbox" aria-label="Select MSFT"></label></td>
-                <td><strong>MSFT</strong></td><td>Microsoft Corp.</td>
-                <td class="num"><data value="441.0">441.00</data></td>
-                <td class="num"><data class="delta delta--up" value="0.004">0.4%</data></td>
-                <td class="num">850</td>
-                <td><button class="btn btn--icon btn--sm btn--positive" popovertarget="r3" style="anchor-name:--r3">⋯</button>
-                  <div id="r3" popover class="menu" style="position-anchor:--r3"><button class="menu__item">Buy</button><button class="menu__item">Sell</button><hr><button class="menu__item menu__item--danger">Close</button></div></td>
-              </tr>
-            </tbody>
-            <tfoot>
-              <tr><td></td><th colspan="4" scope="row">Net exposure</th><td class="num">2,350</td><td></td></tr>
-            </tfoot>
-          </table>
-        </div>
-      </section>
-
-      <hr>
-
-      <!-- ==================================================== FINANCE -->
-
-      <!-- KPI GRID -->
-      <section class="demo-section" aria-labelledby="h-kpis">
-        <h2 class="text-heading" id="h-kpis">KPIs &amp; data</h2>
-        <div class="dashboard">
-          <article class="stat" data-trend="up">
-            <p class="stat__label">Net asset value</p>
-            <p class="stat__value">$1.24<span class="num__unit">M</span></p>
-            <footer class="stat__foot">
-              <data class="delta delta--up" value="0.042">4.2%</data>
-              <span class="stat__caption">vs last quarter</span>
-            </footer>
-          </article>
-
-          <article class="stat" data-trend="down">
-            <p class="stat__label">Daily P&amp;L</p>
-            <p class="stat__value">−$8,410</p>
-            <footer class="stat__foot">
-              <data class="delta delta--down" value="-0.018">1.8%</data>
-              <span class="stat__caption">intraday</span>
-            </footer>
-          </article>
-
-          <article class="stat">
-            <p class="stat__label">Sharpe</p>
-            <p class="stat__value">1.93</p>
-            <footer class="stat__foot">
-              <data class="delta" value="0">flat</data>
-              <span class="stat__caption">trailing 12m</span>
-            </footer>
-          </article>
-
-          <section class="card" data-span="2">
-            <header class="card-header">
-              <h3 class="card-title">Equity curve</h3>
-              <data class="delta delta--up" value="0.11">11.0%</data>
-            </header>
-            <div class="card-body">
-              <svg class="sparkline sparkline--positive" viewBox="0 0 100 30" preserveAspectRatio="none" style="--sparkline-w:100%;--sparkline-h:calc(var(--space-9) + var(--space-4))" role="img" aria-label="Equity trending up">
-                <path class="sparkline__area" d="M0,24 L14,20 L28,22 L42,12 L56,15 L70,6 L84,9 L100,3 L100,30 L0,30 Z"/>
-                <polyline points="0,24 14,20 28,22 42,12 56,15 70,6 84,9 100,3"/>
-                <circle class="sparkline__dot" cx="100" cy="3" r="2.5"/>
-              </svg>
-            </div>
-          </section>
-
-          <section class="card">
-            <header class="card-header"><h3 class="card-title">Allocation</h3></header>
-            <div class="card-body">
-              <table class="bar-chart">
-                <caption class="visually-hidden">Portfolio allocation by asset class</caption>
-                <tbody>
-                  <tr><th scope="row">Equities</th><td class="bar"><span class="bar__fill" style="--value:62">62%</span></td></tr>
-                  <tr><th scope="row">Bonds</th><td class="bar"><span class="bar__fill bar__fill--accent" style="--value:24">24%</span></td></tr>
-                  <tr><th scope="row">Cash</th><td class="bar"><span class="bar__fill bar__fill--warning" style="--value:9">9%</span></td></tr>
-                  <tr><th scope="row">Alts</th><td class="bar"><span class="bar__fill bar__fill--positive" style="--value:5">5%</span></td></tr>
-                </tbody>
-              </table>
-            </div>
-          </section>
-
-          <dl class="dl-stats" data-span="3">
-            <div><dt>Market cap</dt><dd>$2.9T</dd></div>
-            <div><dt>P/E</dt><dd>31.4</dd></div>
-            <div><dt>Div yield</dt><dd>0.52%</dd></div>
-            <div><dt>Beta</dt><dd>1.21</dd></div>
-          </dl>
-        </div>
-      </section>
-    </main>
-  </div>
+        <dl class="dl-stats" data-span="3">
+          <div><dt>Market cap</dt><dd>$2.9T</dd></div>
+          <div><dt>P/E</dt><dd>31.4</dd></div>
+          <div><dt>Div yield</dt><dd>0.52%</dd></div>
+          <div><dt>Beta</dt><dd>1.21</dd></div>
+        </dl>
+      </div>
+    </section>
+  </main>
 
   <script src="dist/runtime.js"></script>
   <script>

@@ -98,6 +98,8 @@
     line-height: var(--line-height-snug);
   }
   .capacity__value {
+    font-size: var(--font-size-1);
+    line-height: var(--line-height-snug);
     font-variant-numeric: tabular-nums;
     text-align: end;
   }
