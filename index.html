@@ -15,10 +15,12 @@
     .text-display { font-family: var(--font-display); font-size: var(--font-size-7); line-height: var(--line-height-tight); letter-spacing: var(--letter-spacing-wide); text-wrap: balance; }
     .text-heading { font-family: var(--font-display); font-size: var(--font-size-5); line-height: var(--line-height-snug); letter-spacing: var(--letter-spacing-wide); text-wrap: balance; }
     .text-lead { font-family: var(--font-body); font-size: var(--font-size-2); line-height: var(--line-height-normal); }
+    .text-body { font-family: var(--font-body); font-size: var(--font-size-1); line-height: var(--line-height-normal); }
     .section { display: flex; flex-direction: column; gap: var(--space-5); margin-block: var(--space-9); }
     .row { display: flex; flex-wrap: wrap; gap: var(--space-3); align-items: center; }
     .col { display: flex; flex-direction: column; gap: var(--space-2); }
     .box { display: grid; place-items: center; inline-size: 100%; block-size: var(--space-9); background-color: var(--paper); border: var(--border-w) var(--border-style) var(--ink); border-radius: var(--radius); }
+    .box--solid { background-color: var(--ink); color: var(--paper) }
     .box--shadow { margin-block-end: var(--space-1); }
     .box--hover { transition: translate var(--transition); }
     .box--hover:hover { translate: var(--hover-shift-x) var(--hover-shift-y); }
@@ -160,12 +162,11 @@
     <section id="layout" class="section" aria-labelledby="h-grid">
       <h2 class="text-heading" id="h-grid">Grid</h2>
       <div class="col">
-        <div>
-          <h3 class="text-lead">Default</h3>
-          <p><code>--grid-min: 24rem | --grid-gap: var(--space-4)</code></p>
-        </div>
         <div class="resizable">
           <div class="grid">
+            <div class="box box--solid" data-span="full" style="height:auto; padding: var(--space-1) var(--space-3)">
+              <h3 class="text-lead">Default: <code style="font-size:var(--font-size-1); display:inline-block;">--grid-min: 24rem</code> | <code style="font-size:var(--font-size-1); display:inline-block;">--grid-gap: var(--space-4)</code></h3>
+            </div>
             <div class="box"><code>&lt;div&gt;</code></div>
             <div class="box"><code>&lt;div&gt;</code></div>
             <div class="box"><code>&lt;div&gt;</code></div>
@@ -176,12 +177,11 @@
         </div>
       </div>
       <div class="col">
-        <div>
-          <h3 class="text-lead">Tight</h3>
-          <p><code>--grid-min: 10rem | --grid-gap: var(--space-2)</code></p>
-        </div>
         <div class="resizable">
           <div class="grid" style="--grid-min:10rem;--grid-gap:var(--space-2)">
+            <div class="box box--solid" data-span="full" style="height:auto; padding: var(--space-1) var(--space-3)">
+              <h3 class="text-lead">Tight: <code style="font-size:var(--font-size-1); display:inline-block;">--grid-min: 10rem</code> | <code style="font-size:var(--font-size-1); display:inline-block;">--grid-gap: var(--space-2)</code></h3>
+            </div>
             <div class="box"><code>&lt;div&gt;</code></div>
             <div class="box"><code>&lt;div&gt;</code></div>
             <div class="box"><code>&lt;div&gt;</code></div>
