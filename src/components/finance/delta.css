@@ -1,15 +1,23 @@
-/* Delta indicator — <data class="delta" value="0.042" data-trend="up">4.2%</data>.
+/* Delta indicator:
+ *   <data class="delta delta--up" value="0.042">
+ *     <svg class="icon" aria-hidden="true"><use href="#icon-arrow-up"/></svg>4.2%</data>
  *
- * Direction is encoded THREE ways: a ▲/▼ glyph (::before), font weight, AND color.
- * Never color alone — colour-blind and grayscale-print safe, and the reason the
- * palette-constrained bleed mapping (positive→ink, negative→accent) is acceptable. */
+ * Direction is encoded THREE ways: an arrow icon, font weight, AND color. Never color
+ * alone — colour-blind and grayscale-print safe, and the reason the palette-constrained
+ * bleed mapping (positive→ink, negative→accent) is acceptable. Flat takes #icon-minus,
+ * which reads as "unchanged" without direction.
+ *
+ * The arrow is a sprite <use> rather than a glyph or a background image so it stays
+ * currentColor and keeps tracking --_tone. It is markup, not a ::before, because a
+ * pseudo-element can't host a <use> — which does mean the arrow and the modifier are
+ * the author's to keep in agreement. */
 
 @layer bleed.components {
   .delta {
     --_tone: var(--neutral);
 
     display: inline-flex;
-    align-items: baseline;
+    align-items: center;
     gap: var(--space-1);
 
     font-variant-numeric: tabular-nums;
@@ -18,28 +26,20 @@
     color: var(--_tone);
   }
 
-  .delta::before {
-    content: "•"; /* flat / neutral */
-    font-size: 0.9em;
-    line-height: var(--line-height-tight);
+  /* slightly under the cap height, so the arrow sits with the digits rather than over them */
+  .delta > .icon {
+    inline-size: 0.9em;
+    block-size: 0.9em;
   }
 
   .delta--up,
   .delta[data-trend="up"] {
     --_tone: var(--positive);
   }
-  .delta--up::before,
-  .delta[data-trend="up"]::before {
-    content: "▲";
-  }
 
   .delta--down,
   .delta[data-trend="down"] {
     --_tone: var(--negative);
-  }
-  .delta--down::before,
-  .delta[data-trend="down"]::before {
-    content: "▼";
   }
 
   /* solid pill form for use inside dense tables */

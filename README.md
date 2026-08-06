@@ -36,18 +36,21 @@ bleed/
 │   ├── tokens/{bleed,blip,boring}.json
 │   │                          DTCG JSON – single source of truth, complete primitive set per theme
 │   ├── fonts/                 font files (.ttf)
+│   ├── icons/                 16×16 stroke-only .svg — one file per icon
 │   ├── foundations/
 │   │   ├── fonts.css          @font-face declarations
 │   │   ├── themes.css         generated, one [data-theme] block per theme
+│   │   ├── icons.css          the .icon utility (sizing for an <svg><use></svg>)
 │   │   └── base.css           reset/typography/focus/@property
 │   ├── components/
 │   │   ├── core/              common/base components — one .css per component
 │   │   └── finance/           components for financial use cases
 │   └── runtime.js             JS scripts for additional functionality that native HTML elements don't already provide
 ├── scripts/
-│   └── build.js               Style Dictionary build, concat + copy src/ to dist/
+│   └── build.js               Style Dictionary build, concat + copy src/ to dist/, generate icon sprite
 ├── dist/                      output files for applications to consume from
-└── index.html                 kitchen sink + live theme switcher
+│                              base.css, fonts.css, themes.css, components.css, sprite.svg, runtime.js
+└── index.html                 kitchen sink + live theme switcher (sprite spliced in by the build)
 ```
 
 Everything is wrapped in `@layer bleed.tokens, bleed.base, bleed.components` so that styles are all encapsulated.
@@ -77,7 +80,7 @@ Available themes:
 
 **Primitive tokens** (per theme) — the raw material: `--ink --paper --accent --border-w --border-style --shadow / --shadow-hover / --shadow-active --hover-shift-x/y --radius --transition --font-display --font-body --font-size-1..7 --line-height-{tight,snug,normal} --letter-spacing-{tight,normal,wide,wider} --space-1..6`.
 
-**Semantic tokens** are declared per-theme alongside the primitives: `--positive --negative --warning --neutral`. Direction is also carried by ▲/▼ glyph + weight in `.delta` — never colour alone.
+**Semantic tokens** are declared per-theme alongside the primitives: `--positive --negative --warning --neutral`. Direction is also carried by an arrow icon + weight in `.delta` — never colour alone.
 
 **Component tokens** are co-located in each component as `--_internal` vars with a public override, e.g. `--btn-bg`, `--card-shadow`. Set them to restyle one instance.
 
@@ -95,6 +98,18 @@ Pressable elements press the same way, entirely through tokens:
 | `:disabled` | —                                | `--shadow-active` |
 
 Form controls (input, select, textarea, checkbox, radio, range) run the same contract, with `:focus` standing in for `:hover` — focus moves the control into its shadow, `:active` presses it the rest of the way. In `.segmented` and `.input-group`, the press belongs to the group, so focusing any control inside moves the entire group together rather than on its own.
+
+### Icons
+
+Drop a 16×16 stroke-only SVG into `src/icons/` and the build folds it into one sprite of `<symbol id="icon-<name>">` — `dist/sprite.svg`.
+
+```html
+<svg class="icon" aria-hidden="true"><use href="#icon-info"/></svg>
+```
+
+The sprite must be in the document for `#icon-…` to resolve; `index.html` inlines it between generated markers.
+
+`<use>` inherits colour, so each symbol's `stroke="currentColor"` keeps tracking `[data-theme]` like text. Sizing is `1em`, so icons follow their slot's font-size. Mark them `aria-hidden` — the accessible name should be provided by surrounding text or an `aria-label`.
 
 ### `@property`
 

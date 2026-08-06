@@ -4,8 +4,10 @@
  *   <dialog class="modal">
  *     <form method="dialog" class="modal__wrap">
  *       <header class="modal__header"><h2 class="modal__title">…</h2>
- *         <button class="modal__close btn btn--icon btn--sm" data-close-modal
- *                 aria-label="Close">✕</button></header>
+ *         <button class="modal__close btn btn--icon btn--sm" data-close-modal aria-label="Close">
+ *           <svg class="icon" aria-hidden="true"><use href="#icon-cross"/></svg>
+ *         </button>
+ *       </header>
  *       <div class="modal__body">…</div>
  *       <footer class="modal__footer"><button class="btn">Confirm</button></footer>
  *     </form>

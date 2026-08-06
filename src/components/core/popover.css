@@ -1,7 +1,8 @@
 /* Popover / dropdown menu — the popover attribute (zero JS for open/close/light-
- * dismiss) + CSS anchor positioning. Primary use: a row "⋯" actions menu.
- *   <button class="btn btn--icon" popovertarget="row-menu"
- *           style="anchor-name:--row1">⋯</button>
+ * dismiss) + CSS anchor positioning. Primary use: a row actions menu.
+ *   <button class="btn btn--icon" popovertarget="row-menu" aria-label="Row actions"
+ *           style="anchor-name:--row1">
+ *     <svg class="icon" aria-hidden="true"><use href="#icon-menu-meatball"/></svg></button>
  *   <div id="row-menu" popover class="menu" style="position-anchor:--row1">
  *     <button class="menu__item">Edit</button>
  *     <button class="menu__item">Duplicate</button>

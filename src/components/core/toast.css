@@ -1,7 +1,8 @@
 /* Toast — transient status. Each toast is an <output role="status"> (polite live
  * region) inside a fixed region; runtime.js appends one and auto-removes it.
  *   <div class="toast-region" id="toasts"></div>
- *   bleed.toast('Trade executed', { title: 'Filled', icon: '✓', solid: true })
+ *   bleed.toast('Trade executed', { title: 'Filled', icon: 'tick', solid: true })
+ * `icon` names a file in src/icons/, rendered as a #icon-<name> sprite reference.
  * Outlined on paper by default; add toast--solid to fill instead. Title
  * optional, message always present — mirrors the alert banner. */
 
@@ -49,8 +50,9 @@
   }
 
   .toast__icon {
-    font-size: var(--font-size-3);
-    line-height: var(--line-height-tight);
+    inline-size: calc(var(--space-4) + var(--space-1));
+    block-size: calc(var(--space-4) + var(--space-1));
+    margin-block-start: 1px; /* px-ok: optical alignment */
     color: currentColor;
   }
 

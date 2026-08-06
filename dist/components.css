@@ -1,10 +1,28 @@
+/* GENERATED from src/icons/ by scripts/build.js — do not edit.
+ * Only icons painted onto a pseudo-element land here; the rest ship in dist/sprite.svg. */
+@layer bleed.tokens {
+  :root {
+    --icon-chevron-down: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' version='1.1' viewBox='0 0 16 16' width='16' height='16' fill='none' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5'%3E %3Cpath d='m3.75 5.75 4.25 4.5 4.25-4.5'/%3E %3C/svg%3E");
+  }
+}
+
+@layer bleed.components {
+  .icon {
+    display: inline-block;
+    flex: none;
+    inline-size: 1em;
+    block-size: 1em;
+  }
+}
 /* Alert banner — persistent inline message. Use role="alert" for urgent/assertive
  * content, role="status" for informational.
  *   <div class="alert alert--solid" role="alert">
- *     <span class="alert__icon" aria-hidden="true">▲</span>
+ *     <svg class="alert__icon icon" aria-hidden="true"><use href="#icon-info"/></svg>
  *     <div><p class="alert__title">Margin call</p>
  *       <p class="alert__text">Deposit by 16:00 EST.</p></div>
- *     <button class="btn btn--icon btn--sm" aria-label="Dismiss">✕</button>
+ *     <button class="alert__close btn btn--icon btn--sm" aria-label="Dismiss">
+ *       <svg class="icon" aria-hidden="true"><use href="#icon-cross"/></svg>
+ *     </button>
  *   </div>
  * Outlined on paper by default; add alert--solid to fill instead. Text
  * always present. */
@@ -26,8 +44,9 @@
   }
 
   .alert__icon {
-    font-size: var(--font-size-3);
-    line-height: var(--line-height-tight);
+    inline-size: calc(var(--space-4) + var(--space-1));
+    block-size: calc(var(--space-4) + var(--space-1));
+    margin-block-start: 1px; /* px-ok: optical alignment */
     color: currentColor;
   }
 
@@ -215,7 +234,7 @@
     font-size: var(--font-size-2);
   }
 
-  /* --- icon-only: square, centres a glyph/SVG ----------------------------- */
+  /* --- icon-only: square, centres an .icon (or a raw SVG) ----------------- */
   .btn--icon {
     padding: var(--space-2);
     min-block-size: calc(var(--space-6) + var(--space-3));
@@ -232,14 +251,10 @@
     min-block-size: calc(var(--space-8) + var(--space-1));
     inline-size: calc(var(--space-8) + var(--space-1));
   }
-  .btn--icon > svg {
+  .btn--icon > :is(svg, .icon),
+  .btn__icon {
     inline-size: calc(var(--space-4) + var(--space-1));
     block-size: calc(var(--space-4) + var(--space-1));
-  }
-
-  .btn__icon {
-    font-size: var(--font-size-3);
-    line-height: var(--line-height-tight);
   }
 
   .btn--full {
@@ -560,7 +575,8 @@
     gap: var(--space-3);
   }
 }
-/* Empty state — <div class="empty"> with an optional icon, title, text, action. */
+/* Empty state — <div class="empty"> with an optional icon, title, text, action.
+ *   <svg class="empty__icon icon" aria-hidden="true"><use href="#icon-inbox"/></svg> */
 
 @layer bleed.components {
   .empty {
@@ -578,8 +594,8 @@
   }
 
   .empty__icon {
-    font-size: var(--font-size-6);
-    line-height: var(--line-height-tight);
+    inline-size: var(--space-6);
+    block-size: var(--space-6);
   }
 
   .empty__title {
@@ -764,14 +780,17 @@
    * treatment, and the gradient is switched off.
    *   <select class="input">…</select> */
   select.input {
+    --_chevron-arm: 5px;
+
     appearance: none;
+    align-items: center;
     cursor: pointer;
     padding-inline-end: var(--space-4);
     background-image: linear-gradient(45deg, transparent 50%, var(--ink) 50%), linear-gradient(135deg, var(--ink) 50%, transparent 50%);
     background-position:
-      calc(100% - var(--space-4) - 5px) center,
+      calc(100% - var(--space-4) - var(--_chevron-arm)) center,
       calc(100% - var(--space-4)) center;
-    background-size: 5px 5px;
+    background-size: var(--_chevron-arm) var(--_chevron-arm);
     background-repeat: no-repeat;
   }
 
@@ -781,9 +800,11 @@
       background-image: none;
     }
     select.input::picker-icon {
-      content: "⏷";
-      color: var(--ink);
-      font-size: var(--font-size-1);
+      content: "";
+      inline-size: calc(var(--space-4) + var(--space-1));
+      block-size: calc(var(--space-4) + var(--space-1));
+      background-color: var(--ink);
+      mask: var(--icon-chevron-down) center / contain no-repeat;
     }
   }
 
@@ -909,8 +930,10 @@
  *   <dialog class="modal">
  *     <form method="dialog" class="modal__wrap">
  *       <header class="modal__header"><h2 class="modal__title">…</h2>
- *         <button class="modal__close btn btn--icon btn--sm" data-close-modal
- *                 aria-label="Close">✕</button></header>
+ *         <button class="modal__close btn btn--icon btn--sm" data-close-modal aria-label="Close">
+ *           <svg class="icon" aria-hidden="true"><use href="#icon-cross"/></svg>
+ *         </button>
+ *       </header>
  *       <div class="modal__body">…</div>
  *       <footer class="modal__footer"><button class="btn">Confirm</button></footer>
  *     </form>
@@ -1039,9 +1062,10 @@
   }
 }
 /* Popover / dropdown menu — the popover attribute (zero JS for open/close/light-
- * dismiss) + CSS anchor positioning. Primary use: a row "⋯" actions menu.
- *   <button class="btn btn--icon" popovertarget="row-menu"
- *           style="anchor-name:--row1">⋯</button>
+ * dismiss) + CSS anchor positioning. Primary use: a row actions menu.
+ *   <button class="btn btn--icon" popovertarget="row-menu" aria-label="Row actions"
+ *           style="anchor-name:--row1">
+ *     <svg class="icon" aria-hidden="true"><use href="#icon-menu-meatball"/></svg></button>
  *   <div id="row-menu" popover class="menu" style="position-anchor:--row1">
  *     <button class="menu__item">Edit</button>
  *     <button class="menu__item">Duplicate</button>
@@ -1198,7 +1222,7 @@
  *
  * Tabs (standard) — .tabs__list[role=tablist] + .tabs__tab, with
  *   <section role="tabpanel">…</section> panels (add hidden to inactive ones).
- *   A tab may lead with .tabs__icon (glyph or SVG, aria-hidden). */
+ *   A tab may lead with .tabs__icon (an .icon or any raw SVG, aria-hidden). */
 
 @layer bleed.components {
   /* --- segmented ---------------------------------------------------------- */
@@ -1288,8 +1312,8 @@
       padding-block-end var(--transition);
   }
   .tabs__icon {
-    font-size: var(--font-size-3);
-    line-height: var(--line-height-tight);
+    inline-size: calc(var(--space-4) + var(--space-1));
+    block-size: calc(var(--space-4) + var(--space-1));
   }
 
   .tabs__tab:not([aria-selected="true"]):hover {
@@ -1330,7 +1354,8 @@
 /* Toast — transient status. Each toast is an <output role="status"> (polite live
  * region) inside a fixed region; runtime.js appends one and auto-removes it.
  *   <div class="toast-region" id="toasts"></div>
- *   bleed.toast('Trade executed', { title: 'Filled', icon: '✓', solid: true })
+ *   bleed.toast('Trade executed', { title: 'Filled', icon: 'tick', solid: true })
+ * `icon` names a file in src/icons/, rendered as a #icon-<name> sprite reference.
  * Outlined on paper by default; add toast--solid to fill instead. Title
  * optional, message always present — mirrors the alert banner. */
 
@@ -1378,8 +1403,9 @@
   }
 
   .toast__icon {
-    font-size: var(--font-size-3);
-    line-height: var(--line-height-tight);
+    inline-size: calc(var(--space-4) + var(--space-1));
+    block-size: calc(var(--space-4) + var(--space-1));
+    margin-block-start: 1px; /* px-ok: optical alignment */
     color: currentColor;
   }
 
@@ -1527,18 +1553,26 @@
   .bar-chart .bar__fill--warning  { --bar-color: var(--warning); }
   .bar-chart .bar__fill--accent   { --bar-color: var(--accent); }
 }
-/* Delta indicator — <data class="delta" value="0.042" data-trend="up">4.2%</data>.
+/* Delta indicator:
+ *   <data class="delta delta--up" value="0.042">
+ *     <svg class="icon" aria-hidden="true"><use href="#icon-arrow-up"/></svg>4.2%</data>
  *
- * Direction is encoded THREE ways: a ▲/▼ glyph (::before), font weight, AND color.
- * Never color alone — colour-blind and grayscale-print safe, and the reason the
- * palette-constrained bleed mapping (positive→ink, negative→accent) is acceptable. */
+ * Direction is encoded THREE ways: an arrow icon, font weight, AND color. Never color
+ * alone — colour-blind and grayscale-print safe, and the reason the palette-constrained
+ * bleed mapping (positive→ink, negative→accent) is acceptable. Flat takes #icon-minus,
+ * which reads as "unchanged" without direction.
+ *
+ * The arrow is a sprite <use> rather than a glyph or a background image so it stays
+ * currentColor and keeps tracking --_tone. It is markup, not a ::before, because a
+ * pseudo-element can't host a <use> — which does mean the arrow and the modifier are
+ * the author's to keep in agreement. */
 
 @layer bleed.components {
   .delta {
     --_tone: var(--neutral);
 
     display: inline-flex;
-    align-items: baseline;
+    align-items: center;
     gap: var(--space-1);
 
     font-variant-numeric: tabular-nums;
@@ -1547,28 +1581,20 @@
     color: var(--_tone);
   }
 
-  .delta::before {
-    content: "•"; /* flat / neutral */
-    font-size: 0.9em;
-    line-height: var(--line-height-tight);
+  /* slightly under the cap height, so the arrow sits with the digits rather than over them */
+  .delta > .icon {
+    inline-size: 0.9em;
+    block-size: 0.9em;
   }
 
   .delta--up,
   .delta[data-trend="up"] {
     --_tone: var(--positive);
   }
-  .delta--up::before,
-  .delta[data-trend="up"]::before {
-    content: "▲";
-  }
 
   .delta--down,
   .delta[data-trend="down"] {
     --_tone: var(--negative);
-  }
-  .delta--down::before,
-  .delta[data-trend="down"]::before {
-    content: "▼";
   }
 
   /* solid pill form for use inside dense tables */

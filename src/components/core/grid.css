@@ -10,12 +10,15 @@
 @layer bleed.components {
   .grid {
     --_min: var(--grid-min, 24rem);
+    /* --grid-gap sets both axes; --grid-row-gap / --grid-col-gap override it per axis */
+    --_gap: var(--grid-gap, var(--space-4));
 
     container-type: inline-size;
     display: grid;
     /* min() keeps a track from overflowing a container narrower than --_min */
     grid-template-columns: repeat(auto-fit, minmax(min(var(--_min), 100%), 1fr));
-    gap: var(--grid-gap, var(--space-4));
+    row-gap: var(--grid-row-gap, var(--_gap));
+    column-gap: var(--grid-col-gap, var(--_gap));
     align-items: start;
   }
 

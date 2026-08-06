@@ -99,7 +99,7 @@
     font-size: var(--font-size-2);
   }
 
-  /* --- icon-only: square, centres a glyph/SVG ----------------------------- */
+  /* --- icon-only: square, centres an .icon (or a raw SVG) ----------------- */
   .btn--icon {
     padding: var(--space-2);
     min-block-size: calc(var(--space-6) + var(--space-3));
@@ -116,14 +116,10 @@
     min-block-size: calc(var(--space-8) + var(--space-1));
     inline-size: calc(var(--space-8) + var(--space-1));
   }
-  .btn--icon > svg {
+  .btn--icon > :is(svg, .icon),
+  .btn__icon {
     inline-size: calc(var(--space-4) + var(--space-1));
     block-size: calc(var(--space-4) + var(--space-1));
-  }
-
-  .btn__icon {
-    font-size: var(--font-size-3);
-    line-height: var(--line-height-tight);
   }
 
   .btn--full {

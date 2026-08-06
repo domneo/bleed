@@ -1,10 +1,12 @@
 /* Alert banner — persistent inline message. Use role="alert" for urgent/assertive
  * content, role="status" for informational.
  *   <div class="alert alert--solid" role="alert">
- *     <span class="alert__icon" aria-hidden="true">▲</span>
+ *     <svg class="alert__icon icon" aria-hidden="true"><use href="#icon-info"/></svg>
  *     <div><p class="alert__title">Margin call</p>
  *       <p class="alert__text">Deposit by 16:00 EST.</p></div>
- *     <button class="btn btn--icon btn--sm" aria-label="Dismiss">✕</button>
+ *     <button class="alert__close btn btn--icon btn--sm" aria-label="Dismiss">
+ *       <svg class="icon" aria-hidden="true"><use href="#icon-cross"/></svg>
+ *     </button>
  *   </div>
  * Outlined on paper by default; add alert--solid to fill instead. Text
  * always present. */
@@ -26,8 +28,9 @@
   }
 
   .alert__icon {
-    font-size: var(--font-size-3);
-    line-height: var(--line-height-tight);
+    inline-size: calc(var(--space-4) + var(--space-1));
+    block-size: calc(var(--space-4) + var(--space-1));
+    margin-block-start: 1px; /* px-ok: optical alignment */
     color: currentColor;
   }
 

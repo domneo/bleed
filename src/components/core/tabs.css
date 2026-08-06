@@ -9,7 +9,7 @@
  *
  * Tabs (standard) — .tabs__list[role=tablist] + .tabs__tab, with
  *   <section role="tabpanel">…</section> panels (add hidden to inactive ones).
- *   A tab may lead with .tabs__icon (glyph or SVG, aria-hidden). */
+ *   A tab may lead with .tabs__icon (an .icon or any raw SVG, aria-hidden). */
 
 @layer bleed.components {
   /* --- segmented ---------------------------------------------------------- */
@@ -99,8 +99,8 @@
       padding-block-end var(--transition);
   }
   .tabs__icon {
-    font-size: var(--font-size-3);
-    line-height: var(--line-height-tight);
+    inline-size: calc(var(--space-4) + var(--space-1));
+    block-size: calc(var(--space-4) + var(--space-1));
   }
 
   .tabs__tab:not([aria-selected="true"]):hover {

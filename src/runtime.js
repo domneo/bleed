@@ -70,7 +70,12 @@
   }, true);
 
   // --- 3. Toasts -------------------------------------------------------------
+  // `icon` is an icon name from src/icons/ (e.g. 'tick'), not a glyph — it becomes a
+  // #icon-<name> sprite reference, so the sprite has to be in the document or the icon
+  // renders empty. Restricted to [a-z0-9-] so a caller-supplied name can never break out
+  // of the href attribute; anything else is dropped.
   function toast(message, { title = '', icon = '', solid = false, timeout = 4000, region = 'toasts' } = {}) {
+    const iconName = /^[a-z0-9-]+$/.test(icon) ? icon : '';
     let host = document.getElementById(region);
     if (!host) {
       host = document.createElement('div');
@@ -82,12 +87,13 @@
     el.className = 'toast' + (solid ? ' toast--solid' : '');
     el.setAttribute('role', 'status');
     el.innerHTML =
-      (icon ? `<span class="toast__icon" aria-hidden="true">${icon}</span>` : '') +
+      (iconName ? `<svg class="toast__icon icon" aria-hidden="true"><use href="#icon-${iconName}"/></svg>` : '') +
       '<div>' +
         (title ? '<p class="toast__title"></p>' : '') +
         '<p class="toast__msg"></p>' +
       '</div>' +
-      '<button class="toast__close btn btn--icon btn--sm" type="button" aria-label="Dismiss">✕</button>';
+      '<button class="toast__close btn btn--icon btn--sm" type="button" aria-label="Dismiss">' +
+        '<svg class="icon" aria-hidden="true"><use href="#icon-cross"/></svg></button>';
     if (title) el.querySelector('.toast__title').textContent = title;
     el.querySelector('.toast__msg').textContent = message;
 
