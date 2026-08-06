@@ -21,7 +21,6 @@
     background-color: var(--paper);
     border: var(--border-w) var(--border-style) var(--ink);
     border-radius: var(--radius);
-    box-shadow: var(--shadow);
   }
 
   .stat__label {

@@ -223,7 +223,15 @@
             <p class="alert__title">With close button</p>
             <p class="alert__text">Insufficient buying power for 200 shares of TSLA.</p>
           </div>
-          <button class="alert__close" type="button" aria-label="Dismiss" onclick="this.parentElement.remove()">✕</button>
+          <button class="alert__close btn btn--icon btn--sm" type="button" aria-label="Dismiss" onclick="this.parentElement.remove()">✕</button>
+        </div>
+        <div class="alert alert--solid" role="alert">
+          <span class="alert__icon" aria-hidden="true">ℹ</span>
+          <div>
+            <p class="alert__title">Solid with close button</p>
+            <p class="alert__text">Insufficient buying power for 200 shares of TSLA.</p>
+          </div>
+          <button class="alert__close btn btn--icon btn--sm" type="button" aria-label="Dismiss" onclick="this.parentElement.remove()">✕</button>
         </div>
       </div>
     </section>
@@ -695,7 +703,7 @@
         <form method="dialog" class="modal__wrap">
           <header class="modal__header">
             <h2 class="modal__title">Short body, no footer</h2>
-            <button class="btn btn--icon btn--sm" type="button" data-close-modal aria-label="Close">✕</button>
+            <button class="modal__close btn btn--icon btn--sm" type="button" data-close-modal aria-label="Close">✕</button>
           </header>
           <div class="modal__body">
             <p>Nothing to confirm, so the footer is dropped entirely. Esc or the ✕ closes it.</p>
@@ -708,7 +716,7 @@
         <form method="dialog" class="modal__wrap">
           <header class="modal__header">
             <h2 class="modal__title">Form with footer actions</h2>
-            <button class="btn btn--icon btn--sm" type="button" data-close-modal aria-label="Close">✕</button>
+            <button class="modal__close btn btn--icon btn--sm" type="button" data-close-modal aria-label="Close">✕</button>
           </header>
           <div class="modal__body">
             <div class="field">
@@ -731,7 +739,7 @@
             <h2 class="modal__title">Long body that scrolls</h2>
           </header>
           <div class="modal__body">
-            <div class="alert" role="status" style="margin-block-end: var(--space-5)">
+            <div class="alert" role="status" style="margin-block-end: var(--space-3)">
               <span class="alert__icon" aria-hidden="true">ℹ</span>
               <div><p class="alert__text">You must hit Accept or Decline.</p></div>
             </div>

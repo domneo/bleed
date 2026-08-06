@@ -83,13 +83,18 @@ Available themes:
 
 ### Interaction
 
-Every pressable element (button, interactive card, tab, nav link) presses the same way, entirely through tokens:
+The shadow marks interactivity: it is carried by every element you can operate — button, input, select, checkbox, radio, range, tab, segmented control, interactive card — and by nothing else. Static surfaces (plain card, stat, alert, modal, menu, tooltip, toast, tab panel) are flat, bordered paper.
 
-| state     | motion                           | shadow            |
-| --------- | -------------------------------- | ----------------- |
-| rest      | —                                | `--shadow`        |
-| `:hover`  | `translate` by `--hover-shift-*` | `--shadow-hover`  |
-| `:active` | `translate` ×2                   | `--shadow-active` |
+Pressable elements press the same way, entirely through tokens:
+
+| state       | motion                           | shadow            |
+| ----------- | -------------------------------- | ----------------- |
+| rest        | —                                | `--shadow`        |
+| `:hover`    | `translate` by `--hover-shift-*` | `--shadow-hover`  |
+| `:active`   | `translate` ×2                   | `--shadow-active` |
+| `:disabled` | —                                | `--shadow-active` |
+
+Form controls (input, select, textarea, checkbox, radio, range) run the same contract, with `:focus` standing in for `:hover` — focus moves the control into its shadow, `:active` presses it the rest of the way. In `.segmented` and `.input-group`, the press belongs to the group, so focusing any control inside moves the entire group together rather than on its own.
 
 ### `@property`
 

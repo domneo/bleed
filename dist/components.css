@@ -4,7 +4,7 @@
  *     <span class="alert__icon" aria-hidden="true">▲</span>
  *     <div><p class="alert__title">Margin call</p>
  *       <p class="alert__text">Deposit by 16:00 EST.</p></div>
- *     <button class="alert__close" aria-label="Dismiss">✕</button>
+ *     <button class="btn btn--icon btn--sm" aria-label="Dismiss">✕</button>
  *   </div>
  * Outlined on paper by default; add alert--solid to fill instead. Text
  * always present. */
@@ -42,21 +42,26 @@
     font-size: var(--font-size-1);
   }
 
+  /* Close is a plain .btn (btn--icon btn--sm) — the alert only pushes it to the
+   * end; everything else about it is the button contract. */
   .alert__close {
     margin-inline-start: auto;
-    appearance: none;
-    border: none;
-    background: transparent;
-    color: inherit;
-    cursor: pointer;
-    font-size: var(--font-size-3);
-    line-height: var(--line-height-tight);
+    margin-block-start: calc(-1 * var(--space-1));
   }
 
   /* fill — solid replaces the outlined-on-paper default */
   .alert--solid {
     --alert-bg: var(--_border);
     --alert-fg: var(--paper);
+    /* the close button now sits ON the fill, where its ink border and ink
+     * shadow would disappear — flip both to paper. The shadow has to be restated
+     * rather than recoloured: --shadow already substituted its var(--ink) back
+     * at :root, so remapping ink here would not reach it. */
+    --btn-fg: var(--paper);
+    --btn-border: var(--paper);
+    --btn-shadow: var(--space-1) var(--space-1) 0 var(--paper);
+    --btn-shadow-hover: calc(var(--space-1) / 2) calc(var(--space-1) / 2) 0 var(--paper);
+    --btn-shadow-active: 0 0 0 var(--paper);
   }
 }
 /* Badge / Tag — <span class="badge">. Tone sets border + text color and is
@@ -112,9 +117,10 @@
 /* Button — <button class="btn"> (also fine on <a>/<input type=submit>).
  *
  * Interaction contract (shared by every pressable component: btn, interactive card,
- * tab, nav link). All of it is token-driven so a theme can change OR remove it:
+ * tab, nav link). The rest shadow is the interactivity signal across the whole kit —
+ * static surfaces carry none. All of it is token-driven so a theme can change OR remove it:
  *   rest    → box-shadow: --shadow
- *   :hover  → translate by --hover-shift-*, box-shadow: --shadow-hover
+ *   :hover / :focus-visible → translate by --hover-shift-*, box-shadow: --shadow-hover
  *   :active → translate 2×,               box-shadow: --shadow-active
  * Bleed moves the element INTO its offset shadow (press). Soft sets --hover-shift 0
  * and swaps blur via the shadow tokens (lift), proving the motion lives in tokens.
@@ -161,7 +167,11 @@
       color var(--transition);
   }
 
-  .btn:hover {
+  /* Keyboard focus is the pointer-free equivalent of hover, so it lands on the
+   * same beat. :focus-visible, not :focus — a mouse click focuses the button too,
+   * and plain :focus would leave it stuck mid-press once the pointer moves away. */
+  .btn:hover,
+  .btn:focus-visible {
     translate: var(--hover-shift-x) var(--hover-shift-y);
     box-shadow: var(--_shadow-hover);
   }
@@ -266,7 +276,6 @@
     background-color: var(--_bg);
     border: var(--border-w) var(--border-style) var(--_bd);
     border-radius: var(--radius);
-    box-shadow: var(--_shadow);
   }
 
   /* simple card: content sits directly inside with padding */
@@ -309,14 +318,20 @@
     border-block-start: var(--border-w) var(--border-style) var(--_bd);
   }
 
-  /* interactive card (wrap in <a>/<button> or add role) — same press contract */
+  /* interactive card (wrap in <a>/<button> or add role) — same press contract.
+   * The shadow lives here, not on .card: a plain card is a flat surface, the
+   * shadow is what marks the card as pressable. */
   .card--interactive {
     cursor: pointer;
+    box-shadow: var(--_shadow);
     transition:
       translate var(--transition),
       box-shadow var(--transition);
   }
-  .card--interactive:hover {
+  /* keyboard focus rides the same beat as hover — see .btn for why it is
+   * :focus-visible and not :focus */
+  .card--interactive:hover,
+  .card--interactive:focus-visible {
     translate: var(--hover-shift-x) var(--hover-shift-y);
     box-shadow: var(--shadow-hover);
   }
@@ -338,6 +353,8 @@
 
 @layer bleed.components {
   .control {
+    --_control-w: calc((var(--space-6) - var(--space-5)) / 2 + var(--space-5));
+    --_control-h: calc((var(--space-6) - var(--space-5)) / 2 + var(--space-5));
     display: inline-flex;
     align-items: center;
     gap: var(--space-2);
@@ -349,13 +366,29 @@
   .field input[type="checkbox"],
   .field input[type="radio"] {
     appearance: none;
-    inline-size: var(--space-5);
-    block-size: var(--space-5);
+    inline-size: var(--_control-w);
+    block-size: var(--_control-h);
     margin: 0;
     background-color: var(--paper);
     background-repeat: no-repeat;
     border: var(--border-w) var(--border-style) var(--ink);
+    box-shadow: var(--shadow);
     cursor: pointer;
+    transition:
+      translate var(--transition),
+      box-shadow var(--transition);
+  }
+
+  /* focus/press — the .btn contract, same as .input */
+  .control :is(input[type="checkbox"], input[type="radio"]):focus,
+  .field :is(input[type="checkbox"], input[type="radio"]):focus {
+    translate: var(--hover-shift-x) var(--hover-shift-y);
+    box-shadow: var(--shadow-hover);
+  }
+  .control :is(input[type="checkbox"], input[type="radio"]):active,
+  .field :is(input[type="checkbox"], input[type="radio"]):active {
+    translate: calc(var(--hover-shift-x) * 2) calc(var(--hover-shift-y) * 2);
+    box-shadow: var(--shadow-active);
   }
 
   /* checkbox: square box, X drawn corner-to-corner. Each diagonal is a stripe
@@ -405,16 +438,18 @@
 
   .control input[type="radio"]:checked,
   .field input[type="radio"]:checked {
-    background-image: radial-gradient(
-      circle calc(var(--space-5) / 2 - var(--border-w) - var(--space-1) / 2) at center,
-      var(--ink) 98%,
-      transparent 100%
-    );
+    background-image: radial-gradient(circle calc(var(--_control-w) / 2 - var(--border-w) * 2) at center, var(--ink) 98%, transparent 100%);
   }
 
   .control:has(:disabled) {
     opacity: 0.5;
     cursor: not-allowed;
+  }
+  /* disabled drops to the pressed shadow, matching .btn:disabled */
+  .control :is(input[type="checkbox"], input[type="radio"]):disabled,
+  .field :is(input[type="checkbox"], input[type="radio"]):disabled {
+    box-shadow: var(--shadow-active);
+    translate: none;
   }
 
   /* range: the thumb is sized to sit inside the track's border with a gap on every
@@ -423,8 +458,8 @@
    * content-box top, hence the matching margin; Firefox centres it. */
   .range,
   .field input[type="range"] {
-    --range-track-h: var(--space-5);
-    --range-thumb-gap: calc(var(--space-1) / 2);
+    --range-track-h: calc((var(--space-6) - var(--space-5)) / 2 + var(--space-5));
+    --range-thumb-gap: var(--border-w);
     --range-thumb-size: calc(var(--range-track-h) - 2 * var(--border-w) - 2 * var(--range-thumb-gap));
 
     appearance: none;
@@ -433,6 +468,23 @@
     margin: 0;
     background-color: transparent;
     cursor: pointer;
+    transition: translate var(--transition);
+  }
+
+  /* The press is split across two elements: the translate has to sit on the input
+   * (the whole control moves, thumb included), while the shadow belongs to the
+   * track pseudo that actually draws the box. */
+  .range:focus,
+  .field input[type="range"]:focus {
+    translate: var(--hover-shift-x) var(--hover-shift-y);
+  }
+  .range:active,
+  .field input[type="range"]:active {
+    translate: calc(var(--hover-shift-x) * 2) calc(var(--hover-shift-y) * 2);
+  }
+  .range:disabled,
+  .field input[type="range"]:disabled {
+    translate: none;
   }
 
   .range::-webkit-slider-runnable-track,
@@ -442,6 +494,20 @@
     background-color: var(--paper);
     border: var(--border-w) var(--border-style) var(--ink);
     border-radius: 0;
+    box-shadow: var(--shadow);
+    transition: box-shadow var(--transition);
+  }
+  .range:focus::-webkit-slider-runnable-track,
+  .field input[type="range"]:focus::-webkit-slider-runnable-track {
+    box-shadow: var(--shadow-hover);
+  }
+  .range:active::-webkit-slider-runnable-track,
+  .field input[type="range"]:active::-webkit-slider-runnable-track {
+    box-shadow: var(--shadow-active);
+  }
+  .range:disabled::-webkit-slider-runnable-track,
+  .field input[type="range"]:disabled::-webkit-slider-runnable-track {
+    box-shadow: var(--shadow-active);
   }
 
   .range::-moz-range-track,
@@ -451,6 +517,20 @@
     background-color: var(--paper);
     border: var(--border-w) var(--border-style) var(--ink);
     border-radius: 0;
+    box-shadow: var(--shadow);
+    transition: box-shadow var(--transition);
+  }
+  .range:focus::-moz-range-track,
+  .field input[type="range"]:focus::-moz-range-track {
+    box-shadow: var(--shadow-hover);
+  }
+  .range:active::-moz-range-track,
+  .field input[type="range"]:active::-moz-range-track {
+    box-shadow: var(--shadow-active);
+  }
+  .range:disabled::-moz-range-track,
+  .field input[type="range"]:disabled::-moz-range-track {
+    box-shadow: var(--shadow-active);
   }
 
   .range::-webkit-slider-thumb,
@@ -566,15 +646,26 @@
     margin-block-end: var(--space-2);
   }
 
-  .field__hint {
+  /* The control's shadow is painted outside its border box, so text sitting one
+   * `gap` below the box only clears the shadow by `gap - shadow-offset`. Hint and
+   * error add that offset back, restoring a full gap below the shadow itself. */
+  .field__hint,
+  .field__error {
+    margin-block-start: var(--space-1);
     font-size: var(--font-size-1);
     line-height: var(--line-height-snug);
+  }
+  /* …but only to clear a control. Text casts no shadow, so a hint and an error
+   * stacked together are already a full gap apart. */
+  :is(.field__hint, .field__error) + :is(.field__hint, .field__error) {
+    margin-block-start: 0;
+  }
+
+  .field__hint {
     color: var(--neutral-strong);
   }
 
   .field__error {
-    font-size: var(--font-size-1);
-    line-height: var(--line-height-snug);
     color: var(--negative-strong);
   }
   /* Error is hidden until the control is invalid post-interaction (:user-invalid),
@@ -598,6 +689,19 @@
     --neutral-subtle: var(--negative-subtle);
   }
 
+  /* The shadow does NOT follow that remap: a custom property substitutes its own
+   * var()s where it is declared, so --shadow baked in the theme's --ink back at
+   * :root and children inherit the finished value. Recolouring it means restating
+   * the triple — on the field (so .input-group, which casts the shadow for an
+   * adorned control, picks it up) and on a bare .input outside any .field. */
+  .field:has(:user-invalid),
+  .field:has([aria-invalid="true"]),
+  .input:is(:user-invalid, [aria-invalid="true"]) {
+    --shadow: var(--space-1) var(--space-1) 0 var(--negative-strong);
+    --shadow-hover: calc(var(--space-1) / 2) calc(var(--space-1) / 2) 0 var(--negative-strong);
+    --shadow-active: 0 0 0 var(--negative-strong);
+  }
+
   /* --- text-like controls ------------------------------------------------- */
   .input,
   .field :is(input, textarea):not([type="checkbox"], [type="radio"], [type="range"]) {
@@ -608,7 +712,11 @@
     background-color: var(--paper);
     border: var(--border-w) var(--border-style) var(--ink);
     border-radius: var(--radius);
-    transition: border-color var(--transition);
+    box-shadow: var(--shadow);
+    transition:
+      border-color var(--transition),
+      translate var(--transition),
+      box-shadow var(--transition);
   }
 
   .input::placeholder,
@@ -621,16 +729,30 @@
     resize: vertical;
   }
 
+  /* focus/press — the .btn contract, with :focus standing in for :hover: focus
+   * moves the control into its shadow, :active presses it the rest of the way. */
+  :is(.input, .field input, .field textarea):focus {
+    translate: var(--hover-shift-x) var(--hover-shift-y);
+    box-shadow: var(--shadow-hover);
+  }
+  :is(.input, .field input, .field textarea):active {
+    translate: calc(var(--hover-shift-x) * 2) calc(var(--hover-shift-y) * 2);
+    box-shadow: var(--shadow-active);
+  }
+
   :is(.input, .field input, .field textarea):user-invalid,
   :is(.input, .field input, .field textarea)[aria-invalid="true"] {
     border-color: var(--negative-strong);
     background-color: var(--negative-subtle);
   }
 
+  /* disabled drops to the pressed shadow, matching .btn:disabled */
   :is(.input, .field input, .field textarea):disabled {
     opacity: 0.5;
     cursor: not-allowed;
     background-color: var(--neutral-subtle);
+    box-shadow: var(--shadow-active);
+    translate: none;
   }
 
   /* Custom select — no wrapper. appearance:none + a two-tone linear-gradient
@@ -675,15 +797,41 @@
     opacity: 0.5;
     cursor: not-allowed;
     background-color: var(--neutral-subtle);
+    box-shadow: var(--shadow-active);
+    translate: none;
   }
 
   /* Input adornments. Leading and/or trailing addons flank the control:
    *   <div class="input-group"><span class="input-group__addon">$</span><input class="input"></div>
    *   <div class="input-group"><input class="input"><span class="input-group__addon input-group__addon--trailing">USD</span></div> */
+  /* The joined control + addon(s) cast one shadow as a unit — a shadow on the
+   * input alone would fall across the addon it is butted up against. */
   .input-group {
     display: flex;
     align-items: stretch;
     min-inline-size: 0;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    transition:
+      translate var(--transition),
+      box-shadow var(--transition);
+  }
+  /* the group owns the press, so focusing any control inside moves the whole
+   * unit — control plus addons — instead of sliding the input off its addon */
+  .input-group:has(.input:focus) {
+    translate: var(--hover-shift-x) var(--hover-shift-y);
+    box-shadow: var(--shadow-hover);
+  }
+  .input-group:has(.input:active) {
+    translate: calc(var(--hover-shift-x) * 2) calc(var(--hover-shift-y) * 2);
+    box-shadow: var(--shadow-active);
+  }
+  /* the inner control stays put and casts nothing — stated for the focus/press
+   * states too, so it never depends on source order */
+  .input-group .input,
+  .input-group .input:is(:focus, :active) {
+    translate: none;
+    box-shadow: none;
   }
   .input-group > .input {
     inline-size: 100%;
@@ -761,7 +909,8 @@
  *   <dialog class="modal">
  *     <form method="dialog" class="modal__wrap">
  *       <header class="modal__header"><h2 class="modal__title">…</h2>
- *         <button class="btn btn--icon btn--ghost" data-close-modal>✕</button></header>
+ *         <button class="modal__close btn btn--icon btn--sm" data-close-modal
+ *                 aria-label="Close">✕</button></header>
  *       <div class="modal__body">…</div>
  *       <footer class="modal__footer"><button class="btn">Confirm</button></footer>
  *     </form>
@@ -781,7 +930,6 @@
     background-color: var(--paper);
     border: var(--border-w) var(--border-style) var(--ink);
     border-radius: var(--radius);
-    box-shadow: var(--shadow);
 
     opacity: 0;
     translate: 0 var(--space-3);
@@ -817,7 +965,7 @@
 
   .modal__header {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-between;
     gap: var(--space-3);
     padding: var(--space-4) var(--space-5);
@@ -830,7 +978,19 @@
     font-size: var(--font-size-3);
   }
 
+  /* Close is a plain .btn (btn--icon btn--sm) — the header only pushes it to the
+   * end and nudges it up onto the title's first line; everything else about it is
+   * the button contract. Identical to .alert__close and .toast__close. */
+  .modal__close {
+    margin-inline-start: auto;
+    margin-inline-end: calc(-1 * var(--space-2));
+    margin-block-start: calc(-1 * var(--space-1));
+  }
+
   .modal__body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
     block-size: auto;
     max-block-size: 85svh;
     padding: var(--space-5);
@@ -899,7 +1059,6 @@
     background-color: var(--paper);
     border: var(--border-w) var(--border-style) var(--ink);
     border-radius: var(--radius);
-    box-shadow: var(--shadow);
 
     /* anchored below the trigger, aligned to its inline-end, flipping if clipped */
     position: fixed;
@@ -1043,12 +1202,32 @@
 
 @layer bleed.components {
   /* --- segmented ---------------------------------------------------------- */
+  /* The shadow sits on the group, not the individual tabs — the segmented control
+   * reads as one pressable unit. No overflow:hidden: it would crop the focus outline. */
   .segmented {
+    /* the tabs sit inside the group's border, so their corner is one border-width
+     * tighter than the group's; floored at 0 for the square themes */
+    --_tab-radius: max(0px, calc(var(--radius) - var(--border-w)));
+
     width: fit-content;
     display: flex;
     border: var(--border-w) var(--border-style) var(--ink);
     border-radius: var(--radius);
-    overflow: hidden;
+    box-shadow: var(--shadow);
+    transition:
+      translate var(--transition),
+      box-shadow var(--transition);
+  }
+
+  /* The group is the pressable unit, so a tab's hover/press plays out on the whole
+   * segmented — the .btn contract one level up. */
+  .segmented:has(> [role="tab"]:is(:hover, :focus-visible)) {
+    translate: var(--hover-shift-x) var(--hover-shift-y);
+    box-shadow: var(--shadow-hover);
+  }
+  .segmented:has(> [role="tab"]:active) {
+    translate: calc(var(--hover-shift-x) * 2) calc(var(--hover-shift-y) * 2);
+    box-shadow: var(--shadow-active);
   }
 
   .segmented > [role="tab"] {
@@ -1064,11 +1243,18 @@
       background-color var(--transition),
       color var(--transition);
   }
+  /* A single tab matches both, so it rounds on all four corners. */
+  .segmented > [role="tab"]:first-child {
+    border-start-start-radius: var(--_tab-radius);
+    border-end-start-radius: var(--_tab-radius);
+  }
   .segmented > [role="tab"]:last-child {
     border-inline-end: none;
+    border-start-end-radius: var(--_tab-radius);
+    border-end-end-radius: var(--_tab-radius);
   }
   .segmented > [role="tab"]:hover {
-    background-color: color-mix(in oklch, var(--ink) 10%, var(--paper));
+    background-color: var(--neutral-subtle);
   }
   .segmented > [role="tab"][aria-selected="true"] {
     color: var(--paper);
@@ -1098,6 +1284,7 @@
     cursor: pointer;
     transition:
       margin-block-start var(--transition),
+      box-shadow var(--transition),
       padding-block-end var(--transition);
   }
   .tabs__icon {
@@ -1108,6 +1295,7 @@
   .tabs__tab:not([aria-selected="true"]):hover {
     color: var(--ink);
     border: var(--border-w) var(--border-style) var(--ink);
+    box-shadow: var(--shadow-hover);
     margin-block-start: calc(-1 * var(--space-2));
   }
   .tabs__tab[aria-selected="true"] {
@@ -1137,7 +1325,6 @@
     padding: var(--space-5);
     border: var(--border-w) var(--border-style) var(--ink);
     border-block-start: none;
-    box-shadow: var(--shadow);
   }
 }
 /* Toast — transient status. Each toast is an <output role="status"> (polite live
@@ -1170,18 +1357,24 @@
     background-color: var(--toast-bg, var(--paper));
     border: var(--border-w) var(--border-style) var(--ink);
     border-radius: var(--radius);
-    box-shadow: var(--toast-shadow, var(--shadow));
 
     /* entry; JS adds .toast--leaving to reverse before removal */
     animation: toast-in var(--transition) both;
   }
 
-  /* fill — solid replaces the outlined-on-paper default; shadow shifts to
-     --neutral so it stays visible against the ink fill (like .btn--solid) */
+  /* fill — solid replaces the outlined-on-paper default */
   .toast--solid {
     --toast-bg: var(--ink);
     --toast-fg: var(--paper);
-    --toast-shadow: var(--space-1) var(--space-1) 0 var(--neutral);
+    /* the dismiss button now sits ON the fill, where its ink border and ink
+     * shadow would disappear — flip both to paper. The shadow has to be restated
+     * rather than recoloured: --shadow already substituted its var(--ink) back
+     * at :root, so remapping ink here would not reach it. */
+    --btn-fg: var(--paper);
+    --btn-border: var(--paper);
+    --btn-shadow: var(--space-1) var(--space-1) 0 var(--paper);
+    --btn-shadow-hover: calc(var(--space-1) / 2) calc(var(--space-1) / 2) 0 var(--paper);
+    --btn-shadow-active: 0 0 0 var(--paper);
   }
 
   .toast__icon {
@@ -1201,15 +1394,12 @@
     font-size: var(--font-size-1);
   }
 
+  /* Close is a plain .btn (btn--icon btn--sm) — the toast only pushes it to the
+   * end and nudges it up onto the title's baseline, the way .alert__close does;
+   * everything else about it is the button contract. */
   .toast__close {
     margin-inline-start: auto;
-    appearance: none;
-    border: none;
-    background: transparent;
-    color: inherit;
-    cursor: pointer;
-    font-size: var(--font-size-3);
-    line-height: var(--line-height-tight);
+    margin-block-start: calc(-1 * var(--space-1));
   }
 
   .toast--leaving {
@@ -1258,7 +1448,6 @@
     background-color: var(--tooltip-bg, var(--paper));
     border: var(--border-w) var(--border-style) var(--ink);
     border-radius: var(--radius);
-    box-shadow: var(--tooltip-shadow, var(--shadow));
 
     /* opens above the anchor by default; override position-area inline to move it */
     position: fixed;
@@ -1272,12 +1461,10 @@
       display var(--transition) allow-discrete;
   }
 
-  /* fill — solid replaces the outlined-on-paper default; shadow shifts to
-     --neutral so it stays visible against the ink fill (like .toast--solid) */
+  /* fill — solid replaces the outlined-on-paper default */
   .tooltip--solid {
     --tooltip-bg: var(--ink);
     --tooltip-fg: var(--paper);
-    --tooltip-shadow: var(--space-1) var(--space-1) 0 var(--neutral);
   }
 
   .tooltip:popover-open {
@@ -1650,7 +1837,6 @@
     background-color: var(--paper);
     border: var(--border-w) var(--border-style) var(--ink);
     border-radius: var(--radius);
-    box-shadow: var(--shadow);
   }
 
   .stat__label {

@@ -20,7 +20,6 @@
     background-color: var(--_bg);
     border: var(--border-w) var(--border-style) var(--_bd);
     border-radius: var(--radius);
-    box-shadow: var(--_shadow);
   }
 
   /* simple card: content sits directly inside with padding */
@@ -63,14 +62,20 @@
     border-block-start: var(--border-w) var(--border-style) var(--_bd);
   }
 
-  /* interactive card (wrap in <a>/<button> or add role) — same press contract */
+  /* interactive card (wrap in <a>/<button> or add role) — same press contract.
+   * The shadow lives here, not on .card: a plain card is a flat surface, the
+   * shadow is what marks the card as pressable. */
   .card--interactive {
     cursor: pointer;
+    box-shadow: var(--_shadow);
     transition:
       translate var(--transition),
       box-shadow var(--transition);
   }
-  .card--interactive:hover {
+  /* keyboard focus rides the same beat as hover — see .btn for why it is
+   * :focus-visible and not :focus */
+  .card--interactive:hover,
+  .card--interactive:focus-visible {
     translate: var(--hover-shift-x) var(--hover-shift-y);
     box-shadow: var(--shadow-hover);
   }

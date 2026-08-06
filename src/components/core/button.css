@@ -1,9 +1,10 @@
 /* Button — <button class="btn"> (also fine on <a>/<input type=submit>).
  *
  * Interaction contract (shared by every pressable component: btn, interactive card,
- * tab, nav link). All of it is token-driven so a theme can change OR remove it:
+ * tab, nav link). The rest shadow is the interactivity signal across the whole kit —
+ * static surfaces carry none. All of it is token-driven so a theme can change OR remove it:
  *   rest    → box-shadow: --shadow
- *   :hover  → translate by --hover-shift-*, box-shadow: --shadow-hover
+ *   :hover / :focus-visible → translate by --hover-shift-*, box-shadow: --shadow-hover
  *   :active → translate 2×,               box-shadow: --shadow-active
  * Bleed moves the element INTO its offset shadow (press). Soft sets --hover-shift 0
  * and swaps blur via the shadow tokens (lift), proving the motion lives in tokens.
@@ -50,7 +51,11 @@
       color var(--transition);
   }
 
-  .btn:hover {
+  /* Keyboard focus is the pointer-free equivalent of hover, so it lands on the
+   * same beat. :focus-visible, not :focus — a mouse click focuses the button too,
+   * and plain :focus would leave it stuck mid-press once the pointer moves away. */
+  .btn:hover,
+  .btn:focus-visible {
     translate: var(--hover-shift-x) var(--hover-shift-y);
     box-shadow: var(--_shadow-hover);
   }

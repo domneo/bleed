@@ -11,6 +11,8 @@
 
 @layer bleed.components {
   .control {
+    --_control-w: calc((var(--space-6) - var(--space-5)) / 2 + var(--space-5));
+    --_control-h: calc((var(--space-6) - var(--space-5)) / 2 + var(--space-5));
     display: inline-flex;
     align-items: center;
     gap: var(--space-2);
@@ -22,13 +24,29 @@
   .field input[type="checkbox"],
   .field input[type="radio"] {
     appearance: none;
-    inline-size: var(--space-5);
-    block-size: var(--space-5);
+    inline-size: var(--_control-w);
+    block-size: var(--_control-h);
     margin: 0;
     background-color: var(--paper);
     background-repeat: no-repeat;
     border: var(--border-w) var(--border-style) var(--ink);
+    box-shadow: var(--shadow);
     cursor: pointer;
+    transition:
+      translate var(--transition),
+      box-shadow var(--transition);
+  }
+
+  /* focus/press — the .btn contract, same as .input */
+  .control :is(input[type="checkbox"], input[type="radio"]):focus,
+  .field :is(input[type="checkbox"], input[type="radio"]):focus {
+    translate: var(--hover-shift-x) var(--hover-shift-y);
+    box-shadow: var(--shadow-hover);
+  }
+  .control :is(input[type="checkbox"], input[type="radio"]):active,
+  .field :is(input[type="checkbox"], input[type="radio"]):active {
+    translate: calc(var(--hover-shift-x) * 2) calc(var(--hover-shift-y) * 2);
+    box-shadow: var(--shadow-active);
   }
 
   /* checkbox: square box, X drawn corner-to-corner. Each diagonal is a stripe
@@ -78,16 +96,18 @@
 
   .control input[type="radio"]:checked,
   .field input[type="radio"]:checked {
-    background-image: radial-gradient(
-      circle calc(var(--space-5) / 2 - var(--border-w) - var(--space-1) / 2) at center,
-      var(--ink) 98%,
-      transparent 100%
-    );
+    background-image: radial-gradient(circle calc(var(--_control-w) / 2 - var(--border-w) * 2) at center, var(--ink) 98%, transparent 100%);
   }
 
   .control:has(:disabled) {
     opacity: 0.5;
     cursor: not-allowed;
+  }
+  /* disabled drops to the pressed shadow, matching .btn:disabled */
+  .control :is(input[type="checkbox"], input[type="radio"]):disabled,
+  .field :is(input[type="checkbox"], input[type="radio"]):disabled {
+    box-shadow: var(--shadow-active);
+    translate: none;
   }
 
   /* range: the thumb is sized to sit inside the track's border with a gap on every
@@ -96,8 +116,8 @@
    * content-box top, hence the matching margin; Firefox centres it. */
   .range,
   .field input[type="range"] {
-    --range-track-h: var(--space-5);
-    --range-thumb-gap: calc(var(--space-1) / 2);
+    --range-track-h: calc((var(--space-6) - var(--space-5)) / 2 + var(--space-5));
+    --range-thumb-gap: var(--border-w);
     --range-thumb-size: calc(var(--range-track-h) - 2 * var(--border-w) - 2 * var(--range-thumb-gap));
 
     appearance: none;
@@ -106,6 +126,23 @@
     margin: 0;
     background-color: transparent;
     cursor: pointer;
+    transition: translate var(--transition);
+  }
+
+  /* The press is split across two elements: the translate has to sit on the input
+   * (the whole control moves, thumb included), while the shadow belongs to the
+   * track pseudo that actually draws the box. */
+  .range:focus,
+  .field input[type="range"]:focus {
+    translate: var(--hover-shift-x) var(--hover-shift-y);
+  }
+  .range:active,
+  .field input[type="range"]:active {
+    translate: calc(var(--hover-shift-x) * 2) calc(var(--hover-shift-y) * 2);
+  }
+  .range:disabled,
+  .field input[type="range"]:disabled {
+    translate: none;
   }
 
   .range::-webkit-slider-runnable-track,
@@ -115,6 +152,20 @@
     background-color: var(--paper);
     border: var(--border-w) var(--border-style) var(--ink);
     border-radius: 0;
+    box-shadow: var(--shadow);
+    transition: box-shadow var(--transition);
+  }
+  .range:focus::-webkit-slider-runnable-track,
+  .field input[type="range"]:focus::-webkit-slider-runnable-track {
+    box-shadow: var(--shadow-hover);
+  }
+  .range:active::-webkit-slider-runnable-track,
+  .field input[type="range"]:active::-webkit-slider-runnable-track {
+    box-shadow: var(--shadow-active);
+  }
+  .range:disabled::-webkit-slider-runnable-track,
+  .field input[type="range"]:disabled::-webkit-slider-runnable-track {
+    box-shadow: var(--shadow-active);
   }
 
   .range::-moz-range-track,
@@ -124,6 +175,20 @@
     background-color: var(--paper);
     border: var(--border-w) var(--border-style) var(--ink);
     border-radius: 0;
+    box-shadow: var(--shadow);
+    transition: box-shadow var(--transition);
+  }
+  .range:focus::-moz-range-track,
+  .field input[type="range"]:focus::-moz-range-track {
+    box-shadow: var(--shadow-hover);
+  }
+  .range:active::-moz-range-track,
+  .field input[type="range"]:active::-moz-range-track {
+    box-shadow: var(--shadow-active);
+  }
+  .range:disabled::-moz-range-track,
+  .field input[type="range"]:disabled::-moz-range-track {
+    box-shadow: var(--shadow-active);
   }
 
   .range::-webkit-slider-thumb,

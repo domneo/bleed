@@ -4,7 +4,7 @@
  *     <span class="alert__icon" aria-hidden="true">▲</span>
  *     <div><p class="alert__title">Margin call</p>
  *       <p class="alert__text">Deposit by 16:00 EST.</p></div>
- *     <button class="alert__close" aria-label="Dismiss">✕</button>
+ *     <button class="btn btn--icon btn--sm" aria-label="Dismiss">✕</button>
  *   </div>
  * Outlined on paper by default; add alert--solid to fill instead. Text
  * always present. */
@@ -42,20 +42,25 @@
     font-size: var(--font-size-1);
   }
 
+  /* Close is a plain .btn (btn--icon btn--sm) — the alert only pushes it to the
+   * end; everything else about it is the button contract. */
   .alert__close {
     margin-inline-start: auto;
-    appearance: none;
-    border: none;
-    background: transparent;
-    color: inherit;
-    cursor: pointer;
-    font-size: var(--font-size-3);
-    line-height: var(--line-height-tight);
+    margin-block-start: calc(-1 * var(--space-1));
   }
 
   /* fill — solid replaces the outlined-on-paper default */
   .alert--solid {
     --alert-bg: var(--_border);
     --alert-fg: var(--paper);
+    /* the close button now sits ON the fill, where its ink border and ink
+     * shadow would disappear — flip both to paper. The shadow has to be restated
+     * rather than recoloured: --shadow already substituted its var(--ink) back
+     * at :root, so remapping ink here would not reach it. */
+    --btn-fg: var(--paper);
+    --btn-border: var(--paper);
+    --btn-shadow: var(--space-1) var(--space-1) 0 var(--paper);
+    --btn-shadow-hover: calc(var(--space-1) / 2) calc(var(--space-1) / 2) 0 var(--paper);
+    --btn-shadow-active: 0 0 0 var(--paper);
   }
 }

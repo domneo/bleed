@@ -28,18 +28,24 @@
     background-color: var(--toast-bg, var(--paper));
     border: var(--border-w) var(--border-style) var(--ink);
     border-radius: var(--radius);
-    box-shadow: var(--toast-shadow, var(--shadow));
 
     /* entry; JS adds .toast--leaving to reverse before removal */
     animation: toast-in var(--transition) both;
   }
 
-  /* fill — solid replaces the outlined-on-paper default; shadow shifts to
-     --neutral so it stays visible against the ink fill (like .btn--solid) */
+  /* fill — solid replaces the outlined-on-paper default */
   .toast--solid {
     --toast-bg: var(--ink);
     --toast-fg: var(--paper);
-    --toast-shadow: var(--space-1) var(--space-1) 0 var(--neutral);
+    /* the dismiss button now sits ON the fill, where its ink border and ink
+     * shadow would disappear — flip both to paper. The shadow has to be restated
+     * rather than recoloured: --shadow already substituted its var(--ink) back
+     * at :root, so remapping ink here would not reach it. */
+    --btn-fg: var(--paper);
+    --btn-border: var(--paper);
+    --btn-shadow: var(--space-1) var(--space-1) 0 var(--paper);
+    --btn-shadow-hover: calc(var(--space-1) / 2) calc(var(--space-1) / 2) 0 var(--paper);
+    --btn-shadow-active: 0 0 0 var(--paper);
   }
 
   .toast__icon {
@@ -59,15 +65,12 @@
     font-size: var(--font-size-1);
   }
 
+  /* Close is a plain .btn (btn--icon btn--sm) — the toast only pushes it to the
+   * end and nudges it up onto the title's baseline, the way .alert__close does;
+   * everything else about it is the button contract. */
   .toast__close {
     margin-inline-start: auto;
-    appearance: none;
-    border: none;
-    background: transparent;
-    color: inherit;
-    cursor: pointer;
-    font-size: var(--font-size-3);
-    line-height: var(--line-height-tight);
+    margin-block-start: calc(-1 * var(--space-1));
   }
 
   .toast--leaving {

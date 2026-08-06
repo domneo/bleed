@@ -43,15 +43,26 @@
     margin-block-end: var(--space-2);
   }
 
-  .field__hint {
+  /* The control's shadow is painted outside its border box, so text sitting one
+   * `gap` below the box only clears the shadow by `gap - shadow-offset`. Hint and
+   * error add that offset back, restoring a full gap below the shadow itself. */
+  .field__hint,
+  .field__error {
+    margin-block-start: var(--space-1);
     font-size: var(--font-size-1);
     line-height: var(--line-height-snug);
+  }
+  /* …but only to clear a control. Text casts no shadow, so a hint and an error
+   * stacked together are already a full gap apart. */
+  :is(.field__hint, .field__error) + :is(.field__hint, .field__error) {
+    margin-block-start: 0;
+  }
+
+  .field__hint {
     color: var(--neutral-strong);
   }
 
   .field__error {
-    font-size: var(--font-size-1);
-    line-height: var(--line-height-snug);
     color: var(--negative-strong);
   }
   /* Error is hidden until the control is invalid post-interaction (:user-invalid),
@@ -75,6 +86,19 @@
     --neutral-subtle: var(--negative-subtle);
   }
 
+  /* The shadow does NOT follow that remap: a custom property substitutes its own
+   * var()s where it is declared, so --shadow baked in the theme's --ink back at
+   * :root and children inherit the finished value. Recolouring it means restating
+   * the triple — on the field (so .input-group, which casts the shadow for an
+   * adorned control, picks it up) and on a bare .input outside any .field. */
+  .field:has(:user-invalid),
+  .field:has([aria-invalid="true"]),
+  .input:is(:user-invalid, [aria-invalid="true"]) {
+    --shadow: var(--space-1) var(--space-1) 0 var(--negative-strong);
+    --shadow-hover: calc(var(--space-1) / 2) calc(var(--space-1) / 2) 0 var(--negative-strong);
+    --shadow-active: 0 0 0 var(--negative-strong);
+  }
+
   /* --- text-like controls ------------------------------------------------- */
   .input,
   .field :is(input, textarea):not([type="checkbox"], [type="radio"], [type="range"]) {
@@ -85,7 +109,11 @@
     background-color: var(--paper);
     border: var(--border-w) var(--border-style) var(--ink);
     border-radius: var(--radius);
-    transition: border-color var(--transition);
+    box-shadow: var(--shadow);
+    transition:
+      border-color var(--transition),
+      translate var(--transition),
+      box-shadow var(--transition);
   }
 
   .input::placeholder,
@@ -98,16 +126,30 @@
     resize: vertical;
   }
 
+  /* focus/press — the .btn contract, with :focus standing in for :hover: focus
+   * moves the control into its shadow, :active presses it the rest of the way. */
+  :is(.input, .field input, .field textarea):focus {
+    translate: var(--hover-shift-x) var(--hover-shift-y);
+    box-shadow: var(--shadow-hover);
+  }
+  :is(.input, .field input, .field textarea):active {
+    translate: calc(var(--hover-shift-x) * 2) calc(var(--hover-shift-y) * 2);
+    box-shadow: var(--shadow-active);
+  }
+
   :is(.input, .field input, .field textarea):user-invalid,
   :is(.input, .field input, .field textarea)[aria-invalid="true"] {
     border-color: var(--negative-strong);
     background-color: var(--negative-subtle);
   }
 
+  /* disabled drops to the pressed shadow, matching .btn:disabled */
   :is(.input, .field input, .field textarea):disabled {
     opacity: 0.5;
     cursor: not-allowed;
     background-color: var(--neutral-subtle);
+    box-shadow: var(--shadow-active);
+    translate: none;
   }
 
   /* Custom select — no wrapper. appearance:none + a two-tone linear-gradient
@@ -152,15 +194,41 @@
     opacity: 0.5;
     cursor: not-allowed;
     background-color: var(--neutral-subtle);
+    box-shadow: var(--shadow-active);
+    translate: none;
   }
 
   /* Input adornments. Leading and/or trailing addons flank the control:
    *   <div class="input-group"><span class="input-group__addon">$</span><input class="input"></div>
    *   <div class="input-group"><input class="input"><span class="input-group__addon input-group__addon--trailing">USD</span></div> */
+  /* The joined control + addon(s) cast one shadow as a unit — a shadow on the
+   * input alone would fall across the addon it is butted up against. */
   .input-group {
     display: flex;
     align-items: stretch;
     min-inline-size: 0;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    transition:
+      translate var(--transition),
+      box-shadow var(--transition);
+  }
+  /* the group owns the press, so focusing any control inside moves the whole
+   * unit — control plus addons — instead of sliding the input off its addon */
+  .input-group:has(.input:focus) {
+    translate: var(--hover-shift-x) var(--hover-shift-y);
+    box-shadow: var(--shadow-hover);
+  }
+  .input-group:has(.input:active) {
+    translate: calc(var(--hover-shift-x) * 2) calc(var(--hover-shift-y) * 2);
+    box-shadow: var(--shadow-active);
+  }
+  /* the inner control stays put and casts nothing — stated for the focus/press
+   * states too, so it never depends on source order */
+  .input-group .input,
+  .input-group .input:is(:focus, :active) {
+    translate: none;
+    box-shadow: none;
   }
   .input-group > .input {
     inline-size: 100%;

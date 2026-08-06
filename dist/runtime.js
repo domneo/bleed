@@ -87,7 +87,7 @@
         (title ? '<p class="toast__title"></p>' : '') +
         '<p class="toast__msg"></p>' +
       '</div>' +
-      '<button class="toast__close" type="button" aria-label="Dismiss">✕</button>';
+      '<button class="toast__close btn btn--icon btn--sm" type="button" aria-label="Dismiss">✕</button>';
     if (title) el.querySelector('.toast__title').textContent = title;
     el.querySelector('.toast__msg').textContent = message;
 

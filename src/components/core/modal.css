@@ -4,7 +4,8 @@
  *   <dialog class="modal">
  *     <form method="dialog" class="modal__wrap">
  *       <header class="modal__header"><h2 class="modal__title">…</h2>
- *         <button class="btn btn--icon btn--ghost" data-close-modal>✕</button></header>
+ *         <button class="modal__close btn btn--icon btn--sm" data-close-modal
+ *                 aria-label="Close">✕</button></header>
  *       <div class="modal__body">…</div>
  *       <footer class="modal__footer"><button class="btn">Confirm</button></footer>
  *     </form>
@@ -24,7 +25,6 @@
     background-color: var(--paper);
     border: var(--border-w) var(--border-style) var(--ink);
     border-radius: var(--radius);
-    box-shadow: var(--shadow);
 
     opacity: 0;
     translate: 0 var(--space-3);
@@ -60,7 +60,7 @@
 
   .modal__header {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-between;
     gap: var(--space-3);
     padding: var(--space-4) var(--space-5);
@@ -73,7 +73,19 @@
     font-size: var(--font-size-3);
   }
 
+  /* Close is a plain .btn (btn--icon btn--sm) — the header only pushes it to the
+   * end and nudges it up onto the title's first line; everything else about it is
+   * the button contract. Identical to .alert__close and .toast__close. */
+  .modal__close {
+    margin-inline-start: auto;
+    margin-inline-end: calc(-1 * var(--space-2));
+    margin-block-start: calc(-1 * var(--space-1));
+  }
+
   .modal__body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
     block-size: auto;
     max-block-size: 85svh;
     padding: var(--space-5);

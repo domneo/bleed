@@ -19,7 +19,6 @@
     background-color: var(--paper);
     border: var(--border-w) var(--border-style) var(--ink);
     border-radius: var(--radius);
-    box-shadow: var(--shadow);
 
     /* anchored below the trigger, aligned to its inline-end, flipping if clipped */
     position: fixed;
