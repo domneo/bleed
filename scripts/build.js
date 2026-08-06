@@ -5,7 +5,7 @@
  * unconditionally; theming picks a theme via [data-theme] on the root. base.css and
  * themes.css copy straight into dist/ unmodified; components.css is assembled by
  * concatenating every component group. src/icons/ is emitted separately as
- * dist/sprite.svg, which is also spliced into index.html so the demo works off disk.
+ * dist/icons.svg, which is also spliced into index.html so the demo works off disk.
  *
  * Usage:
  *  - node scripts/build.js   -> generate tokens, then concat into dist/
@@ -36,25 +36,6 @@ function cssFiles(dir) {
 // returns file contents
 function read(rel) {
   return readFileSync(join(ROOT, rel), "utf8").trimEnd() + "\n";
-}
-
-/* Inlines an SVG as a url() data URI. Only the characters that would terminate the
- * url() or the data URI are escaped, so the output stays greppable — double quotes
- * are swapped for single so the whole thing can sit inside a quoted url(). */
-function svgToDataUri(svg) {
-  const body = svg
-    .replace(/<\?xml[\s\S]*?\?>/g, "")
-    .replace(/<!--[\s\S]*?-->/g, "")
-    .replace(/\s+/g, " ")
-    .trim()
-    .replace(/"/g, "'")
-    .replace(/%/g, "%25")
-    .replace(/#/g, "%23")
-    .replace(/</g, "%3C")
-    .replace(/>/g, "%3E")
-    .replace(/\{/g, "%7B")
-    .replace(/\}/g, "%7D");
-  return `url("data:image/svg+xml,${body}")`;
 }
 
 // lists every icon name in src/icons/, alphabetically
@@ -98,29 +79,6 @@ function buildSprite() {
   );
 }
 
-/* Icons whose host is a pseudo-element with no element to hang a <use> off. There is
- * exactly one: the select chevron. select.input::picker-icon is a UA pseudo-element and
- * can never take a child, and .select::after shares its chevron rather than forcing an
- * extra element into every wrapper. These stay data-URI masks; every other icon lives
- * in the sprite. */
-const MASK_ICONS = ["chevron-down"];
-
-// emits the --icon-<name> tokens for the mask exceptions above
-function assembleIcons() {
-  const dir = join(ROOT, "src/icons");
-  if (!existsSync(dir)) return "";
-
-  const tokens = MASK_ICONS.map(
-    (n) => `    --icon-${n}: ${svgToDataUri(readFileSync(join(dir, `${n}.svg`), "utf8"))};`,
-  ).join("\n");
-
-  return (
-    `/* GENERATED from src/icons/ by scripts/build.js — do not edit.\n` +
-    ` * Only icons painted onto a pseudo-element land here; the rest ship in dist/sprite.svg. */\n` +
-    `@layer bleed.tokens {\n  :root {\n${tokens}\n  }\n}\n\n`
-  );
-}
-
 /* Builds the demo page's icon gallery: one tile per icon, each rendering the sprite
  * reference it is labelled with, so the gallery can never drift from src/icons/. */
 function buildIconGallery() {
@@ -132,7 +90,7 @@ function buildIconGallery() {
 }
 
 /* Splices a generated block into index.html between its marker comments. The demo page is
- * opened straight off disk, and browsers refuse a cross-origin <use href="sprite.svg#…">
+ * opened straight off disk, and browsers refuse a cross-origin <use href="icons.svg#…">
  * on file://, so the sprite has to be in the document rather than fetched; the gallery is
  * generated for the same reason the sprite is — both are derived from src/icons/. Written
  * only when it actually changed — the build re-runs on every src/ change under `pnpm dev`. */
@@ -142,7 +100,7 @@ const MARKERS = {
     close: "<!-- /GENERATED sprite -->",
     indent: "  ",
   },
-  icons: {
+  gallery: {
     open: "<!-- GENERATED icon gallery from src/icons/ by scripts/build.js — do not edit. -->",
     close: "<!-- /GENERATED icon gallery -->",
     indent: "        ",
@@ -172,10 +130,8 @@ function spliceInto(name, content) {
   console.log(`› spliced ${name} into ${rel}`);
 }
 
-// builds dist/components.css: the icon layer, the icon utility, then every component group.
 function assembleComponents() {
-  let out = assembleIcons();
-  out += read("src/foundations/icons.css");
+  let out = "";
   for (const group of GROUPS) {
     for (const file of cssFiles(group.dir)) {
       out += read(file);
@@ -217,10 +173,10 @@ console.log(`› wrote dist/components.css (${(components.length / 1024).toFixed
 
 // build the icon sprite, then mirror it and its gallery into the demo page
 const sprite = buildSprite();
-writeFileSync(join(ROOT, "dist/sprite.svg"), sprite + "\n");
-console.log(`› wrote dist/sprite.svg (${iconNames().length} icons)`);
+writeFileSync(join(ROOT, "dist/icons.svg"), sprite + "\n");
+console.log(`› wrote dist/icons.svg (${iconNames().length} icons)`);
 spliceInto("sprite", sprite);
-spliceInto("icons", buildIconGallery());
+spliceInto("gallery", buildIconGallery());
 
 // copy js file into dist
 if (existsSync(join(ROOT, "src/runtime.js"))) {

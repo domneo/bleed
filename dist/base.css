@@ -11,12 +11,27 @@
 @property --paper     { syntax: "<color>";  inherits: true; initial-value: oklch(0.97 0.01 90); }
 @property --accent  { syntax: "<color>";  inherits: true; initial-value: oklch(0.2 0.01 264); }
 @property --positive  { syntax: "<color>";  inherits: true; initial-value: oklch(0.45 0.31 264); }
+@property --positive-subtle { syntax: "<color>"; inherits: true; initial-value: oklch(0.65 0.31 264); }
+@property --positive-strong { syntax: "<color>"; inherits: true; initial-value: oklch(0.25 0.31 264); }
 @property --negative  { syntax: "<color>";  inherits: true; initial-value: oklch(0.2 0.01 264); }
+@property --negative-subtle { syntax: "<color>"; inherits: true; initial-value: oklch(0.4 0.01 264); }
+@property --negative-strong { syntax: "<color>"; inherits: true; initial-value: oklch(0.1 0.01 264); }
 @property --warning   { syntax: "<color>";  inherits: true; initial-value: oklch(0.4 0.16 264); }
+@property --warning-subtle { syntax: "<color>"; inherits: true; initial-value: oklch(0.6 0.16 264); }
+@property --warning-strong { syntax: "<color>"; inherits: true; initial-value: oklch(0.2 0.16 264); }
 @property --neutral   { syntax: "<color>";  inherits: true; initial-value: oklch(0.6 0.05 264); }
+@property --neutral-subtle { syntax: "<color>"; inherits: true; initial-value: oklch(0.8 0.05 264); }
+@property --neutral-strong { syntax: "<color>"; inherits: true; initial-value: oklch(0.4 0.05 264); }
 @property --radius        { syntax: "<length>"; inherits: true; initial-value: 0px; }
+@property --border-w      { syntax: "<length>"; inherits: true; initial-value: 2px; }
 @property --hover-shift-x { syntax: "<length>"; inherits: true; initial-value: 3px; }
 @property --hover-shift-y { syntax: "<length>"; inherits: true; initial-value: 3px; }
+
+@layer bleed.tokens {
+  :root {
+    --icon-chevron-down: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' version='1.1' viewBox='0 0 16 16' width='16' height='16' fill='none' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5'%3E %3Cpath d='m3.75 5.75 4.25 4.5 4.25-4.5'/%3E %3C/svg%3E");
+  }
+}
 
 @layer bleed.base {
   *,
@@ -129,5 +144,13 @@
     :where(*):hover, :where(*):active, :where(*):focus, :where(*):focus-within {
       translate: none !important;
     }
+  }
+
+  /* --- icons -------------------------------------------------------------- */
+  .icon {
+    display: inline-block;
+    flex: none;
+    inline-size: 1em;
+    block-size: 1em;
   }
 }
