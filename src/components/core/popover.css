@@ -49,6 +49,21 @@
     }
   }
 
+  /* An open menu holds its trigger in the hover beat. Needs the popover to be the
+   * trigger's next sibling; :where() keeps :hover/:active winning. */
+  .btn:where(:has(+ .menu:popover-open)) {
+    translate: var(--hover-shift-x) var(--hover-shift-y);
+    box-shadow: var(--_shadow-hover);
+  }
+
+  /* a chevron-down trigger points at the menu's state, like an open select */
+  .btn[popovertarget] svg:has(use[href="#icon-chevron-down"]) {
+    transition: scale var(--transition);
+  }
+  .btn:where(:has(+ .menu:popover-open)) svg:has(use[href="#icon-chevron-down"]) {
+    scale: 1 -1;
+  }
+
   .menu__item {
     display: flex;
     align-items: center;

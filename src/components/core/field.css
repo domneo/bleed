@@ -103,6 +103,7 @@
   .input,
   .field :is(input, textarea):not([type="checkbox"], [type="radio"], [type="range"]) {
     inline-size: 100%;
+    column-gap: var(--space-3);
     padding: var(--space-2) var(--space-3);
     font: inherit;
     color: var(--ink);
@@ -165,6 +166,7 @@
 
     appearance: none;
     align-items: center;
+    column-gap: var(--space-3);
     cursor: pointer;
     padding-inline-end: var(--space-4);
     background-image: linear-gradient(45deg, transparent 50%, var(--ink) 50%), linear-gradient(135deg, var(--ink) 50%, transparent 50%);
@@ -175,6 +177,14 @@
     background-repeat: no-repeat;
   }
 
+  /* open flips the chevron to point at the list — mirrored gradients here, and a
+   * scale on the glyph below; both say the same thing the trigger button does. */
+  @supports not (appearance: base-select) {
+    select.input:open {
+      background-image: linear-gradient(135deg, transparent 50%, var(--ink) 50%), linear-gradient(45deg, var(--ink) 50%, transparent 50%);
+    }
+  }
+
   @supports (appearance: base-select) {
     select.input {
       appearance: base-select;
@@ -182,10 +192,15 @@
     }
     select.input::picker-icon {
       content: "";
+      flex-shrink: 0;
       inline-size: calc(var(--space-4) + var(--space-1));
       block-size: calc(var(--space-4) + var(--space-1));
       background-color: var(--ink);
       mask: var(--icon-chevron-down) center / contain no-repeat;
+      transition: scale var(--transition);
+    }
+    select.input:open::picker-icon {
+      scale: 1 -1;
     }
   }
 
