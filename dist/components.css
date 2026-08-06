@@ -372,7 +372,8 @@
     --_control-h: calc((var(--space-6) - var(--space-5)) / 2 + var(--space-5));
     display: inline-flex;
     align-items: center;
-    gap: var(--space-2);
+    gap: calc(var(--space-2) + var(--space-1));
+    padding-block-start: calc(var(--space-1) / 2);
     cursor: pointer;
   }
 
@@ -383,7 +384,7 @@
     appearance: none;
     inline-size: var(--_control-w);
     block-size: var(--_control-h);
-    margin: 0;
+    margin: calc(-1 * var(--space-1) / 2) 0 0 0;
     background-color: var(--paper);
     background-repeat: no-repeat;
     border: var(--border-w) var(--border-style) var(--ink);
@@ -895,12 +896,15 @@
 @layer bleed.components {
   .grid {
     --_min: var(--grid-min, 24rem);
+    /* --grid-gap sets both axes; --grid-row-gap / --grid-col-gap override it per axis */
+    --_gap: var(--grid-gap, var(--space-4));
 
     container-type: inline-size;
     display: grid;
     /* min() keeps a track from overflowing a container narrower than --_min */
     grid-template-columns: repeat(auto-fit, minmax(min(var(--_min), 100%), 1fr));
-    gap: var(--grid-gap, var(--space-4));
+    row-gap: var(--grid-row-gap, var(--_gap));
+    column-gap: var(--grid-col-gap, var(--_gap));
     align-items: start;
   }
 
