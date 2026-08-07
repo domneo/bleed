@@ -27,7 +27,7 @@
   "hover-shift-x": { "$type": "dimension", "$value": "0px" },
   "hover-shift-y": { "$type": "dimension", "$value": "0px" },
 
-  "radius": { "$type": "dimension", "$value": "0.75rem" },
+  "radius": { "$type": "dimension", "$value": "0.25rem" },
 
   "transition-duration": { "$type": "other", "$value": "220ms" },
   "transition-ease": { "$type": "other", "$value": "cubic-bezier(0.2, 0, 0, 1)" },

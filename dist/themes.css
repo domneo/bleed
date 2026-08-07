@@ -67,8 +67,8 @@
 /* ---- blip ---- */
 @layer bleed.tokens {
   [data-theme="blip"] {
-    --ink: oklch(0.78 0.16 264);
-    --paper: oklch(0.19 0.02 264);
+    --ink: oklch(0.9 0.07 209.09);
+    --paper: oklch(0.24 0.03 232.18);
     --accent: oklch(0.9 0.03 264);
     --positive-subtle: oklch(from var(--positive) calc(l - 0.4) c h);
     --positive: var(--ink);
@@ -151,7 +151,7 @@
     --shadow-active: 0 2px 6px oklch(0.5 0.05 255 / 0.16);
     --hover-shift-x: 0px;
     --hover-shift-y: 0px;
-    --radius: 0.75rem;
+    --radius: 0.25rem;
     --transition-duration: 220ms;
     --transition-ease: cubic-bezier(0.2, 0, 0, 1);
     --transition: var(--transition-duration) var(--transition-ease);
