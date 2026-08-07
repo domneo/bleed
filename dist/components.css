@@ -705,7 +705,7 @@
 
   /* --- text-like controls ------------------------------------------------- */
   .input,
-  .field :is(input, textarea):not([type="checkbox"], [type="radio"], [type="range"]) {
+  .field :is(input, textarea):not(:where([type="checkbox"], [type="radio"], [type="range"])) {
     inline-size: 100%;
     column-gap: var(--space-3);
     padding: var(--space-2) var(--space-3);
@@ -854,12 +854,13 @@
     translate: none;
     box-shadow: none;
   }
-  .input-group > .input {
+  .input-group > .input:not(.input-group__addon) {
     inline-size: 100%;
     min-inline-size: 0;
   }
   .input-group > :is(.input-group__addon, span:first-child, span:last-child) {
     display: inline-flex;
+    flex-shrink: 0;
     align-items: center;
     padding-inline: var(--space-3);
     color: var(--ink);
@@ -869,6 +870,8 @@
   /* leading addon: joins the input's start edge */
   .input-group > :is(.input-group__addon:first-child, span:first-child) {
     border-inline-end: none;
+    border-start-end-radius: 0;
+    border-end-end-radius: 0;
   }
   .input-group > :is(.input-group__addon:first-child, span:first-child) ~ .input {
     border-start-start-radius: 0;
@@ -877,6 +880,8 @@
   /* trailing addon: joins the input's end edge */
   .input-group > :is(.input-group__addon--trailing, span:last-child:not(:first-child)) {
     border-inline-start: none;
+    border-start-start-radius: 0;
+    border-end-start-radius: 0;
   }
   .input-group > .input:has(~ :is(.input-group__addon--trailing, span:last-child:not(:first-child))) {
     border-start-end-radius: 0;

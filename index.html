@@ -993,22 +993,30 @@
           <input class="input" id="text-input-disabled" name="text-input-disabled" value="Not editable" disabled>
         </div>
 
-        <!-- single leading addon -->
+        <!-- text addons -->
         <div class="field">
-          <label for="text-input-addon-leading">Input with leading addon</label>
-          <div class="input-group">
-            <span class="input-group__addon">$</span>
-            <input class="input" id="text-input-addon-leading" name="text-input-addon-leading" type="number" step="0.01" placeholder="0.00">
-          </div>
-        </div>
-
-        <!-- leading + trailing addon -->
-        <div class="field">
-          <label for="text-input-addons">Input with addons</label>
+          <label for="text-input-addons">Input with text addons</label>
           <div class="input-group">
             <span class="input-group__addon">$</span>
             <input class="input" id="text-input-addons" name="text-input-addons" type="number" step="0.01" placeholder="0.00">
             <span class="input-group__addon input-group__addon--trailing">USD</span>
+          </div>
+        </div>
+
+        <!-- select addons -->
+        <div class="field">
+          <label for="text-input-addon-leading">Input with select addons</label>
+          <div class="input-group">
+            <select class="input input-group__addon" id="text-input-addon-currency" name="text-input-addon-currency" style="inline-size: 6rem;">
+              <option>SGD</option>
+              <option>USD</option>
+              <option>JPY</option>
+            </select>
+            <input class="input" id="text-input-addon-leading" name="text-input-addon-leading" type="number" step="0.01" placeholder="0.00">
+            <select class="input input-group__addon input-group__addon--trailing" id="text-input-addon-direction" name="text-input-addon-direction" style="inline-size: 5rem;">
+              <option>IN</option>
+              <option>OUT</option>
+            </select>
           </div>
         </div>
 
