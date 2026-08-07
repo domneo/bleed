@@ -822,9 +822,12 @@
     translate: none;
   }
 
-  /* Input adornments. Leading and/or trailing addons flank the control:
+  /* Input adornments. Leading and/or trailing addons flank the control — a
+   * static <span>, a <select>, or a pressable <button class="btn">/icon
+   * button, any of them tagged .input-group__addon:
    *   <div class="input-group"><span class="input-group__addon">$</span><input class="input"></div>
-   *   <div class="input-group"><input class="input"><span class="input-group__addon input-group__addon--trailing">USD</span></div> */
+   *   <div class="input-group"><input class="input"><span class="input-group__addon">USD</span></div>
+   *   <div class="input-group"><button class="btn input-group__addon" type="button">−</button><input class="input"><button class="btn input-group__addon" type="button">+</button></div> */
   /* The joined control + addon(s) cast one shadow as a unit — a shadow on the
    * input alone would fall across the addon it is butted up against. */
   .input-group {
@@ -839,18 +842,22 @@
   }
   /* the group owns the press, so focusing any control inside moves the whole
    * unit — control plus addons — instead of sliding the input off its addon */
-  .input-group:has(.input:focus) {
+  .input-group:has(.input:focus),
+  .input-group:has(.btn:is(:hover, :focus-visible)) {
     translate: var(--hover-shift-x) var(--hover-shift-y);
     box-shadow: var(--shadow-hover);
   }
-  .input-group:has(.input:active) {
+  .input-group:has(.input:active),
+  .input-group:has(.btn:active) {
     translate: calc(var(--hover-shift-x) * 2) calc(var(--hover-shift-y) * 2);
     box-shadow: var(--shadow-active);
   }
   /* the inner control stays put and casts nothing — stated for the focus/press
    * states too, so it never depends on source order */
   .input-group .input,
-  .input-group .input:is(:focus, :active) {
+  .input-group .input:is(:focus, :active),
+  .input-group .btn,
+  .input-group .btn:is(:hover, :focus-visible, :active) {
     translate: none;
     box-shadow: none;
   }
@@ -858,34 +865,35 @@
     inline-size: 100%;
     min-inline-size: 0;
   }
-  .input-group > :is(.input-group__addon, span:first-child, span:last-child) {
+  .input-group > .input-group__addon {
     display: inline-flex;
     flex-shrink: 0;
     align-items: center;
     padding-inline: var(--space-3);
     color: var(--ink);
-    background-color: var(--neutral-subtle);
+    background-color: var(--paper);
     border: var(--border-w) var(--border-style) var(--ink);
   }
-  /* leading addon: joins the input's start edge */
-  .input-group > :is(.input-group__addon:first-child, span:first-child) {
-    border-inline-end: none;
-    border-start-end-radius: 0;
-    border-end-end-radius: 0;
+  .input-group > .input-group__addon:is(select.input, .btn):is(:hover, :focus) {
+    background-color: var(--neutral-subtle);
   }
-  .input-group > :is(.input-group__addon:first-child, span:first-child) ~ .input {
-    border-start-start-radius: 0;
-    border-end-start-radius: 0;
+  .input-group > .input-group__addon,
+  .input-group > .input:not(.input-group__addon) {
+    border-radius: 0;
+    border-inline-end: none;
+  }
+  /* leading addon: joins the input's start edge */
+  .input-group > .input-group__addon:first-child,
+  .input-group > .input:not(.input-group__addon):first-child {
+    border-start-start-radius: var(--radius);
+    border-end-start-radius: var(--radius);
   }
   /* trailing addon: joins the input's end edge */
-  .input-group > :is(.input-group__addon--trailing, span:last-child:not(:first-child)) {
-    border-inline-start: none;
-    border-start-start-radius: 0;
-    border-end-start-radius: 0;
-  }
-  .input-group > .input:has(~ :is(.input-group__addon--trailing, span:last-child:not(:first-child))) {
-    border-start-end-radius: 0;
-    border-end-end-radius: 0;
+  .input-group > .input-group__addon:last-child,
+  .input-group > .input:not(.input-group__addon):last-child {
+    border-start-end-radius: var(--radius);
+    border-end-end-radius: var(--radius);
+    border-inline-end: var(--border-w) var(--border-style) var(--ink);
   }
 }
 /* Grid — the layout primitive: auto-fit tiles with opt-in spans.

@@ -999,7 +999,7 @@
           <div class="input-group">
             <span class="input-group__addon">$</span>
             <input class="input" id="text-input-addons" name="text-input-addons" type="number" step="0.01" placeholder="0.00">
-            <span class="input-group__addon input-group__addon--trailing">USD</span>
+            <span class="input-group__addon">USD</span>
           </div>
         </div>
 
@@ -1013,10 +1013,21 @@
               <option>JPY</option>
             </select>
             <input class="input" id="text-input-addon-leading" name="text-input-addon-leading" type="number" step="0.01" placeholder="0.00">
-            <select class="input input-group__addon input-group__addon--trailing" id="text-input-addon-direction" name="text-input-addon-direction" style="inline-size: 5rem;">
+            <select class="input input-group__addon" id="text-input-addon-direction" name="text-input-addon-direction" style="inline-size: 5rem;">
               <option>IN</option>
               <option>OUT</option>
             </select>
+          </div>
+        </div>
+
+        <!-- button addons -->
+        <div class="field">
+          <label for="qty-input-addons">Input with button addons</label>
+          <div class="input-group">
+            <button class="btn btn--icon input-group__addon" type="button" aria-label="Decrease quantity" onclick="this.closest('.input-group').querySelector('input').stepDown()"><svg class="icon" aria-hidden="true"><use href="#icon-minus"/></svg></button>
+            <button class="btn btn--icon input-group__addon" type="button" aria-label="Increase quantity" onclick="this.closest('.input-group').querySelector('input').stepUp()"><svg class="icon" aria-hidden="true"><use href="#icon-plus"/></svg></button>
+            <input class="input" id="qty-input-addons" name="qty-input-addons" type="number" min="0" step="1" value="1" style="text-align: center;">
+            <button class="btn input-group__addon" type="button">Validate</button>
           </div>
         </div>
 
@@ -1126,7 +1137,7 @@
               <option>2</option>
               <option>3</option>
             </select>
-            <span class="input-group__addon input-group__addon--trailing">days</span>
+            <span class="input-group__addon">days</span>
           </div>
         </div>
 
