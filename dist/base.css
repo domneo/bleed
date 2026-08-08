@@ -27,12 +27,6 @@
 @property --hover-shift-x { syntax: "<length>"; inherits: true; initial-value: 3px; }
 @property --hover-shift-y { syntax: "<length>"; inherits: true; initial-value: 3px; }
 
-@layer bleed.tokens {
-  :root {
-    --icon-chevron-down: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' version='1.1' viewBox='0 0 16 16' width='16' height='16' fill='none' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5'%3E %3Cpath d='m3.75 5.75 4.25 4.5 4.25-4.5'/%3E %3C/svg%3E");
-  }
-}
-
 @layer bleed.base {
   *,
   *::before,
@@ -145,12 +139,75 @@
       translate: none !important;
     }
   }
+}
+/* The .icon utility — sizing for an <svg><use></svg> sprite reference.
+ *   <svg class="icon" aria-hidden="true"><use href="#icon-info"/></svg>
+ * Sizing is 1em, so an icon follows its slot's font-size, and inherits colour like text. */
 
-  /* --- icons -------------------------------------------------------------- */
+@layer bleed.tokens {
+  :root {
+    --icon-chevron-down: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' version='1.1' viewBox='0 0 16 16' width='16' height='16' fill='none' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5'%3E %3Cpath d='m3.75 5.75 4.25 4.5 4.25-4.5'/%3E %3C/svg%3E");
+  }
+}
+
+@layer bleed.base {
   .icon {
     display: inline-block;
     flex: none;
     inline-size: 1em;
     block-size: 1em;
   }
+}
+/* Typography roles — <h1 class="t-display-5">Heading</h1>, <p class="t-body-2">Copy</p>
+ *
+ * - Two families, seven sizes each: t-body-1..7, t-display-1..7.
+ * - Each family has its own font-size scale (--font-size-1..7 vs --font-size-display-1..7).
+ * - line-height/letter-spacing/font-weight are fixed per role, not separate knobs —
+ *   pick the role and size that fit rather than composing properties by hand.
+ * - t-body: reading copy — normal leading/tracking/weight at every size.
+ * - t-display: headline register — wide tracking, bold weight, text-wrap: balance,
+ *   line-height tightening as size climbs (1-2 normal, 3-5 snug, 6-7 tight). */
+
+@layer bleed.base {
+  .t-body-1,
+  .t-body-2,
+  .t-body-3,
+  .t-body-4,
+  .t-body-5,
+  .t-body-6,
+  .t-body-7 {
+    font-family: var(--font-body);
+    line-height: var(--line-height-normal);
+    letter-spacing: var(--letter-spacing-normal);
+    font-weight: var(--font-weight-normal);
+  }
+
+  .t-body-1 { font-size: var(--font-size-1); }
+  .t-body-2 { font-size: var(--font-size-2); }
+  .t-body-3 { font-size: var(--font-size-3); }
+  .t-body-4 { font-size: var(--font-size-4); }
+  .t-body-5 { font-size: var(--font-size-5); }
+  .t-body-6 { font-size: var(--font-size-6); }
+  .t-body-7 { font-size: var(--font-size-7); }
+
+  .t-display-1,
+  .t-display-2,
+  .t-display-3,
+  .t-display-4,
+  .t-display-5,
+  .t-display-6,
+  .t-display-7 {
+    font-family: var(--font-display);
+    letter-spacing: var(--letter-spacing-wide);
+    font-weight: var(--font-weight-bold);
+    text-wrap: balance;
+  }
+
+  .t-display-1 { font-size: var(--font-size-display-1); line-height: var(--line-height-normal); }
+  .t-display-2 { font-size: var(--font-size-display-2); line-height: var(--line-height-normal); }
+  .t-display-3 { font-size: var(--font-size-display-3); line-height: var(--line-height-snug); }
+  .t-display-4 { font-size: var(--font-size-display-4); line-height: var(--line-height-snug); }
+  .t-display-5 { font-size: var(--font-size-display-5); line-height: var(--line-height-snug); }
+  .t-display-6 { font-size: var(--font-size-display-6); line-height: var(--line-height-tight); }
+  .t-display-7 { font-size: var(--font-size-display-7); line-height: var(--line-height-tight); }
 }

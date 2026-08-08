@@ -27,12 +27,6 @@
 @property --hover-shift-x { syntax: "<length>"; inherits: true; initial-value: 3px; }
 @property --hover-shift-y { syntax: "<length>"; inherits: true; initial-value: 3px; }
 
-@layer bleed.tokens {
-  :root {
-    --icon-chevron-down: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' version='1.1' viewBox='0 0 16 16' width='16' height='16' fill='none' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5'%3E %3Cpath d='m3.75 5.75 4.25 4.5 4.25-4.5'/%3E %3C/svg%3E");
-  }
-}
-
 @layer bleed.base {
   *,
   *::before,
@@ -144,13 +138,5 @@
     :where(*):hover, :where(*):active, :where(*):focus, :where(*):focus-within {
       translate: none !important;
     }
-  }
-
-  /* --- icons -------------------------------------------------------------- */
-  .icon {
-    display: inline-block;
-    flex: none;
-    inline-size: 1em;
-    block-size: 1em;
   }
 }

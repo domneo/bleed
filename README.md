@@ -42,8 +42,9 @@ bleed/
 │   ├── icons/                 16×16 stroke-only .svg — one file per icon
 │   ├── foundations/
 │   │   ├── fonts.css          @font-face declarations
+│   │   ├── base.css           layer order/reset/focus/@property
 │   │   ├── icons.css          the .icon utility (sizing for an <svg><use></svg>)
-│   │   └── base.css           layer order/reset/typography/focus/@property
+│   │   └── typography.css     the .t-body-*/.t-display-* type-role utilities
 │   ├── components/
 │   │   ├── core/              common/base components — one .css per component
 │   │   └── finance/           components for financial use cases
@@ -67,7 +68,8 @@ pnpm dev    # same build, re-run on every change under src/
 ```
 
 - `dist/themes.css` is generated straight out of `src/tokens/`
-- `base.css` and `fonts.css` are copied verbatim
+- `fonts.css` is copied verbatim
+- `base.css` is `foundations/base.css` with `foundations/icons.css` and `foundations/typography.css` concatenated on
 - `components.css` is the concatenation of every component group
 
 ---
@@ -86,7 +88,7 @@ Available themes:
 
 ## Design Tokens
 
-**Primitive tokens** (per theme) — the raw material: `--ink --paper --accent --border-w --border-style --shadow / --shadow-hover / --shadow-active --hover-shift-x/y --radius --transition (--transition-duration + --transition-ease) --font-display --font-body --font-size-1..7 --line-height-{tight,snug,normal} --letter-spacing-{tight,normal,wide,wider} --space-1..9`.
+**Primitive tokens** (per theme) — the raw material: `--ink --paper --accent --border-w --border-style --shadow / --shadow-hover / --shadow-active --hover-shift-x/y --radius --transition (--transition-duration + --transition-ease) --font-display --font-body --font-weight-{normal,bold} --font-size-1..7 --font-size-display-1..7 --line-height-{tight,snug,normal} --letter-spacing-{tight,normal,wide,wider} --space-1..9`.
 
 **Semantic tokens** are declared per-theme alongside the primitives, each as a three-step ramp: `--positive --negative --warning --neutral`, plus a `-subtle` and `-strong` variant of each (`--positive-subtle`, `--negative-strong`, …). The base step is authored; the subtle/strong steps are derived from it with relative `oklch(from …)`, so retuning a tone means editing one value. Direction is never carried by colour alone — `.delta` encodes it three ways: an arrow icon, font weight, and colour.
 
@@ -147,6 +149,12 @@ Public API: `window.bleed = { toast, initTablist }`.
 
 ## Typography
 
-HTML elements carry no visual type styling; `h1..h6` are structural only. Size, weight, and space are applied to text with the `--font-size-* / --line-height-* / --letter-spacing-*` tokens, so the whole type scale re-themes per `[data-theme]`.
+HTML elements carry no visual type styling; `h1..h6` are structural only. Apply a type role with `.t-body-1..7` or `.t-display-1..7` — each class bundles font-family, font-size, line-height, letter-spacing, and font-weight as one deliberate combination. Each role has its own font-size scale.
 
-`--font-size-1..7` are **fluid**: each is a `clamp(min, preferred + vw, max)` that scales with the viewport (20rem → 80rem). The scale bottoms out at 14px (`--font-size-1`, `0.875rem`) and runs up to 64px (`--font-size-7`, `4rem`).
+- **`.t-body-*`** — reading copy. `--font-body`, sized off `--font-size-1..7`, normal line-height/letter-spacing/weight at every size.
+- **`.t-display-*`** — headline register. `--font-display`, sized off its own `--font-size-display-1..7` scale, wide letter-spacing and bold weight throughout, `text-wrap: balance`, and line-height stepping tighter as size climbs (1–2 normal, 3–5 snug, 6–7 tight).
+
+```html
+<h1 class="t-display-6">By Month</h1>
+<p class="t-body-2">Lead paragraph.</p>
+```

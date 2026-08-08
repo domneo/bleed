@@ -13,10 +13,6 @@
     /* Demo styles */
     body > header { position: sticky; top: 0; padding: var(--space-4); z-index: 1; @media (min-width: 30rem) { padding: var(--space-6) } }
     main { max-inline-size: 80rem; padding: 0 var(--space-4) var(--space-4); overflow: hidden;  @media (min-width: 30rem) { padding: 0 var(--space-6) var(--space-6) } }
-    .text-display { font-family: var(--font-display); font-size: var(--font-size-7); line-height: var(--line-height-tight); letter-spacing: var(--letter-spacing-wide); text-wrap: balance; }
-    .text-heading { font-family: var(--font-display); font-size: var(--font-size-5); line-height: var(--line-height-snug); letter-spacing: var(--letter-spacing-wide); text-wrap: balance; }
-    .text-lead { font-family: var(--font-body); font-size: var(--font-size-2); line-height: var(--line-height-normal); }
-    .text-body { font-family: var(--font-body); font-size: var(--font-size-1); line-height: var(--line-height-normal); }
     .section { display: flex; flex-direction: column; gap: var(--space-5); margin-block: var(--space-9); }
     .row { display: flex; flex-wrap: wrap; gap: var(--space-3); align-items: center; }
     .col { display: flex; flex-direction: column; gap: var(--space-2); }
@@ -308,8 +304,8 @@
 
   <main>
     <section class="section">
-      <h1 class="text-display">bleed<br />design system</h1>
-      <p class="text-lead">Themable component library implemented with HTML, CSS, and minimal JS.<br />Themes are achieved via design tokens using <a href="https://styledictionary.com/" target="_blank">Style Dictionary</a>.</p>
+      <h1 class="t-display-7">bleed<br />design system</h1>
+      <p class="t-body-2">Themable component library implemented with HTML, CSS, and minimal JS.<br />Themes are achieved via design tokens using <a href="https://styledictionary.com/" target="_blank">Style Dictionary</a>.</p>
     </section>
 
     <hr>
@@ -318,7 +314,7 @@
 
     <!-- TOKENS: COLOR -->
     <section id="tokens" class="section" aria-labelledby="h-color" style="--grid-min:12rem;--grid-gap:var(--space-5)">
-      <h2 class="text-heading" id="h-color">Color</h2>
+      <h2 class="t-display-5" id="h-color">Color</h2>
       <div class="grid">
         <div class="col"><div class="box" style="background-color:var(--ink)"></div><p><code>--ink</code></p></div>
         <div class="col"><div class="box" style="background-color:var(--paper)"></div><p><code>--paper</code></p></div>
@@ -350,7 +346,7 @@
 
     <!-- TOKENS: BORDER & RADIUS -->
     <section class="section" aria-labelledby="h-border-radius" style="--grid-min:8rem;--grid-gap:var(--space-5)">
-      <h2 class="text-heading" id="h-border-radius">Border &amp; radius</h2>
+      <h2 class="t-display-5" id="h-border-radius">Border &amp; radius</h2>
       <div class="grid">
         <div class="col"><div class="box"></div><p><code>--border-w</code> | <code>--border-style</code> | <code>--radius</code></p></div>
       </div>
@@ -360,7 +356,7 @@
 
     <!-- TOKENS: SHADOW -->
     <section class="section" aria-labelledby="h-shadow" style="--grid-min:9rem;--grid-gap:var(--space-5)">
-      <h2 class="text-heading" id="h-shadow">Shadow</h2>
+      <h2 class="t-display-5" id="h-shadow">Shadow</h2>
       <div class="grid">
         <div class="col"><div class="box box--shadow" style="box-shadow:var(--shadow)"></div><p><code>--shadow</code></p></div>
         <div class="col"><div class="box box--shadow" style="box-shadow:var(--shadow-hover)"></div><p><code>--shadow-hover</code></p></div>
@@ -372,7 +368,7 @@
 
     <!-- TOKENS: HOVER SHIFT & TRANSITION -->
     <section class="section" aria-labelledby="h-hover-transition" style="--grid-min:8rem;--grid-gap:var(--space-5)">
-      <h2 class="text-heading" id="h-hover-transition">Hover shift &amp; transition</h2>
+      <h2 class="t-display-5" id="h-hover-transition">Hover shift &amp; transition</h2>
       <div class="grid">
         <div class="col"><div class="box box--hover">Hover me</div><p><code>--hover-shift-x/y</code> | <code>--transition</code> | <code>--transition-duration/ease</code></p></div>
       </div>
@@ -382,7 +378,7 @@
 
     <!-- TOKENS: SPACING SCALE -->
     <section class="section" aria-labelledby="h-spacing-scale">
-      <h2 class="text-heading" id="h-spacing-scale">Spacing scale</h2>
+      <h2 class="t-display-5" id="h-spacing-scale">Spacing scale</h2>
       <!-- --grid-min:100% pins the grid to one track: bars stay comparable -->
       <div class="grid" style="--grid-min:100%;--grid-gap:var(--space-2)">
         <div class="row"><span class="scale-bar" style="inline-size:var(--space-1)"></span><code>--space-1</code></div>
@@ -401,26 +397,22 @@
 
     <!-- TOKENS: TYPOGRAPHY -->
     <section class="section" aria-labelledby="h-typography">
-      <h2 class="text-heading" id="h-typography">Typography</h2>
-      <div class="grid" style="--grid-min:22rem;--grid-gap:var(--space-6)">
-        <div class="col">
-          <div class="row"><p><code>--font-size-1</code></p><p style="font-family:var(--font-display);font-size:var(--font-size-1);">--font-display</p></div>
-          <div class="row"><p><code>--font-size-2</code></p><p style="font-family:var(--font-display);font-size:var(--font-size-2);">--font-display</p></div>
-          <div class="row"><p><code>--font-size-3</code></p><p style="font-family:var(--font-display);font-size:var(--font-size-3);">--font-display</p></div>
-          <div class="row"><p><code>--font-size-4</code></p><p style="font-family:var(--font-display);font-size:var(--font-size-4);">--font-display</p></div>
-          <div class="row"><p><code>--font-size-5</code></p><p style="font-family:var(--font-display);font-size:var(--font-size-5);">--font-display</p></div>
-          <div class="row"><p><code>--font-size-6</code></p><p style="font-family:var(--font-display);font-size:var(--font-size-6);">--font-display</p></div>
-          <div class="row"><p><code>--font-size-7</code></p><p style="font-family:var(--font-display);font-size:var(--font-size-7);">--font-display</p></div>
-        </div>
-        <div class="col">
-          <div class="row"><p><code>--font-size-1</code></p><p style="font-family:var(--font-body);font-size:var(--font-size-1)">--font-body</p></div>
-          <div class="row"><p><code>--font-size-2</code></p><p style="font-family:var(--font-body);font-size:var(--font-size-2)">--font-body</p></div>
-          <div class="row"><p><code>--font-size-3</code></p><p style="font-family:var(--font-body);font-size:var(--font-size-3)">--font-body</p></div>
-          <div class="row"><p><code>--font-size-4</code></p><p style="font-family:var(--font-body);font-size:var(--font-size-4)">--font-body</p></div>
-          <div class="row"><p><code>--font-size-5</code></p><p style="font-family:var(--font-body);font-size:var(--font-size-5)">--font-body</p></div>
-          <div class="row"><p><code>--font-size-6</code></p><p style="font-family:var(--font-body);font-size:var(--font-size-6)">--font-body</p></div>
-          <div class="row"><p><code>--font-size-7</code></p><p style="font-family:var(--font-body);font-size:var(--font-size-7)">--font-body</p></div>
-        </div>
+      <h2 class="t-display-5" id="h-typography">Typography</h2>
+      <div class="col">
+        <p class="t-display-1">t-display-1</p>
+        <p class="t-display-2">t-display-2</p>
+        <p class="t-display-3">t-display-3</p>
+        <p class="t-display-4">t-display-4</p>
+        <p class="t-display-5">t-display-5</p>
+        <p class="t-display-6">t-display-6</p>
+        <p class="t-display-7">t-display-7</p>
+        <p class="t-body-1">t-body-1</p>
+        <p class="t-body-2">t-body-2</p>
+        <p class="t-body-3">t-body-3</p>
+        <p class="t-body-4">t-body-4</p>
+        <p class="t-body-5">t-body-5</p>
+        <p class="t-body-6">t-body-6</p>
+        <p class="t-body-7">t-body-7</p>
       </div>
     </section>
 
@@ -428,7 +420,7 @@
 
     <!-- TOKENS: ICONS -->
     <section class="section" aria-labelledby="h-icons">
-      <h2 class="text-heading" id="h-icons">Icons</h2>
+      <h2 class="t-display-5" id="h-icons">Icons</h2>
       <div class="card card--pad" style="max-height: 60svh; overflow-y: auto;">
         <!-- GENERATED icon gallery from src/icons/ by scripts/build.js — do not edit. -->
         <div class="icon-grid grid" style="--grid-min:14rem;--grid-row-gap:var(--space-6);--grid-col-gap:var(--space-4)">
@@ -703,12 +695,12 @@
     <!-- ===================================================== LAYOUT: GRID -->
 
     <section id="layout" class="section" aria-labelledby="h-grid">
-      <h2 class="text-heading" id="h-grid">Grid</h2>
+      <h2 class="t-display-5" id="h-grid">Grid</h2>
       <div class="col">
         <div class="resizable">
           <div class="grid">
             <div class="box box--solid" data-span="full" style="height:auto; padding: var(--space-1) var(--space-3)">
-              <h3 class="text-lead">Default: <code style="font-size:var(--font-size-1); display:inline-block;">--grid-min: 24rem</code> | <code style="font-size:var(--font-size-1); display:inline-block;">--grid-gap: var(--space-4)</code></h3>
+              <h3 class="t-body-2">Default: <code style="font-size:var(--font-size-1); display:inline-block;">--grid-min: 24rem</code> | <code style="font-size:var(--font-size-1); display:inline-block;">--grid-gap: var(--space-4)</code></h3>
             </div>
             <div class="box"><code>&lt;div&gt;</code></div>
             <div class="box"><code>&lt;div&gt;</code></div>
@@ -723,7 +715,7 @@
         <div class="resizable">
           <div class="grid" style="--grid-min:10rem;--grid-gap:var(--space-2)">
             <div class="box box--solid" data-span="full" style="height:auto; padding: var(--space-1) var(--space-3)">
-              <h3 class="text-lead">Tight: <code style="font-size:var(--font-size-1); display:inline-block;">--grid-min: 10rem</code> | <code style="font-size:var(--font-size-1); display:inline-block;">--grid-gap: var(--space-2)</code></h3>
+              <h3 class="t-body-2">Tight: <code style="font-size:var(--font-size-1); display:inline-block;">--grid-min: 10rem</code> | <code style="font-size:var(--font-size-1); display:inline-block;">--grid-gap: var(--space-2)</code></h3>
             </div>
             <div class="box"><code>&lt;div&gt;</code></div>
             <div class="box"><code>&lt;div&gt;</code></div>
@@ -742,7 +734,7 @@
 
     <!-- ALERTS -->
     <section class="section" aria-labelledby="h-alerts">
-      <h2 class="text-heading" id="h-alerts">Alerts</h2>
+      <h2 class="t-display-5" id="h-alerts">Alerts</h2>
       <div class="grid" style="--grid-min:100%;">
         <div class="alert" role="status">
           <svg class="alert__icon icon" aria-hidden="true"><use href="#icon-info"/></svg>
@@ -783,7 +775,7 @@
 
     <!-- BADGES -->
     <section class="section" aria-labelledby="h-badges">
-      <h2 class="text-heading" id="h-badges">Badges</h2>
+      <h2 class="t-display-5" id="h-badges">Badges</h2>
       <div class="grid" style="--grid-min:100%;">
         <div class="row">
           <span class="badge">Default</span>
@@ -808,7 +800,7 @@
 
     <!-- BUTTONS -->
     <section id="components" class="section" aria-labelledby="h-buttons">
-      <h2 class="text-heading" id="h-buttons">Buttons</h2>
+      <h2 class="t-display-5" id="h-buttons">Buttons</h2>
       <!-- one track per size, so the three scales line up for comparison -->
       <div class="grid" style="--grid-min:100%;">
         <div class="row">
@@ -839,7 +831,7 @@
 
     <!-- EMPTY -->
     <section class="section" aria-labelledby="h-empty">
-      <h2 class="text-heading" id="h-empty">Empty state</h2>
+      <h2 class="t-display-5" id="h-empty">Empty state</h2>
       <div class="empty">
         <svg class="empty__icon icon" aria-hidden="true"><use href="#icon-skull"/></svg>
         <h3 class="empty__title">No open positions</h3>
@@ -852,7 +844,7 @@
 
     <!-- LOADING -->
     <section class="section" aria-labelledby="h-loading">
-      <h2 class="text-heading" id="h-loading">Loading</h2>
+      <h2 class="t-display-5" id="h-loading">Loading</h2>
       <div class="card card--pad" aria-busy="true">
         <div class="skeleton skeleton--circle"></div>
         <div class="skeleton skeleton--text" style="inline-size:70%"></div>
@@ -865,7 +857,7 @@
 
     <!-- MENUS (POPOVER) -->
     <section class="section" aria-labelledby="h-menus">
-      <h2 class="text-heading" id="h-menus">Menus</h2>
+      <h2 class="t-display-5" id="h-menus">Menus</h2>
       <div>
         <button type="button" class="btn" popovertarget="m-demo" style="anchor-name:--m-demo">Actions <svg class="btn__icon icon" aria-hidden="true"><use href="#icon-chevron-down"/></svg></button>
         <div id="m-demo" popover class="menu" style="position-anchor:--m-demo">
@@ -883,10 +875,10 @@
 
     <!-- PROGRESS -->
     <section class="section" aria-labelledby="h-progress">
-      <h2 class="text-heading" id="h-progress">Meter & Progress</h2>
+      <h2 class="t-display-5" id="h-progress">Meter & Progress</h2>
       <div class="grid" style="--grid-min:20rem; --grid-gap:var(--space-5)">
         <div class="col" style="gap: var(--space-5)">
-          <h3 class="text-lead">Meter</h3>
+          <h3 class="t-body-2">Meter</h3>
           <div class="capacity">
             <span class="capacity__label">Default</span>
             <span class="capacity__value">41%</span>
@@ -909,7 +901,7 @@
           </div>
         </div>
         <div class="col" style="gap: var(--space-5)">
-          <h3 class="text-lead">Progress</h3>
+          <h3 class="t-body-2">Progress</h3>
           <div class="capacity">
             <label class="capacity__label" for="load-default">Default</label>
             <progress class="progress" id="load-default" value="0.35" aria-label="Default"></progress>
@@ -938,7 +930,7 @@
 
     <!-- TOAST -->
     <section class="section" aria-labelledby="h-toasts">
-      <h2 class="text-heading" id="h-toasts">Toasts</h2>
+      <h2 class="t-display-5" id="h-toasts">Toasts</h2>
       <div class="row">
         <button class="btn" type="button" onclick="bleed.toast('A default outlined toast with a message only.', {icon:'tick'})">default</button>
         <button class="btn" type="button" onclick="bleed.toast('A toast with no icon.')">no icon</button>
@@ -952,7 +944,7 @@
 
     <!-- TOOLTIP -->
     <section class="section" aria-labelledby="h-tooltips">
-      <h2 class="text-heading" id="h-tooltips">Tooltips</h2>
+      <h2 class="t-display-5" id="h-tooltips">Tooltips</h2>
       <div class="grid" style="--grid-min:100%; --grid-gap:var(--space-5)">
         <div class="row">
           <button class="btn" popovertarget="tip-default" popovertargetaction="show" style="anchor-name:--tip-default" aria-describedby="tip-default">Default</button>
@@ -979,7 +971,7 @@
 
     <!-- INPUTS -->
     <section class="section" aria-labelledby="h-text-inputs">
-      <h2 class="text-heading" id="h-text-inputs">Inputs</h2>
+      <h2 class="t-display-5" id="h-text-inputs">Inputs</h2>
       <form class="grid" style="--grid-gap:var(--space-6)" onsubmit="return false">
 
         <!-- resting state -->
@@ -1057,7 +1049,7 @@
 
     <!-- TEXTAREA -->
     <section class="section" aria-labelledby="h-textarea">
-      <h2 class="text-heading" id="h-textarea">Textarea</h2>
+      <h2 class="t-display-5" id="h-textarea">Textarea</h2>
       <form class="grid" style="--grid-gap:var(--space-6)" onsubmit="return false">
 
         <!-- resting state -->
@@ -1094,7 +1086,7 @@
 
     <!-- SELECT -->
     <section class="section" aria-labelledby="h-select">
-      <h2 class="text-heading" id="h-select">Select</h2>
+      <h2 class="t-display-5" id="h-select">Select</h2>
       <form class="grid" style="--grid-gap:var(--space-6)" onsubmit="return false">
 
         <!-- resting state -->
@@ -1174,7 +1166,7 @@
 
     <!-- CHECKBOX & RADIO -->
     <section class="section" aria-labelledby="h-choice">
-      <h2 class="text-heading" id="h-choice">Checkbox &amp; radio</h2>
+      <h2 class="t-display-5" id="h-choice">Checkbox &amp; radio</h2>
       <form class="grid" style="--grid-min:14rem; --grid-gap:var(--space-6)" onsubmit="return false">
         <fieldset class="field">
           <legend class="field__label">Checkbox</legend>
@@ -1202,7 +1194,7 @@
 
     <!-- RANGE -->
     <section class="section" aria-labelledby="h-range">
-      <h2 class="text-heading" id="h-range">Range</h2>
+      <h2 class="t-display-5" id="h-range">Range</h2>
       <form class="grid" style="--grid-min:14rem; --grid-gap:var(--space-6)" onsubmit="return false">
 
         <!-- default -->
@@ -1225,7 +1217,7 @@
 
     <!-- CARDS -->
     <section class="section" aria-labelledby="h-cards">
-      <h2 class="text-heading" id="h-cards">Cards</h2>
+      <h2 class="t-display-5" id="h-cards">Cards</h2>
       <div class="grid" style="--grid-gap:var(--space-6)">
         <article class="card card--pad">
           <h3 class="card-title">Simple</h3>
@@ -1253,7 +1245,7 @@
 
     <!-- MODAL -->
     <section class="section" aria-labelledby="h-modals">
-      <h2 class="text-heading" id="h-modals">Modals</h2>
+      <h2 class="t-display-5" id="h-modals">Modals</h2>
       <div class="row">
         <button class="btn" data-open-modal="modal-brief">Brief</button>
         <button class="btn" data-open-modal="trade-modal">With Footer</button>
@@ -1326,7 +1318,7 @@
 
     <!-- TABS -->
     <section class="section" aria-labelledby="h-tabs">
-      <h2 class="text-heading" id="h-tabs">Tabs</h2>
+      <h2 class="t-display-5" id="h-tabs">Tabs</h2>
       <div class="grid" style="--grid-min:100%; --grid-gap:var(--space-7)">
         <div class="tabs">
           <div class="tabs__list" role="tablist" aria-label="Standard tabs">
@@ -1364,7 +1356,7 @@
 
     <!-- TABLE -->
     <section class="section" aria-labelledby="h-positions">
-      <h2 class="text-heading" id="h-positions">Positions</h2>
+      <h2 class="t-display-5" id="h-positions">Positions</h2>
       <div class="table-scroll" data-span="full" style="max-block-size:20rem">
         <table class="table table--zebra table--rows">
           <thead>
@@ -1420,7 +1412,7 @@
 
     <!-- KPI GRID -->
     <section class="section" aria-labelledby="h-kpis">
-      <h2 class="text-heading" id="h-kpis">KPIs &amp; data</h2>
+      <h2 class="t-display-5" id="h-kpis">KPIs &amp; data</h2>
       <div class="grid">
         <article class="stat" data-trend="up">
           <p class="stat__label">Net asset value</p>

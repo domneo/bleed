@@ -1,0 +1,18 @@
+/* The .icon utility — sizing for an <svg><use></svg> sprite reference.
+ *   <svg class="icon" aria-hidden="true"><use href="#icon-info"/></svg>
+ * Sizing is 1em, so an icon follows its slot's font-size, and inherits colour like text. */
+
+@layer bleed.tokens {
+  :root {
+    --icon-chevron-down: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' version='1.1' viewBox='0 0 16 16' width='16' height='16' fill='none' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5'%3E %3Cpath d='m3.75 5.75 4.25 4.5 4.25-4.5'/%3E %3C/svg%3E");
+  }
+}
+
+@layer bleed.base {
+  .icon {
+    display: inline-block;
+    flex: none;
+    inline-size: 1em;
+    block-size: 1em;
+  }
+}

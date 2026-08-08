@@ -1,11 +1,14 @@
 /**
  * # Build orchestrator
- * Style Dictionary for tokens, plus dependency-free concatenation for shipped bundles.
- * Ships as three dist files: base.css, components.css, themes.css — each loads once,
- * unconditionally; theming picks a theme via [data-theme] on the root. base.css and
- * themes.css copy straight into dist/ unmodified; components.css is assembled by
- * concatenating every component group. src/icons/ is emitted separately as
- * dist/icons.svg, which is also spliced into index.html so the demo works off disk.
+ * - Style Dictionary for tokens, plus dependency-free concatenation for shipped bundles.
+ * - Ships three dist files: base.css, components.css, themes.css — each loads once,
+ *   unconditionally; theming picks a theme via [data-theme] on the root.
+ * - themes.css copies straight into dist/ unmodified.
+ * - base.css is src/foundations/base.css plus every file in BASE_EXTRAS concatenated
+ *   on (see assembleBase).
+ * - components.css is assembled the same way, concatenating every component group.
+ * - src/icons/ is emitted separately as dist/icons.svg, also spliced into index.html
+ *   so the demo works off disk.
  *
  * Usage:
  *  - node scripts/build.js   -> generate tokens, then concat into dist/
@@ -22,6 +25,9 @@ const GROUPS = [
   { name: "CORE", dir: "src/components/core" },
   { name: "FINANCE", dir: "src/components/finance" },
 ];
+
+// foundation files appended after base.css into dist/base.css
+const BASE_EXTRAS = ["src/foundations/icons.css", "src/foundations/typography.css"];
 
 // lists the .css files inside a given source directory, returning them as bundle-ready relative paths
 function cssFiles(dir) {
@@ -140,6 +146,16 @@ function assembleComponents() {
   return out;
 }
 
+// base.css first (layer order, @property, reset), then every foundation extra —
+// concatenated into one dist/base.css so the shipped stylesheet count stays fixed.
+function assembleBase() {
+  let out = read("src/foundations/base.css");
+  for (const file of BASE_EXTRAS) {
+    if (existsSync(join(ROOT, file))) out += read(file);
+  }
+  return out;
+}
+
 // --- main ----------------------------------------------------------------------
 
 // build css files into dist
@@ -150,8 +166,9 @@ console.log("› building tokens...");
 await buildTokens();
 console.log(`› wrote dist/themes.css (${THEMES.length} themes)`);
 
-copyFileSync(join(ROOT, "src/foundations/base.css"), join(ROOT, "dist/base.css"));
-console.log("› copied dist/base.css");
+const base = assembleBase();
+writeFileSync(join(ROOT, "dist/base.css"), base);
+console.log(`› wrote dist/base.css (${(base.length / 1024).toFixed(1)} kB)`);
 
 copyFileSync(join(ROOT, "src/foundations/fonts.css"), join(ROOT, "dist/fonts.css"));
 console.log("› copied dist/fonts.css");
