@@ -1,6 +1,5 @@
 /* Grid — the layout primitive: auto-fit tiles with opt-in spans.
  *   <div class="grid">
- *     <article class="stat">…</article>
  *     <section class="card" data-span="2">…</section>
  *     <section class="card" data-span="full">…</section>
  *   </div>

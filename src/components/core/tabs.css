@@ -134,6 +134,7 @@
 
   .tabs__panel {
     position: relative;
+    overflow: auto;
     background: var(--paper);
     padding: var(--space-5);
     border: var(--border-w) var(--border-style) var(--ink);

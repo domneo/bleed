@@ -28,16 +28,21 @@
 
   .dl-stats dt {
     font-size: var(--font-size-1);
-    letter-spacing: var(--letter-spacing-wide);
-    color: color-mix(in oklch, var(--ink) 60%, var(--paper));
+    font-family: var(--font-body);
+    line-height: var(--line-height-normal);
+    letter-spacing: var(--letter-spacing-normal);
+    font-weight: var(--font-weight-normal);
+    color: var(--neutral-strong);
   }
 
   .dl-stats dd {
     margin: 0;
-    font-family: var(--font-display);
     font-size: var(--font-size-3);
+    font-family: var(--font-body);
+    line-height: var(--line-height-normal);
+    letter-spacing: var(--letter-spacing-normal);
+    font-weight: var(--font-weight-normal);
     font-variant-numeric: tabular-nums;
-    line-height: var(--line-height-tight);
   }
 
   /* inline variant: label left, value right, one per row */
@@ -47,6 +52,17 @@
     gap: var(--space-2) var(--space-4);
     margin: 0;
   }
-  .dl-inline dt { color: color-mix(in oklch, var(--ink) 65%, var(--paper)); }
-  .dl-inline dd { margin: 0; text-align: end; font-variant-numeric: tabular-nums; }
+  .dl-inline dt {
+    color: var(--neutral-strong);
+  }
+  .dl-inline dd {
+    margin: 0;
+    text-align: end;
+    font-size: var(--font-size-1);
+    font-family: var(--font-body);
+    line-height: var(--line-height-normal);
+    letter-spacing: var(--letter-spacing-normal);
+    font-weight: var(--font-weight-normal);
+    font-variant-numeric: tabular-nums;
+  }
 }

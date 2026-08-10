@@ -46,8 +46,7 @@ bleed/
 │   │   ├── icons.css          the .icon utility (sizing for an <svg><use></svg>)
 │   │   └── typography.css     the .t-body-*/.t-display-* type-role utilities
 │   ├── components/
-│   │   ├── core/              common/base components — one .css per component
-│   │   └── finance/           components for financial use cases
+│   │   └── core/              common/base components — one .css per component
 │   └── runtime.js             JS scripts for additional functionality that native HTML elements don't already provide
 ├── scripts/
 │   └── build.js               Style Dictionary build, concat + copy src/ to dist/, generate icon sprite
@@ -90,13 +89,13 @@ Available themes:
 
 **Primitive tokens** (per theme) — the raw material: `--ink --paper --accent --border-w --border-style --shadow / --shadow-hover / --shadow-active --hover-shift-x/y --radius --transition (--transition-duration + --transition-ease) --font-display --font-body --font-weight-{normal,bold} --font-size-1..7 --font-size-display-1..7 --line-height-{tight,snug,normal} --letter-spacing-{tight,normal,wide,wider} --space-1..9`.
 
-**Semantic tokens** are declared per-theme alongside the primitives, each as a three-step ramp: `--positive --negative --warning --neutral`, plus a `-subtle` and `-strong` variant of each (`--positive-subtle`, `--negative-strong`, …). The base step is authored; the subtle/strong steps are derived from it with relative `oklch(from …)`, so retuning a tone means editing one value. Direction is never carried by colour alone — `.delta` encodes it three ways: an arrow icon, font weight, and colour.
+**Semantic tokens** are declared per-theme alongside the primitives, each as a three-step ramp: `--positive --negative --warning --neutral`, plus a `-subtle` and `-strong` variant of each (`--positive-subtle`, `--negative-strong`, …). The base step is authored; the subtle/strong steps are derived from it with relative `oklch(from …)`, so retuning a tone means editing one value.
 
 **Component tokens** are co-located in each component as `--_internal` vars with a public override, e.g. `--btn-bg`, `--card-shadow`, `--grid-min`. Set them to restyle one instance.
 
 ### Interaction
 
-The shadow marks interactivity: it is carried by every element you can operate — button, input, select, checkbox, radio, range, tab, segmented control, interactive card — and by nothing else. Static surfaces (plain card, stat, alert, modal, menu, tooltip, toast, tab panel) are flat, bordered paper.
+The shadow marks interactivity: it is carried by every element you can operate — button, input, select, checkbox, radio, range, tab, segmented control, interactive card — and by nothing else. Static surfaces (plain card, alert, modal, menu, tooltip, toast, tab panel) are flat, bordered paper.
 
 Pressable elements press the same way, entirely through tokens:
 

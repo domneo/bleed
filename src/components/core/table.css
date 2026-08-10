@@ -58,13 +58,6 @@
   .table tbody tr:has(:checked) {
     background-color: color-mix(in oklch, var(--ink) 18%, var(--paper));
   }
-  /* a cell can flag a whole row's tone via :has on the row */
-  .table tbody tr:has(.delta--down) :is(th, td):first-child {
-    box-shadow: inset var(--space-1) 0 0 var(--negative);
-  }
-  .table tbody tr:has(.delta--up) :is(th, td):first-child {
-    box-shadow: inset var(--space-1) 0 0 var(--positive);
-  }
 
   .table caption {
     padding-block-end: var(--space-2);

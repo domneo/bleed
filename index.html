@@ -700,7 +700,7 @@
         <div class="resizable">
           <div class="grid">
             <div class="box box--solid" data-span="full" style="height:auto; padding: var(--space-1) var(--space-3)">
-              <h3 class="t-body-2">Default: <code style="font-size:var(--font-size-1); display:inline-block;">--grid-min: 24rem</code> | <code style="font-size:var(--font-size-1); display:inline-block;">--grid-gap: var(--space-4)</code></h3>
+              <h3 class="t-body-3">Default: <code style="font-size:var(--font-size-1); display:inline-block;">--grid-min: 24rem</code> | <code style="font-size:var(--font-size-1); display:inline-block;">--grid-gap: var(--space-4)</code></h3>
             </div>
             <div class="box"><code>&lt;div&gt;</code></div>
             <div class="box"><code>&lt;div&gt;</code></div>
@@ -715,7 +715,7 @@
         <div class="resizable">
           <div class="grid" style="--grid-min:10rem;--grid-gap:var(--space-2)">
             <div class="box box--solid" data-span="full" style="height:auto; padding: var(--space-1) var(--space-3)">
-              <h3 class="t-body-2">Tight: <code style="font-size:var(--font-size-1); display:inline-block;">--grid-min: 10rem</code> | <code style="font-size:var(--font-size-1); display:inline-block;">--grid-gap: var(--space-2)</code></h3>
+              <h3 class="t-body-3">Tight: <code style="font-size:var(--font-size-1); display:inline-block;">--grid-min: 10rem</code> | <code style="font-size:var(--font-size-1); display:inline-block;">--grid-gap: var(--space-2)</code></h3>
             </div>
             <div class="box"><code>&lt;div&gt;</code></div>
             <div class="box"><code>&lt;div&gt;</code></div>
@@ -878,7 +878,7 @@
       <h2 class="t-display-5" id="h-progress">Meter & Progress</h2>
       <div class="grid" style="--grid-min:20rem; --grid-gap:var(--space-5)">
         <div class="col" style="gap: var(--space-5)">
-          <h3 class="t-body-2">Meter</h3>
+          <h3 class="t-body-3">Meter</h3>
           <div class="capacity">
             <span class="capacity__label">Default</span>
             <span class="capacity__value">41%</span>
@@ -901,7 +901,7 @@
           </div>
         </div>
         <div class="col" style="gap: var(--space-5)">
-          <h3 class="t-body-2">Progress</h3>
+          <h3 class="t-body-3">Progress</h3>
           <div class="capacity">
             <label class="capacity__label" for="load-default">Default</label>
             <progress class="progress" id="load-default" value="0.35" aria-label="Default"></progress>
@@ -923,6 +923,36 @@
             <progress class="progress progress--negative" id="load-negative" value="0.18" aria-label="Negative"></progress>
           </div>
         </div>
+      </div>
+    </section>
+
+    <hr>
+
+    <!-- DEFINITION LIST -->
+    <section class="section" aria-labelledby="h-dl">
+      <h2 class="t-display-5" id="h-dl">Definition lists</h2>
+
+      <div class="col" style="gap: var(--space-2)">
+        <h3 class="t-body-3">Stat grid</h3>
+        <dl class="dl-stats">
+          <div><dt>Market cap</dt><dd>$2.9T</dd></div>
+          <div><dt>P/E</dt><dd>31.4</dd></div>
+          <div><dt>Dividend yield</dt><dd>0.44%</dd></div>
+          <div><dt>52w range</dt><dd>164.08–237.49</dd></div>
+        </dl>
+      </div>
+
+      <div class="col" style="gap: var(--space-2); max-inline-size: 24rem;">
+        <h3 class="t-body-3">Inline</h3>
+        <article class="card card--pad">
+          <dl class="dl-inline">
+            <dt>Symbol</dt><dd><strong>AAPL</strong></dd>
+            <dt>Quantity</dt><dd>1,200</dd>
+            <dt>Avg price</dt><dd>228.50</dd>
+            <dt>Commission</dt><dd>4.95</dd>
+            <dt>Total</dt><dd>274,204.95</dd>
+          </dl>
+        </article>
       </div>
     </section>
 
@@ -1357,7 +1387,7 @@
     <!-- TABLE -->
     <section class="section" aria-labelledby="h-positions">
       <h2 class="t-display-5" id="h-positions">Positions</h2>
-      <div class="table-scroll" data-span="full" style="max-block-size:20rem">
+      <article class="card">
         <table class="table table--zebra table--rows">
           <thead>
             <tr>
@@ -1375,7 +1405,7 @@
               <td><label class="control"><input type="checkbox" aria-label="Select AAPL"></label></td>
               <td><strong>AAPL</strong></td><td>Apple Inc.</td>
               <td class="num"><data value="228.5">228.50</data></td>
-              <td class="num"><data class="delta delta--up" value="0.012"><svg class="icon" aria-hidden="true"><use href="#icon-arrow-up"/></svg>1.2%</data></td>
+              <td class="num"><data value="0.012"><svg class="icon" aria-hidden="true"><use href="#icon-arrow-up"/></svg>1.2%</data></td>
               <td class="num">1,200</td>
               <td><button class="btn btn--icon btn--sm" popovertarget="r1" style="anchor-name:--r1" aria-label="Row actions"><svg class="icon" aria-hidden="true"><use href="#icon-menu-meatball"/></svg></button>
                 <div id="r1" popover class="menu" style="position-anchor:--r1"><button class="menu__item">Buy</button><button class="menu__item">Sell</button><hr><button class="menu__item menu__item--danger">Close</button></div></td>
@@ -1384,7 +1414,7 @@
               <td><label class="control"><input type="checkbox" checked aria-label="Select TSLA"></label></td>
               <td><strong>TSLA</strong></td><td>Tesla, Inc.</td>
               <td class="num"><data value="242.1">242.10</data></td>
-              <td class="num"><data class="delta delta--down" value="-0.031"><svg class="icon" aria-hidden="true"><use href="#icon-arrow-down"/></svg>3.1%</data></td>
+              <td class="num"><data value="-0.031"><svg class="icon" aria-hidden="true"><use href="#icon-arrow-down"/></svg>3.1%</data></td>
               <td class="num">300</td>
               <td><button class="btn btn--icon btn--sm" popovertarget="r2" style="anchor-name:--r2" aria-label="Row actions"><svg class="icon" aria-hidden="true"><use href="#icon-menu-meatball"/></svg></button>
                 <div id="r2" popover class="menu" style="position-anchor:--r2"><button class="menu__item">Buy</button><button class="menu__item">Sell</button><hr><button class="menu__item menu__item--danger">Close</button></div></td>
@@ -1393,7 +1423,7 @@
               <td><label class="control"><input type="checkbox" aria-label="Select MSFT"></label></td>
               <td><strong>MSFT</strong></td><td>Microsoft Corp.</td>
               <td class="num"><data value="441.0">441.00</data></td>
-              <td class="num"><data class="delta delta--up" value="0.004"><svg class="icon" aria-hidden="true"><use href="#icon-arrow-up"/></svg>0.4%</data></td>
+              <td class="num"><data value="0.004"><svg class="icon" aria-hidden="true"><use href="#icon-arrow-up"/></svg>0.4%</data></td>
               <td class="num">850</td>
               <td><button class="btn btn--icon btn--sm" popovertarget="r3" style="anchor-name:--r3" aria-label="Row actions"><svg class="icon" aria-hidden="true"><use href="#icon-menu-meatball"/></svg></button>
                 <div id="r3" popover class="menu" style="position-anchor:--r3"><button class="menu__item">Buy</button><button class="menu__item">Sell</button><hr><button class="menu__item menu__item--danger">Close</button></div></td>
@@ -1403,80 +1433,7 @@
             <tr><td></td><th colspan="4" scope="row">Net exposure</th><td class="num">2,350</td><td></td></tr>
           </tfoot>
         </table>
-      </div>
-    </section>
-
-    <hr>
-
-    <!-- ==================================================== FINANCE -->
-
-    <!-- KPI GRID -->
-    <section class="section" aria-labelledby="h-kpis">
-      <h2 class="t-display-5" id="h-kpis">KPIs &amp; data</h2>
-      <div class="grid">
-        <article class="stat" data-trend="up">
-          <p class="stat__label">Net asset value</p>
-          <p class="stat__value">$1.24<span class="num__unit">M</span></p>
-          <footer class="stat__foot">
-            <data class="delta delta--up" value="0.042"><svg class="icon" aria-hidden="true"><use href="#icon-arrow-up"/></svg>4.2%</data>
-            <span class="stat__caption">vs last quarter</span>
-          </footer>
-        </article>
-
-        <article class="stat" data-trend="down">
-          <p class="stat__label">Daily P&amp;L</p>
-          <p class="stat__value">−$8,410</p>
-          <footer class="stat__foot">
-            <data class="delta delta--down" value="-0.018"><svg class="icon" aria-hidden="true"><use href="#icon-arrow-down"/></svg>1.8%</data>
-            <span class="stat__caption">intraday</span>
-          </footer>
-        </article>
-
-        <article class="stat">
-          <p class="stat__label">Sharpe</p>
-          <p class="stat__value">1.93</p>
-          <footer class="stat__foot">
-            <data class="delta" value="0"><svg class="icon" aria-hidden="true"><use href="#icon-minus"/></svg>flat</data>
-            <span class="stat__caption">trailing 12m</span>
-          </footer>
-        </article>
-
-        <section class="card" data-span="2">
-          <header class="card-header">
-            <h3 class="card-title">Equity curve</h3>
-            <data class="delta delta--up" value="0.11"><svg class="icon" aria-hidden="true"><use href="#icon-arrow-up"/></svg>11.0%</data>
-          </header>
-          <div class="card-body">
-            <svg class="sparkline sparkline--positive" viewBox="0 0 100 30" preserveAspectRatio="none" style="--sparkline-w:100%;--sparkline-h:calc(var(--space-9) + var(--space-4))" role="img" aria-label="Equity trending up">
-              <path class="sparkline__area" d="M0,24 L14,20 L28,22 L42,12 L56,15 L70,6 L84,9 L100,3 L100,30 L0,30 Z"/>
-              <polyline points="0,24 14,20 28,22 42,12 56,15 70,6 84,9 100,3"/>
-              <circle class="sparkline__dot" cx="100" cy="3" r="2.5"/>
-            </svg>
-          </div>
-        </section>
-
-        <section class="card">
-          <header class="card-header"><h3 class="card-title">Allocation</h3></header>
-          <div class="card-body">
-            <table class="bar-chart">
-              <caption class="visually-hidden">Portfolio allocation by asset class</caption>
-              <tbody>
-                <tr><th scope="row">Equities</th><td class="bar"><span class="bar__fill" style="--value:62">62%</span></td></tr>
-                <tr><th scope="row">Bonds</th><td class="bar"><span class="bar__fill bar__fill--accent" style="--value:24">24%</span></td></tr>
-                <tr><th scope="row">Cash</th><td class="bar"><span class="bar__fill bar__fill--warning" style="--value:9">9%</span></td></tr>
-                <tr><th scope="row">Alts</th><td class="bar"><span class="bar__fill bar__fill--positive" style="--value:5">5%</span></td></tr>
-              </tbody>
-            </table>
-          </div>
-        </section>
-
-        <dl class="dl-stats" data-span="3">
-          <div><dt>Market cap</dt><dd>$2.9T</dd></div>
-          <div><dt>P/E</dt><dd>31.4</dd></div>
-          <div><dt>Div yield</dt><dd>0.52%</dd></div>
-          <div><dt>Beta</dt><dd>1.21</dd></div>
-        </dl>
-      </div>
+      </article>
     </section>
   </main>
 

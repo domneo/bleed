@@ -23,7 +23,6 @@ const ROOT = new URL("../", import.meta.url).pathname;
 // component groups
 const GROUPS = [
   { name: "CORE", dir: "src/components/core" },
-  { name: "FINANCE", dir: "src/components/finance" },
 ];
 
 // foundation files appended after base.css into dist/base.css

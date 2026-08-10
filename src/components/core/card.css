@@ -11,6 +11,8 @@
     --_bg: var(--card-bg, var(--paper));
     --_bd: var(--card-border, var(--ink));
     --_shadow: var(--card-shadow, var(--shadow));
+    /* set --card-pad on the card or an ancestor to retune the padding */
+    --_pad: var(--card-pad, var(--space-5));
 
     display: flex;
     flex-direction: column;
@@ -24,7 +26,7 @@
 
   /* simple card: content sits directly inside with padding */
   .card--pad {
-    padding: var(--space-5);
+    padding: var(--_pad);
     gap: var(--space-3);
   }
 
@@ -33,7 +35,7 @@
     align-items: center;
     justify-content: space-between;
     gap: var(--space-3);
-    padding: var(--space-4) var(--space-5);
+    padding: var(--space-4) var(--_pad);
     border-block-end: var(--border-w) var(--border-style) var(--_bd);
   }
 
@@ -45,7 +47,7 @@
   }
 
   .card-body {
-    padding: var(--space-5);
+    padding: var(--_pad);
     min-inline-size: 0;
   }
   /* let an embedded viz go edge-to-edge */
@@ -58,7 +60,7 @@
     align-items: center;
     justify-content: flex-end;
     gap: var(--space-3);
-    padding: var(--space-4) var(--space-5);
+    padding: var(--space-4) var(--_pad);
     border-block-start: var(--border-w) var(--border-style) var(--_bd);
   }
 
