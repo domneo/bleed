@@ -1418,16 +1418,33 @@
   }
 }
 /* Data table — real <table>. Sticky header, tabular numerics, zebra, :has() row
- * states. Wrap in .table-scroll for a bounded, sticky-header scroll region:
+ * states. Wrap in .table-scroll for a bounded scroll region that scrolls both
+ * axes — sticky header down, columns across.
  *   <div class="table-scroll"><table class="table table--zebra"> … </table></div>
  * Mark numeric columns with class="num" on the <th>/<td> to right-align + tabular. */
 
 @layer bleed.components {
   .table-scroll {
     overflow: auto;
-    max-block-size: 70svh;
+    min-inline-size: 0;
+    max-inline-size: 100%;
+    overscroll-behavior-inline: contain;
+    /* set --table-scroll-max-h: none to scroll across only and let the table
+     * run its full height */
+    max-block-size: var(--table-scroll-max-h, 70svh);
     border: var(--border-w) var(--border-style) var(--ink);
     border-radius: var(--radius);
+  }
+
+  .table-scroll > .table {
+    min-inline-size: max-content;
+  }
+
+  /* inside a card the card already draws the frame */
+  .card > .table-scroll,
+  .card-body > .table-scroll {
+    border: 0;
+    border-radius: inherit;
   }
 
   .table {
