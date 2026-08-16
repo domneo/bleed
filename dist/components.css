@@ -1424,7 +1424,9 @@
  * states. Wrap in .table-scroll for a bounded scroll region that scrolls both
  * axes — sticky header down, columns across.
  *   <div class="table-scroll"><table class="table table--zebra"> … </table></div>
- * Mark numeric columns with class="num" on the <th>/<td> to right-align + tabular. */
+ * Mark numeric columns with class="num" on the <th>/<td> to right-align + tabular.
+ * Add table--sticky-foot to pin the totals row, and class="solid" on a cell or
+ * row to fill it with ink. */
 
 @layer bleed.components {
   .table-scroll {
@@ -1435,7 +1437,6 @@
     /* set --table-scroll-max-h: none to scroll across only and let the table
      * run its full height */
     max-block-size: var(--table-scroll-max-h, 70svh);
-    border: var(--border-w) var(--border-style) var(--ink);
     border-radius: var(--radius);
   }
 
@@ -1443,39 +1444,52 @@
     min-inline-size: max-content;
   }
 
-  /* inside a card the card already draws the frame */
-  .card > .table-scroll,
-  .card-body > .table-scroll {
-    border: 0;
-    border-radius: inherit;
-  }
-
   .table {
     inline-size: 100%;
-    border-collapse: collapse;
+    /* separate, not collapse: a collapsed border belongs to the table rather
+     * than the cell, so the sticky head's rule scrolls away without it */
+    border-collapse: separate;
+    border-spacing: 0;
     font-variant-numeric: tabular-nums;
   }
 
   .table :is(th, td) {
     padding: var(--space-2) var(--space-3);
     text-align: start;
-    border-block-end: var(--border-w) var(--border-style)
-      color-mix(in oklch, var(--ink) 30%, var(--paper));
+    font-size: var(--font-size-1);
+    font-family: var(--font-body);
+    line-height: var(--line-height-normal);
+    letter-spacing: var(--letter-spacing-normal);
+    font-weight: var(--font-weight-normal);
   }
 
   .table thead th {
     position: sticky;
     inset-block-start: 0;
     z-index: 1;
-    font-family: var(--font-display);
-    font-size: var(--font-size-1);
     background-color: var(--paper);
     border-block-end: var(--border-w) var(--border-style) var(--ink);
   }
 
   .table tfoot :is(th, td) {
+    background-color: var(--paper);
     border-block-start: var(--border-w) var(--border-style) var(--ink);
     border-block-end: none;
+  }
+
+  /* sticky footer row */
+  .table--sticky-foot tfoot :is(th, td) {
+    position: sticky;
+    inset-block-end: 0;
+    z-index: 1;
+  }
+
+  /* solid cell */
+  .table :is(th, td).solid,
+  .table tr.solid :is(th, td) {
+    color: var(--paper);
+    background-color: var(--ink);
+    border-color: var(--ink);
   }
 
   /* numeric column: right-align + align digits */
