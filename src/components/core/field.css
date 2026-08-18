@@ -122,6 +122,15 @@
     color: var(--neutral);
   }
 
+  /* Date-like controls (date, datetime-local, month, time, week) lay their
+   * segments out in a shadow wrapper that the UA sheet pads by 1px block-wise —
+   * 2px of extra inner height that pushes them a hair taller than every other
+   * control on the same row. Zeroing it lands them back on the shared height. */
+  .input::-webkit-datetime-edit-fields-wrapper,
+  .field input::-webkit-datetime-edit-fields-wrapper {
+    padding-block: 0;
+  }
+
   .field textarea {
     min-block-size: calc(var(--space-9) + var(--space-4));
     resize: vertical;
