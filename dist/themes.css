@@ -76,8 +76,8 @@
 /* ---- blip ---- */
 @layer bleed.tokens {
   [data-theme="blip"] {
-    --ink: oklch(0.9 0.07 209.09);
-    --paper: oklch(0.24 0.03 232.18);
+    --ink: oklch(0.94 0.08 196.86);
+    --paper: oklch(0.2 0.06 250.12);
     --accent: oklch(0.9 0.03 264);
     --positive-subtle: oklch(from var(--positive) calc(l - 0.4) c h);
     --positive: var(--ink);
