@@ -33,7 +33,7 @@
   "transition-ease": { "$type": "other", "$value": "cubic-bezier(0.2, 0, 0, 1)" },
   "transition": { "$type": "other", "$value": "{transition-duration} {transition-ease}" },
 
-  "font-display": { "$type": "fontFamily", "$value": "\"BBH Bartle\", \"Arial Black\", system-ui, sans-serif" },
+  "font-display": { "$type": "fontFamily", "$value": "\"Michroma\", \"Trebuchet MS\", system-ui, sans-serif" },
   "font-body": { "$type": "fontFamily", "$value": "\"DM Mono\", ui-monospace, \"SF Mono\", Menlo, monospace" },
 
   "font-weight-normal": { "$type": "fontWeight", "$value": "400" },

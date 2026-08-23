@@ -41,6 +41,7 @@
     letter-spacing: var(--letter-spacing-wide);
     font-weight: var(--font-weight-bold);
     text-wrap: balance;
+    text-transform: uppercase;
   }
 
   .t-display-1 { font-size: var(--font-size-display-1); line-height: var(--line-height-normal); }
