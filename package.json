@@ -2,6 +2,7 @@
   "name": "bleed",
   "version": "1.0.0",
   "description": "My personal design system.",
+  "license": "MIT",
   "author": "Dominic Neo",
   "type": "module",
   "files": [
