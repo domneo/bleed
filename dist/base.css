@@ -70,8 +70,11 @@
     text-wrap: pretty;
   }
 
+  /* follow the surface, not the page: on a filled surface (.alert--solid,
+   * .toast--solid, .badge--solid, a table .solid cell) the fg is flipped to
+   * --paper, and a hardcoded --ink link would sit invisible on the fill. */
   a {
-    color: var(--ink);
+    color: inherit;
     text-underline-offset: 0.15em;
     text-decoration-thickness: max(1px, 0.08em); /* px-ok: hairline floor */
   }
